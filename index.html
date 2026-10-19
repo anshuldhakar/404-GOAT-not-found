@@ -7,37 +7,38 @@
   <style>
     :root {
       --fk-blue: #2874f0;
-      --fk-blue-dark: #1e5bc6;
       --fk-yellow: #ffe500;
-      --fk-yellow-dark: #f59e0b;
-      --fk-bg: #f1f3f6;
-      --card-bg: #ffffff;
-      --text: #212121;
-      --text-muted: #878787;
+      --retro-black: #18181b;
+      --retro-cream: #faf7f2;
+      --card-border: 2.5px solid #18181b;
+      --retro-shadow: 4px 4px 0px #18181b;
+      --retro-shadow-hover: 6px 6px 0px #18181b;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Trebuchet MS", sans-serif;
     }
 
     body {
-      background-color: var(--fk-bg);
-      color: var(--text);
-      padding-bottom: 5rem;
+      background-color: var(--retro-cream);
+      color: var(--retro-black);
+      padding-bottom: 6rem;
+      background-image: radial-gradient(#d4d4d8 1px, transparent 1px);
+      background-size: 20px 20px;
     }
 
-    /* Flipkart Top Brand Bar */
+    /* 90s Cyber Flipkart Top Bar */
     .fk-navbar {
       background-color: var(--fk-blue);
-      color: #ffffff;
+      border-bottom: 3px solid var(--retro-black);
       padding: 1rem 1.5rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
       position: sticky;
       top: 0;
       z-index: 100;
+      box-shadow: 0 4px 0px rgba(0, 0, 0, 0.15);
     }
 
     .fk-navbar-content {
@@ -51,145 +52,166 @@
 
     .brand-title {
       display: flex;
-      align-items: baseline;
-      gap: 0.35rem;
+      align-items: center;
+      gap: 0.5rem;
       text-decoration: none;
       color: #ffffff;
     }
 
     .brand-title h1 {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-style: italic;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: -0.5px;
+      text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
     }
 
-    .brand-plus {
-      font-size: 0.85rem;
-      font-style: italic;
-      color: var(--fk-yellow);
-      font-weight: 700;
+    .brand-badge {
+      font-size: 0.75rem;
+      background: var(--fk-yellow);
+      color: var(--retro-black);
+      font-weight: 800;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      border: 1.5px solid var(--retro-black);
+      text-transform: uppercase;
+      box-shadow: 2px 2px 0px var(--retro-black);
     }
 
     .nav-tagline {
       font-size: 0.85rem;
-      color: #e0e7ff;
-      display: none;
-    }
-
-    @media (min-width: 640px) {
-      .nav-tagline {
-        display: block;
-      }
+      color: #ffffff;
+      font-family: monospace;
+      font-weight: 600;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
     }
 
     .container {
       max-width: 1150px;
-      margin: 2rem auto 0;
-      padding: 0 1rem;
+      margin: 2.5rem auto 0;
+      padding: 0 1.25rem;
     }
 
-    /* Sub-header Banner */
+    /* Hero / 90s Window Banner */
     .hero-banner {
       background: #ffffff;
-      border-radius: 8px;
-      padding: 1.75rem 1.5rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      border: var(--card-border);
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--retro-shadow);
       text-align: center;
-      border-top: 4px solid var(--fk-yellow);
+      position: relative;
+    }
+
+    .tape-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--fk-yellow);
+      border: 2px solid var(--retro-black);
+      padding: 0.25rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 2px 2px 0px var(--retro-black);
     }
 
     .hero-banner h2 {
-      font-size: 1.75rem;
-      color: #212121;
-      margin-bottom: 0.4rem;
+      font-size: 1.85rem;
+      color: var(--retro-black);
+      margin-top: 0.5rem;
+      margin-bottom: 0.6rem;
+      font-weight: 800;
     }
 
     .hero-banner p {
-      font-size: 1rem;
-      color: var(--text-muted);
+      font-size: 1.05rem;
+      color: #4b5563;
       max-width: 680px;
       margin: 0 auto;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
-    /* Search & Action Controls */
+    /* Controls */
     .controls {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
     }
 
     .search-wrapper {
       position: relative;
       width: 100%;
-      max-width: 560px;
+      max-width: 580px;
     }
 
     .search-bar {
       width: 100%;
-      padding: 0.85rem 1.25rem 0.85rem 2.8rem;
-      border-radius: 4px;
-      border: 1px solid #e0e0e0;
-      font-size: 0.95rem;
+      padding: 1rem 1.25rem 1rem 3rem;
+      border-radius: 8px;
+      border: var(--card-border);
+      font-size: 1rem;
       outline: none;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
-      transition: all 0.2s ease;
+      box-shadow: var(--retro-shadow);
       background: #ffffff;
+      font-weight: 500;
+      transition: all 0.15s ease;
     }
 
     .search-bar:focus {
-      border-color: var(--fk-blue);
-      box-shadow: 0 2px 8px rgba(40, 116, 240, 0.2);
+      box-shadow: var(--retro-shadow-hover);
+      transform: translate(-1px, -1px);
     }
 
     .search-icon {
       position: absolute;
-      left: 1rem;
+      left: 1.1rem;
       top: 50%;
       transform: translateY(-50%);
-      color: var(--fk-blue);
-      font-size: 1.1rem;
+      font-size: 1.15rem;
     }
 
     .request-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background-color: #ffffff;
-      color: var(--fk-blue);
-      border: 1px solid var(--fk-blue);
+      background-color: var(--fk-yellow);
+      color: var(--retro-black);
+      border: var(--card-border);
       text-decoration: none;
-      padding: 0.6rem 1.35rem;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 0.9rem;
+      padding: 0.7rem 1.4rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      box-shadow: 3px 3px 0px var(--retro-black);
       transition: all 0.15s ease;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
 
     .request-btn:hover {
-      background-color: #f0f5ff;
-      border-color: var(--fk-blue-dark);
-      color: var(--fk-blue-dark);
+      box-shadow: 5px 5px 0px var(--retro-black);
+      transform: translate(-2px, -2px);
     }
 
     /* Grid Layout */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 3.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.75rem;
+      margin-bottom: 4rem;
     }
 
     /* 3D Flip Card */
     .card-container {
       perspective: 1000px;
-      min-height: 270px;
-      height: 270px;
+      min-height: 280px;
+      height: 280px;
       cursor: pointer;
     }
 
@@ -198,7 +220,7 @@
       width: 100%;
       height: 100%;
       text-align: center;
-      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
       transform-style: preserve-3d;
     }
 
@@ -213,63 +235,73 @@
       height: 100%;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
-      border-radius: 8px;
+      border-radius: 12px;
+      border: var(--card-border);
       padding: 1.4rem;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-      border: 1px solid #e5e7eb;
+      box-shadow: var(--retro-shadow);
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .card-container:hover .card-front,
+    .card-container:hover .card-back {
+      box-shadow: var(--retro-shadow-hover);
+      transform: translateY(-2px);
     }
 
     /* Front Styling */
     .card-front {
-      background: var(--card-bg);
+      background: #ffffff;
       align-items: center;
       justify-content: flex-start;
-      border-bottom: 3px solid var(--fk-blue);
+      padding-top: 1.6rem;
     }
 
     .avatar {
-      width: 48px;
-      height: 48px;
-      background-color: #f0f5ff;
-      color: var(--fk-blue);
-      font-weight: 700;
+      width: 52px;
+      height: 52px;
+      background-color: var(--fk-yellow);
+      color: var(--retro-black);
+      font-weight: 800;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.15rem;
-      margin-bottom: 0.6rem;
-      border: 2px solid var(--fk-yellow);
+      font-size: 1.2rem;
+      margin-bottom: 0.65rem;
+      border: 2px solid var(--retro-black);
       flex-shrink: 0;
+      box-shadow: 2px 2px 0px var(--retro-black);
     }
 
     .colleague-name {
-      font-size: 1.15rem;
-      font-weight: 600;
+      font-size: 1.2rem;
+      font-weight: 800;
       margin-bottom: 0.35rem;
-      color: #212121;
+      color: var(--retro-black);
+      letter-spacing: -0.3px;
     }
 
     .colleague-team {
-      font-size: 0.75rem;
-      color: #388e3c;
-      background: #e8f5e9;
-      padding: 0.2rem 0.65rem;
-      border-radius: 3px;
-      font-weight: 600;
-      margin-bottom: 0.65rem;
+      font-size: 0.78rem;
+      color: var(--retro-black);
+      background: #e0e7ff;
+      border: 1.5px solid var(--retro-black);
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
       display: inline-block;
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
 
-    /* Remark Tag Badges */
+    /* Remark Chips */
     .meta-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.35rem;
+      gap: 0.4rem;
       justify-content: center;
       max-height: 65px;
       overflow-y: auto;
@@ -278,51 +310,55 @@
 
     .remark-tag {
       font-size: 0.72rem;
-      color: #2874f0;
-      background: #f0f5ff;
-      border: 1px solid #dbeafe;
-      padding: 0.15rem 0.55rem;
+      color: var(--retro-black);
+      background: #fef08a;
+      border: 1.5px solid var(--retro-black);
+      padding: 0.15rem 0.5rem;
       border-radius: 4px;
-      font-weight: 500;
+      font-weight: 700;
       white-space: nowrap;
     }
 
     .hint {
-      font-size: 0.75rem;
-      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #6b7280;
       margin-top: auto;
+      font-family: monospace;
     }
 
-    /* Back Styling */
+    /* Back Styling (Millennial Game Boy / Cyber Navy) */
     .card-back {
-      background: #172337;
+      background: #172554;
       color: #ffffff;
       transform: rotateY(180deg);
       justify-content: space-between;
-      border: 1px solid #172337;
-      border-bottom: 3px solid var(--fk-yellow);
+      border: var(--card-border);
     }
 
     .card-back-header {
       font-size: 0.85rem;
       color: var(--fk-yellow);
-      font-weight: 600;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
+      font-family: monospace;
+      border-bottom: 1.5px dashed rgba(255, 255, 255, 0.2);
+      padding-bottom: 0.4rem;
     }
 
     .anecdote-wrapper {
       margin: auto 0;
-      max-height: 180px;
+      max-height: 175px;
       overflow-y: auto;
-      padding: 0 0.25rem;
+      padding: 0.25rem 0.5rem;
     }
 
     .anecdote-text {
-      font-size: 0.95rem;
-      line-height: 1.55;
+      font-size: 0.96rem;
+      line-height: 1.6;
       font-style: italic;
-      color: #f1f3f6;
+      color: #f8fafc;
     }
 
     /* Empty state */
@@ -331,163 +367,176 @@
       text-align: center;
       padding: 3rem 1.5rem;
       background: #ffffff;
-      border-radius: 8px;
-      border: 1px dashed #d1d5db;
+      border-radius: 12px;
+      border: 2px dashed var(--retro-black);
+      box-shadow: var(--retro-shadow);
     }
 
     .empty-state h3 {
-      font-size: 1.2rem;
-      color: #212121;
-      margin-bottom: 0.4rem;
+      font-size: 1.35rem;
+      color: var(--retro-black);
+      margin-bottom: 0.5rem;
+      font-weight: 800;
     }
 
     .empty-state p {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      margin-bottom: 1.25rem;
+      font-size: 1rem;
+      color: #4b5563;
+      margin-bottom: 1.5rem;
     }
 
-    /* Flipkart Gift Card Section */
+    /* Millennial Flipkart Gift Card Footer */
     .gift-section {
       background: #ffffff;
-      border: 1px solid #e0e0e0;
-      border-top: 4px solid var(--fk-blue);
-      border-radius: 8px;
-      padding: 2.25rem 1.5rem;
+      border: var(--card-border);
+      border-radius: 16px;
+      padding: 2.5rem 1.5rem;
       text-align: center;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: 6px 6px 0px var(--retro-black);
       max-width: 720px;
       margin: 0 auto;
+      position: relative;
     }
 
     .gift-badge {
       display: inline-block;
-      background: var(--fk-yellow);
-      color: #212121;
-      font-weight: 700;
-      font-size: 0.75rem;
-      padding: 0.3rem 0.85rem;
-      border-radius: 4px;
+      background: var(--fk-blue);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.95rem;
+      border-radius: 6px;
+      border: 2px solid var(--retro-black);
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 0.85rem;
+      margin-bottom: 1rem;
+      box-shadow: 2px 2px 0px var(--retro-black);
     }
 
     .gift-section h2 {
-      font-size: 1.45rem;
-      color: #212121;
-      margin-bottom: 0.5rem;
+      font-size: 1.6rem;
+      color: var(--retro-black);
+      margin-bottom: 0.6rem;
+      font-weight: 800;
     }
 
     .gift-section p {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      line-height: 1.55;
-      margin-bottom: 1.4rem;
+      font-size: 1rem;
+      color: #4b5563;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
     }
 
     .email-container {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
     }
 
     .email-box {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      background: #f8fafc;
-      border: 1px solid #d1d5db;
-      padding: 0.55rem 1.1rem;
-      border-radius: 4px;
+      gap: 0.75rem;
+      background: #f4f4f5;
+      border: 2px solid var(--retro-black);
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
       font-family: monospace;
-      font-size: 0.95rem;
-      color: #212121;
+      font-size: 1rem;
+      color: var(--retro-black);
+      box-shadow: 3px 3px 0px var(--retro-black);
     }
 
     .copy-btn {
-      background: var(--fk-blue);
-      border: none;
-      color: #ffffff;
-      padding: 0.3rem 0.65rem;
-      border-radius: 4px;
-      font-size: 0.75rem;
+      background: var(--fk-yellow);
+      border: 1.5px solid var(--retro-black);
+      color: var(--retro-black);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
       cursor: pointer;
-      font-weight: 600;
-      transition: background 0.15s;
+      font-weight: 800;
+      box-shadow: 1.5px 1.5px 0px var(--retro-black);
+      transition: all 0.1s ease;
     }
 
     .copy-btn:hover {
-      background: var(--fk-blue-dark);
+      transform: translate(-1px, -1px);
+      box-shadow: 2.5px 2.5px 0px var(--retro-black);
     }
 
     .flipkart-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: #fb641b;
+      background: #fb641b; /* Iconic Flipkart checkout orange */
       color: #ffffff;
       text-decoration: none;
-      padding: 0.85rem 1.8rem;
-      border-radius: 4px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      padding: 0.9rem 2rem;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 1rem;
+      border: 2px solid var(--retro-black);
+      box-shadow: 4px 4px 0px var(--retro-black);
       transition: all 0.15s ease;
       text-transform: uppercase;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.4px;
     }
 
     .flipkart-btn:hover {
-      background: #e65612;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      background: #ea580c;
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px var(--retro-black);
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Flipkart Bar -->
+  <!-- Top 90s Cyber Bar -->
   <nav class="fk-navbar">
     <div class="fk-navbar-content">
       <div class="brand-title">
         <h1>Flipkart</h1>
-        <span class="brand-plus">Explore Plus ✦</span>
+        <span class="brand-badge">90s Edition 💾</span>
       </div>
-      <div class="nav-tagline">Farewell Notes & Anecdotes</div>
+      <div class="nav-tagline">404: GOAT NOT FOUND</div>
     </div>
   </nav>
 
   <div class="container">
     <div class="hero-banner">
-      <h2>Memories, Banter & Stakeholder Debrief 👋</h2>
-      <p>Thank you for all the syncs, laughs, and supply planning adventures! Type your name, team, or any remark tags to filter, then click your card to flip.</p>
+      <div class="tape-badge">FLIP &amp; RELIVE 📼</div>
+      <h2>Anecdotes, Lore &amp; Stakeholder Log</h2>
+      <p>Sorted from A to Z! Type your name, team, or any tags in the retro search box, click your tile to flip it, and enjoy the throwback.</p>
     </div>
 
     <div class="controls">
       <div class="search-wrapper">
-        <span class="search-icon">🔍</span>
+        <span class="search-icon">🔎</span>
         <input
           type="text"
           id="searchInput"
           class="search-bar"
-          placeholder="Search by name, team, or remark tag (e.g. Chai, SQL)..."
+          placeholder="Search by name, team, or tag (e.g., Chai, SQL, Ops)..."
           autocomplete="off"
         />
       </div>
-      <a href="mailto:anshuldhakar2904@gmail.com?subject=Request%20for%20Anecdote%20-%20404%20GOAT%20Not%20Found" class="request-btn" id="topRequestBtn">
-        Can't find your name? Request an anecdote →
+      <a href="mailto:anshuldhakar2904@gmail.com?subject=Request%20for%20Anecdote%20-%20404%20GOAT%20Not%20Found" class="request-btn">
+        Missing your tile? Request an anecdote ✉️
       </a>
     </div>
 
     <!-- Cards Grid -->
     <div class="card-grid" id="cardGrid">
-      <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 2rem;">Loading memories...</div>
+      <div style="grid-column: 1 / -1; text-align: center; color: #6b7280; padding: 2rem; font-family: monospace;">
+        Loading memories from floppy disk... ⏳
+      </div>
     </div>
 
     <!-- Flipkart Gift Card Bottom Section -->
     <footer class="gift-section">
-      <div class="gift-badge">Parting Ritual 🎁</div>
-      <h2>Liked your anecdote or feeling generous?</h2>
+      <div class="gift-badge">Parting Tribute 🎁</div>
+      <h2>Liked your anecdote or feeling nostalgic?</h2>
       <p>
-        If I made your day a little less stressful or your tea breaks a lot more fun, feel free to fuel my next chapter with an electronic Flipkart Gift Card!
+        If I made your syncs less chaotic, saved a fire drill, or brought laughs to the floor, feel free to sponsor my next chapter with an electronic Flipkart Gift Card!
       </p>
       
       <div class="email-container">
@@ -559,22 +608,33 @@
       for (let i = 1; i < rows.length; i++) {
         const r = rows[i];
         if (r && r[0]) {
+          const rawName = (r[0] || "").trim();
+          const rawTeam = (r[1] || "").trim();
+          const rawAnecdote = (r[2] || "").trim();
           const rawRemarks = r.slice(3).join(", ");
           
+          // Fallback if anecdote is blank or empty
+          const fallbackAnecdote = "Still buffering this anecdote on dial-up... but you're awesome!";
+          const finalAnecdote = rawAnecdote.length > 0 ? rawAnecdote : fallbackAnecdote;
+
           const tags = rawRemarks
             .split(",")
             .map(t => t.trim())
             .filter(t => t.length > 0);
 
           parsedData.push({
-            name: r[0] || "",
-            team: r[1] || "",
-            anecdote: r[2] || "Always brought great energy to the team!",
+            name: rawName,
+            team: rawTeam,
+            anecdote: finalAnecdote,
             tags: tags,
             tagsString: tags.join(" ").toLowerCase()
           });
         }
       }
+
+      // 1. Sort alphabetically by Name (A-Z) by default
+      parsedData.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
+
       return parsedData;
     }
 
@@ -586,8 +646,8 @@
         const currentQuery = document.getElementById("searchInput").value.trim();
         grid.innerHTML = `
           <div class="empty-state">
-            <h3>No matching notes found</h3>
-            <p>Couldn't find anything matching <strong>"${escapeHtml(currentQuery)}"</strong>. Did I miss you?</p>
+            <h3>404: Stakeholder Not Found 📟</h3>
+            <p>Couldn't find anything matching <strong>"${escapeHtml(currentQuery)}"</strong>. Did dial-up drop your note?</p>
             <a href="${REQUEST_LINK}" class="request-btn">
               Request Your Anecdote Now →
             </a>
@@ -624,14 +684,14 @@
               <div class="colleague-name">${escapeHtml(item.name)}</div>
               <div>${teamBadge}</div>
               <div class="meta-tags">${tagBadges}</div>
-              <div class="hint">Click to flip ↻</div>
+              <div class="hint">[ CLICK TO FLIP ↻ ]</div>
             </div>
             <div class="card-back">
-              <div class="card-back-header">${escapeHtml(item.name)}</div>
+              <div class="card-back-header">MEMO // ${escapeHtml(item.name)}</div>
               <div class="anecdote-wrapper">
                 <p class="anecdote-text">"${escapeHtml(item.anecdote)}"</p>
               </div>
-              <div class="hint" style="color: #94a3b8;">Click to flip back</div>
+              <div class="hint" style="color: var(--fk-yellow);">[ CLICK TO FLIP BACK ]</div>
             </div>
           </div>
         `;
@@ -671,7 +731,7 @@
       const email = document.getElementById("targetEmail").innerText;
       navigator.clipboard.writeText(email).then(() => {
         const btn = document.querySelector(".copy-btn");
-        btn.innerText = "Copied! ✓";
+        btn.innerText = "COPIED! ✓";
         setTimeout(() => {
           btn.innerText = "Copy";
         }, 2000);
@@ -689,7 +749,7 @@
         console.error(err);
         document.getElementById("cardGrid").innerHTML = `
           <div class="empty-state">
-            <p>Could not load memories. Please check connection or sheet permissions.</p>
+            <p>Could not load memories. Please check your network or sheet connection.</p>
           </div>
         `;
       }
