@@ -3,120 +3,193 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Farewell & Fond Memories</title>
+  <title>Farewell & Fond Memories | 404 GOAT Not Found</title>
   <style>
     :root {
-      --primary: #2874f0;
-      --accent: #ffd200;
-      --bg: #f4f6fb;
+      --fk-blue: #2874f0;
+      --fk-blue-dark: #1e5bc6;
+      --fk-yellow: #ffe500;
+      --fk-yellow-dark: #f59e0b;
+      --fk-bg: #f1f3f6;
       --card-bg: #ffffff;
-      --text: #1f2937;
-      --text-muted: #6b7280;
+      --text: #212121;
+      --text-muted: #878787;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     }
 
     body {
-      background-color: var(--bg);
+      background-color: var(--fk-bg);
       color: var(--text);
-      padding: 2.5rem 1rem 4rem;
+      padding-bottom: 5rem;
     }
 
-    .container {
-      max-width: 1100px;
+    /* Flipkart Top Brand Bar */
+    .fk-navbar {
+      background-color: var(--fk-blue);
+      color: #ffffff;
+      padding: 1rem 1.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .fk-navbar-content {
+      max-width: 1150px;
       margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
+    .brand-title {
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+      text-decoration: none;
+      color: #ffffff;
     }
 
-    header h1 {
-      font-size: 2.2rem;
-      margin-bottom: 0.5rem;
-      color: #111827;
+    .brand-title h1 {
+      font-size: 1.5rem;
+      font-style: italic;
+      font-weight: 800;
       letter-spacing: -0.5px;
     }
 
-    header p {
-      font-size: 1.05rem;
+    .brand-plus {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--fk-yellow);
+      font-weight: 700;
+    }
+
+    .nav-tagline {
+      font-size: 0.85rem;
+      color: #e0e7ff;
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .nav-tagline {
+        display: block;
+      }
+    }
+
+    .container {
+      max-width: 1150px;
+      margin: 2rem auto 0;
+      padding: 0 1rem;
+    }
+
+    /* Sub-header Banner */
+    .hero-banner {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 1.75rem 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      border-top: 4px solid var(--fk-yellow);
+    }
+
+    .hero-banner h2 {
+      font-size: 1.75rem;
+      color: #212121;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-banner p {
+      font-size: 1rem;
       color: var(--text-muted);
-      max-width: 650px;
+      max-width: 680px;
       margin: 0 auto;
       line-height: 1.5;
     }
 
-    /* Controls */
+    /* Search & Action Controls */
     .controls {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 1rem;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
     }
 
     .search-wrapper {
       position: relative;
       width: 100%;
-      max-width: 500px;
+      max-width: 560px;
     }
 
     .search-bar {
       width: 100%;
-      padding: 0.85rem 1.25rem;
-      border-radius: 999px;
-      border: 1px solid #d1d5db;
-      font-size: 1rem;
+      padding: 0.85rem 1.25rem 0.85rem 2.8rem;
+      border-radius: 4px;
+      border: 1px solid #e0e0e0;
+      font-size: 0.95rem;
       outline: none;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
       transition: all 0.2s ease;
       background: #ffffff;
     }
 
     .search-bar:focus {
-      border-color: var(--primary);
-      box-shadow: 0 4px 14px rgba(40, 116, 240, 0.18);
+      border-color: var(--fk-blue);
+      box-shadow: 0 2px 8px rgba(40, 116, 240, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--fk-blue);
+      font-size: 1.1rem;
     }
 
     .request-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background-color: var(--primary);
-      color: #ffffff;
+      background-color: #ffffff;
+      color: var(--fk-blue);
+      border: 1px solid var(--fk-blue);
       text-decoration: none;
-      padding: 0.65rem 1.35rem;
-      border-radius: 999px;
-      font-weight: 500;
-      font-size: 0.92rem;
-      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
-      box-shadow: 0 2px 6px rgba(40, 116, 240, 0.25);
+      padding: 0.6rem 1.35rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
 
     .request-btn:hover {
-      opacity: 0.95;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 10px rgba(40, 116, 240, 0.35);
+      background-color: #f0f5ff;
+      border-color: var(--fk-blue-dark);
+      color: var(--fk-blue-dark);
     }
 
     /* Grid Layout */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
     }
 
     /* 3D Flip Card */
     .card-container {
       perspective: 1000px;
-      min-height: 250px;
-      height: 250px;
+      min-height: 270px;
+      height: 270px;
       cursor: pointer;
     }
 
@@ -140,26 +213,27 @@
       height: 100%;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
-      border-radius: 16px;
+      border-radius: 8px;
       padding: 1.4rem;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e5e7eb;
     }
 
     /* Front Styling */
     .card-front {
       background: var(--card-bg);
+      align-items: center;
+      justify-content: flex-start;
+      border-bottom: 3px solid var(--fk-blue);
     }
 
     .avatar {
       width: 48px;
       height: 48px;
-      background-color: #eff6ff;
-      color: var(--primary);
+      background-color: #f0f5ff;
+      color: var(--fk-blue);
       font-weight: 700;
       border-radius: 50%;
       display: flex;
@@ -167,66 +241,88 @@
       justify-content: center;
       font-size: 1.15rem;
       margin-bottom: 0.6rem;
-      border: 1px solid rgba(40, 116, 240, 0.15);
+      border: 2px solid var(--fk-yellow);
+      flex-shrink: 0;
     }
 
     .colleague-name {
       font-size: 1.15rem;
       font-weight: 600;
-      margin-bottom: 0.3rem;
-      color: #111827;
+      margin-bottom: 0.35rem;
+      color: #212121;
     }
 
+    .colleague-team {
+      font-size: 0.75rem;
+      color: #388e3c;
+      background: #e8f5e9;
+      padding: 0.2rem 0.65rem;
+      border-radius: 3px;
+      font-weight: 600;
+      margin-bottom: 0.65rem;
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    /* Remark Tag Badges */
     .meta-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 0.35rem;
       justify-content: center;
-      margin-bottom: 0.75rem;
+      max-height: 65px;
+      overflow-y: auto;
+      margin-bottom: 0.5rem;
     }
 
-    .colleague-team {
-      font-size: 0.75rem;
-      color: #4b5563;
-      background: #f3f4f6;
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
+    .remark-tag {
+      font-size: 0.72rem;
+      color: #2874f0;
+      background: #f0f5ff;
+      border: 1px solid #dbeafe;
+      padding: 0.15rem 0.55rem;
+      border-radius: 4px;
       font-weight: 500;
-    }
-
-    .colleague-remark {
-      font-size: 0.75rem;
-      color: #92400e;
-      background: #fef3c7;
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-      font-weight: 500;
+      white-space: nowrap;
     }
 
     .hint {
       font-size: 0.75rem;
-      color: #9ca3af;
+      color: var(--text-muted);
       margin-top: auto;
     }
 
     /* Back Styling */
     .card-back {
-      background: #111827;
-      color: #f9fafb;
+      background: #172337;
+      color: #ffffff;
       transform: rotateY(180deg);
-      overflow-y: auto;
       justify-content: space-between;
+      border: 1px solid #172337;
+      border-bottom: 3px solid var(--fk-yellow);
+    }
+
+    .card-back-header {
+      font-size: 0.85rem;
+      color: var(--fk-yellow);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .anecdote-wrapper {
       margin: auto 0;
+      max-height: 180px;
+      overflow-y: auto;
+      padding: 0 0.25rem;
     }
 
     .anecdote-text {
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       line-height: 1.55;
       font-style: italic;
-      color: #f3f4f6;
+      color: #f1f3f6;
     }
 
     /* Empty state */
@@ -235,13 +331,13 @@
       text-align: center;
       padding: 3rem 1.5rem;
       background: #ffffff;
-      border-radius: 14px;
-      border: 1px dashed #cbd5e1;
+      border-radius: 8px;
+      border: 1px dashed #d1d5db;
     }
 
     .empty-state h3 {
       font-size: 1.2rem;
-      color: #1f2937;
+      color: #212121;
       margin-bottom: 0.4rem;
     }
 
@@ -250,45 +346,175 @@
       color: var(--text-muted);
       margin-bottom: 1.25rem;
     }
+
+    /* Flipkart Gift Card Section */
+    .gift-section {
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-top: 4px solid var(--fk-blue);
+      border-radius: 8px;
+      padding: 2.25rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .gift-badge {
+      display: inline-block;
+      background: var(--fk-yellow);
+      color: #212121;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.85rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.85rem;
+    }
+
+    .gift-section h2 {
+      font-size: 1.45rem;
+      color: #212121;
+      margin-bottom: 0.5rem;
+    }
+
+    .gift-section p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 1.4rem;
+    }
+
+    .email-container {
+      margin-bottom: 1.5rem;
+    }
+
+    .email-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: #f8fafc;
+      border: 1px solid #d1d5db;
+      padding: 0.55rem 1.1rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.95rem;
+      color: #212121;
+    }
+
+    .copy-btn {
+      background: var(--fk-blue);
+      border: none;
+      color: #ffffff;
+      padding: 0.3rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+
+    .copy-btn:hover {
+      background: var(--fk-blue-dark);
+    }
+
+    .flipkart-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #fb641b; /* Flipkart signature orange checkout button */
+      color: #ffffff;
+      text-decoration: none;
+      padding: 0.85rem 1.8rem;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      transition: all 0.15s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .flipkart-btn:hover {
+      background: #e65612;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
   </style>
 </head>
 <body>
+
+  <!-- Top Flipkart Bar -->
+  <nav class="fk-navbar">
+    <div class="fk-navbar-content">
+      <div class="brand-title">
+        <h1>Flipkart</h1>
+        <span class="brand-plus">Explore Plus ✦</span>
+      </div>
+      <div class="nav-tagline">Farewell Notes & Anecdotes</div>
+    </div>
+  </nav>
+
   <div class="container">
-    <header>
-      <h1>Notes & Memories 👋</h1>
-      <p>Thank you for all the banter, syncs, and camaraderie! Type your name, team, or remark to filter, then click your card to flip.</p>
-    </header>
+    <div class="hero-banner">
+      <h2>Memories, Banter & Stakeholder Debrief 👋</h2>
+      <p>Thank you for all the syncs, laughs, and supply planning adventures! Type your name, team, or any remark tags to filter, then click your card to flip.</p>
+    </div>
 
     <div class="controls">
       <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
         <input
           type="text"
           id="searchInput"
           class="search-bar"
-          placeholder="Search by name, team, or remark..."
+          placeholder="Search by name, team, or remark tag (e.g. Chai, SQL)..."
           autocomplete="off"
         />
       </div>
-      <a href="mailto:anshuldhakar2904@gmail.com?subject=Anecdote%20Request" target="_blank" class="request-btn" id="topRequestBtn">
+      <a href="PASTE_YOUR_GOOGLE_FORM_OR_MAILTO_LINK_HERE" target="_blank" class="request-btn" id="topRequestBtn">
         Can't find your name? Request an anecdote →
       </a>
     </div>
 
+    <!-- Cards Grid -->
     <div class="card-grid" id="cardGrid">
-      <div style="grid-column: 1 / -1; text-align: center; color: #6b7280; padding: 2rem;">Loading cards...</div>
+      <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 2rem;">Loading memories...</div>
     </div>
+
+    <!-- Flipkart Gift Card Bottom Section -->
+    <footer class="gift-section">
+      <div class="gift-badge">Parting Ritual 🎁</div>
+      <h2>Liked your anecdote or feeling generous?</h2>
+      <p>
+        If I made your day a little less stressful or your tea breaks a lot more fun, feel free to fuel my next chapter with an electronic Flipkart Gift Card!
+      </p>
+      
+      <div class="email-container">
+        <div class="email-box">
+          <span id="targetEmail">YOUR_PERSONAL_EMAIL@gmail.com</span>
+          <button class="copy-btn" onclick="copyEmail()">Copy</button>
+        </div>
+      </div>
+
+      <div>
+        <a href="https://www.flipkart.com/the-gift-card-store" target="_blank" rel="noopener noreferrer" class="flipkart-btn">
+          Send Flipkart Gift Card 🛍️
+        </a>
+      </div>
+    </footer>
   </div>
 
   <script>
     // Live published Google Sheet CSV URL
     const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTOnE4C0nb_EUJuxnD1taVpQxMmG-Su-iOxPXLAEanOs4oiUYNxhrszNGP39Sr7QUCDDQOiaEppTvPB/pub?output=csv";
 
-    // Set your Google Form link or email fallback
-    const REQUEST_LINK = "mailto:anshuldhakar2904@gmail.com?subject=Anecdote%20Request";
+    // Fallback or Google Form URL
+    const REQUEST_LINK = "PASTE_YOUR_GOOGLE_FORM_OR_MAILTO_LINK_HERE";
 
     let colleaguesData = [];
 
-    // Robust CSV parser to handle quotes, commas, and line breaks
+    // Robust CSV parser
     function parseCSV(text) {
       const rows = [];
       let row = [];
@@ -328,16 +554,24 @@
         rows.push(row);
       }
 
-      // Skip header row and map columns
+      // Skip header row and extract fields
       const parsedData = [];
       for (let i = 1; i < rows.length; i++) {
         const r = rows[i];
-        if (r[0]) {
+        if (r && r[0]) {
+          const rawRemarks = r.slice(3).join(", ");
+          
+          const tags = rawRemarks
+            .split(",")
+            .map(t => t.trim())
+            .filter(t => t.length > 0);
+
           parsedData.push({
             name: r[0] || "",
             team: r[1] || "",
-            anecdote: r[2] || "Still figuring out what to say, but you're awesome!",
-            remark: r[3] || "" // 4th Column: Remark
+            anecdote: r[2] || "Always brought great energy to the team!",
+            tags: tags,
+            tagsString: tags.join(" ").toLowerCase()
           });
         }
       }
@@ -375,8 +609,8 @@
         card.className = "card-container";
         card.onclick = () => card.classList.toggle("is-flipped");
 
-        const remarkBadge = item.remark 
-          ? `<span class="colleague-remark">${escapeHtml(item.remark)}</span>` 
+        const tagBadges = item.tags.length > 0
+          ? item.tags.map(t => `<span class="remark-tag">${escapeHtml(t)}</span>`).join("")
           : "";
 
         const teamBadge = item.team 
@@ -388,18 +622,16 @@
             <div class="card-front">
               <div class="avatar">${initials}</div>
               <div class="colleague-name">${escapeHtml(item.name)}</div>
-              <div class="meta-tags">
-                ${teamBadge}
-                ${remarkBadge}
-              </div>
+              <div>${teamBadge}</div>
+              <div class="meta-tags">${tagBadges}</div>
               <div class="hint">Click to flip ↻</div>
             </div>
             <div class="card-back">
-              <div style="font-size: 0.8rem; opacity: 0.7; margin-bottom: 0.5rem;">${escapeHtml(item.name)}</div>
+              <div class="card-back-header">${escapeHtml(item.name)}</div>
               <div class="anecdote-wrapper">
                 <p class="anecdote-text">"${escapeHtml(item.anecdote)}"</p>
               </div>
-              <div class="hint" style="color: #9ca3af;">Click to flip back</div>
+              <div class="hint" style="color: #94a3b8;">Click to flip back</div>
             </div>
           </div>
         `;
@@ -419,7 +651,7 @@
       });
     }
 
-    // Instant filter on keystroke across Name, Team, and Remark
+    // Instant filter across Name, Team, and all Remark tags
     document.getElementById("searchInput").addEventListener("input", (e) => {
       const term = e.target.value.toLowerCase().trim();
       if (!term) {
@@ -429,17 +661,28 @@
       const filtered = colleaguesData.filter((c) =>
         c.name.toLowerCase().includes(term) ||
         c.team.toLowerCase().includes(term) ||
-        c.remark.toLowerCase().includes(term)
+        c.tagsString.includes(term)
       );
       renderCards(filtered);
     });
 
-    // Update Request button link
-    if (REQUEST_LINK !== "mailto:anshuldhakar2904@gmail.com?subject=Anecdote%20Request") {
+    // Copy Email functionality
+    function copyEmail() {
+      const email = document.getElementById("targetEmail").innerText;
+      navigator.clipboard.writeText(email).then(() => {
+        const btn = document.querySelector(".copy-btn");
+        btn.innerText = "Copied! ✓";
+        setTimeout(() => {
+          btn.innerText = "Copy";
+        }, 2000);
+      });
+    }
+
+    if (REQUEST_LINK !== "PASTE_YOUR_GOOGLE_FORM_OR_MAILTO_LINK_HERE") {
       document.getElementById("topRequestBtn").href = REQUEST_LINK;
     }
 
-    // Initial fetch
+    // Fetch and load data
     async function loadData() {
       try {
         const res = await fetch(SHEET_CSV_URL);
