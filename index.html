@@ -423,7 +423,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: #fb641b; /* Flipkart signature orange checkout button */
+      background: #fb641b;
       color: #ffffff;
       text-decoration: none;
       padding: 0.85rem 1.8rem;
@@ -472,7 +472,7 @@
           autocomplete="off"
         />
       </div>
-      <a href="PASTE_YOUR_GOOGLE_FORM_OR_MAILTO_LINK_HERE" target="_blank" class="request-btn" id="topRequestBtn">
+      <a href="mailto:anshuldhakar2904@gmail.com?subject=Request%20for%20Anecdote%20-%20404%20GOAT%20Not%20Found" class="request-btn" id="topRequestBtn">
         Can't find your name? Request an anecdote →
       </a>
     </div>
@@ -492,7 +492,7 @@
       
       <div class="email-container">
         <div class="email-box">
-          <span id="targetEmail">YOUR_PERSONAL_EMAIL@gmail.com</span>
+          <span id="targetEmail">anshuldhakar2904@gmail.com</span>
           <button class="copy-btn" onclick="copyEmail()">Copy</button>
         </div>
       </div>
@@ -509,8 +509,8 @@
     // Live published Google Sheet CSV URL
     const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTOnE4C0nb_EUJuxnD1taVpQxMmG-Su-iOxPXLAEanOs4oiUYNxhrszNGP39Sr7QUCDDQOiaEppTvPB/pub?output=csv";
 
-    // Fallback or Google Form URL
-    const REQUEST_LINK = "PASTE_YOUR_GOOGLE_FORM_OR_MAILTO_LINK_HERE";
+    // Direct mailto link to your personal Gmail ID
+    const REQUEST_LINK = "mailto:anshuldhakar2904@gmail.com?subject=Request%20for%20Anecdote%20-%20404%20GOAT%20Not%20Found";
 
     let colleaguesData = [];
 
@@ -588,7 +588,7 @@
           <div class="empty-state">
             <h3>No matching notes found</h3>
             <p>Couldn't find anything matching <strong>"${escapeHtml(currentQuery)}"</strong>. Did I miss you?</p>
-            <a href="${REQUEST_LINK}" target="_blank" class="request-btn">
+            <a href="${REQUEST_LINK}" class="request-btn">
               Request Your Anecdote Now →
             </a>
           </div>
@@ -676,10 +676,6 @@
           btn.innerText = "Copy";
         }, 2000);
       });
-    }
-
-    if (REQUEST_LINK !== "PASTE_YOUR_GOOGLE_FORM_OR_MAILTO_LINK_HERE") {
-      document.getElementById("topRequestBtn").href = REQUEST_LINK;
     }
 
     // Fetch and load data
