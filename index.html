@@ -15,7 +15,8 @@
       --text-main: #212121;
       --text-muted: #717478;
       --border-color: #e0e0e0;
-      --status-green: #388e3c;
+      --status-delivered: #16a34a;
+      --status-intransit: #d97706;
     }
 
     * {
@@ -215,7 +216,7 @@
       margin-bottom: 4rem;
     }
 
-    /* 3D Flip Card - STRICT CLICK ONLY (NO HOVER FLIPPING) */
+    /* 3D Flip Card - STRICT CLICK ONLY */
     .card-container {
       perspective: 1000px;
       min-height: 275px;
@@ -231,10 +232,9 @@
       text-align: center;
       transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
       transform-style: preserve-3d;
-      transform: rotateY(0deg) !important; /* Forces baseline, prevents hover-flip */
+      transform: rotateY(0deg) !important;
     }
 
-    /* THIS IS THE ONLY TRIGGER FOR ROTATION */
     .card-container.is-flipped .card-inner {
       transform: rotateY(180deg) !important;
     }
@@ -253,7 +253,7 @@
       flex-direction: column;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
       background: var(--card-bg);
-      pointer-events: none; /* Mouse passes to parent container for click */
+      pointer-events: none;
     }
 
     /* Front: Shipping Label / Consignment */
@@ -276,8 +276,21 @@
       padding-bottom: 0.4rem;
     }
 
-    .tracking-tag {
-      color: var(--status-green);
+    .status-badge-delivered {
+      color: var(--status-delivered);
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    .status-badge-intransit {
+      color: var(--status-intransit);
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
       font-weight: 700;
     }
 
@@ -364,7 +377,6 @@
     .card-back-meta {
       font-family: monospace;
       font-size: 0.72rem;
-      color: var(--fk-yellow);
       display: flex;
       justify-content: space-between;
       border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
@@ -523,7 +535,7 @@
     <div class="manifest-banner">
       <div class="manifest-meta">
         <span>ORDER: #FAREWELL-2026-GOAT</span>
-        <span>FULFILLMENT: COMPLETED</span>
+        <span>MANIFEST: VERIFIED</span>
         <span>SORT ORDER: A ➔ Z</span>
       </div>
       <h2>Consignment Manifest &amp; Anecdotes 📦</h2>
@@ -636,8 +648,12 @@
           const rawAnecdote = (r[2] || "").trim();
           const rawRemarks = r.slice(3).join(", ");
           
-          const fallbackAnecdote = "Consignment still pending pick-list creation... but you're an operational rockstar! (Ping me for the unboxed debrief 📦)";
-          const finalAnecdote = rawAnecdote.length > 0 ? rawAnecdote : fallbackAnecdote;
+          // Determine status & fallback based on whether Anecdote is filled or empty
+          const isFilled = rawAnecdote.length > 0;
+          const status = isFilled ? "DELIVERED" : "IN TRANSIT";
+          const finalAnecdote = isFilled 
+            ? rawAnecdote 
+            : "Consignment still in transit between hubs... but you're an operational rockstar! (Ping me for the unboxed debrief 📦)";
 
           const tags = rawRemarks
             .split(",")
@@ -648,6 +664,8 @@
             name: rawName,
             team: rawTeam,
             anecdote: finalAnecdote,
+            status: status,
+            isDelivered: isFilled,
             tags: tags,
             tagsString: tags.join(" ").toLowerCase()
           });
@@ -690,8 +708,8 @@
         const card = document.createElement("div");
         card.className = "card-container";
         
-        // Strict Click Event Listener (Only flips upon clicking)
-        card.addEventListener("click", function(e) {
+        // Strict Click-Only Toggle
+        card.addEventListener("click", function() {
           card.classList.toggle("is-flipped");
         });
 
@@ -704,13 +722,17 @@
           : "";
 
         const trackingNumber = `FK-SCM-${String(index + 101).padStart(4, '0')}`;
+        
+        // Status badge styling
+        const statusClass = item.isDelivered ? "status-badge-delivered" : "status-badge-intransit";
+        const backStatusColor = item.isDelivered ? "#4ade80" : "var(--fk-yellow)";
 
         card.innerHTML = `
           <div class="card-inner">
             <div class="card-front">
               <div class="label-header">
                 <span>AWB: ${trackingNumber}</span>
-                <span class="tracking-tag">VERIFIED</span>
+                <span class="${statusClass}">● ${item.status}</span>
               </div>
               <div class="colleague-title-row">
                 <div class="avatar">${initials}</div>
@@ -723,7 +745,7 @@
             <div class="card-back">
               <div class="card-back-meta">
                 <span>STAKEHOLDER: ${escapeHtml(item.name)}</span>
-                <span>STATUS: DELIVERED</span>
+                <span style="color: ${backStatusColor}; font-weight: 700;">${item.status}</span>
               </div>
               <div class="anecdote-wrapper">
                 <p class="anecdote-text">"${escapeHtml(item.anecdote)}"</p>
