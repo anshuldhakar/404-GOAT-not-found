@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farewell & Fond Memories</title>
+  <style>
+    :root {
+      --primary: #2874f0;
+      --accent: #ffd200;
+      --bg: #f4f6fb;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 2.5rem 1rem 4rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+      color: #111827;
+      letter-spacing: -0.5px;
+    }
+
+    header p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .search-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .search-bar {
+      width: 100%;
+      padding: 0.85rem 1.25rem;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      font-size: 1rem;
+      outline: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: all 0.2s ease;
+      background: #ffffff;
+    }
+
+    .search-bar:focus {
+      border-color: var(--primary);
+      box-shadow: 0 4px 14px rgba(40, 116, 240, 0.18);
+    }
+
+    .request-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: var(--primary);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 0.65rem 1.35rem;
+      border-radius: 999px;
+      font-weight: 500;
+      font-size: 0.92rem;
+      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 2px 6px rgba(40, 116, 240, 0.25);
+    }
+
+    .request-btn:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(40, 116, 240, 0.35);
+    }
+
+    /* Grid Layout */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* 3D Flip Card */
+    .card-container {
+      perspective: 1000px;
+      min-height: 250px;
+      height: 250px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .card-container.is-flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    /* Front Styling */
+    .card-front {
+      background: var(--card-bg);
+    }
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      background-color: #eff6ff;
+      color: var(--primary);
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      margin-bottom: 0.6rem;
+      border: 1px solid rgba(40, 116, 240, 0.15);
+    }
+
+    .colleague-name {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      color: #111827;
+    }
+
+    .meta-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .colleague-team {
+      font-size: 0.75rem;
+      color: #4b5563;
+      background: #f3f4f6;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    .colleague-remark {
+      font-size: 0.75rem;
+      color: #92400e;
+      background: #fef3c7;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    .hint {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-top: auto;
+    }
+
+    /* Back Styling */
+    .card-back {
+      background: #111827;
+      color: #f9fafb;
+      transform: rotateY(180deg);
+      overflow-y: auto;
+      justify-content: space-between;
+    }
+
+    .anecdote-wrapper {
+      margin: auto 0;
+    }
+
+    .anecdote-text {
+      font-size: 0.92rem;
+      line-height: 1.55;
+      font-style: italic;
+      color: #f3f4f6;
+    }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: #ffffff;
+      border-radius: 14px;
+      border: 1px dashed #cbd5e1;
+    }
+
+    .empty-state h3 {
+      font-size: 1.2rem;
+      color: #1f2937;
+      margin-bottom: 0.4rem;
+    }
+
+    .empty-state p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Notes & Memories 👋</h1>
+      <p>Thank you for all the banter, syncs, and camaraderie! Type your name, team, or remark to filter, then click your card to flip.</p>
+    </header>
+
+    <div class="controls">
+      <div class="search-wrapper">
+        <input
+          type="text"
+          id="searchInput"
+          class="search-bar"
+          placeholder="Search by name, team, or remark..."
+          autocomplete="off"
+        />
+      </div>
+      <a href="mailto:anshuldhakar2904@gmail.com?subject=Anecdote%20Request" target="_blank" class="request-btn" id="topRequestBtn">
+        Can't find your name? Request an anecdote →
+      </a>
+    </div>
+
+    <div class="card-grid" id="cardGrid">
+      <div style="grid-column: 1 / -1; text-align: center; color: #6b7280; padding: 2rem;">Loading cards...</div>
+    </div>
+  </div>
+
+  <script>
+    // Live published Google Sheet CSV URL
+    const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTOnE4C0nb_EUJuxnD1taVpQxMmG-Su-iOxPXLAEanOs4oiUYNxhrszNGP39Sr7QUCDDQOiaEppTvPB/pub?output=csv";
+
+    // Set your Google Form link or email fallback
+    const REQUEST_LINK = "mailto:anshuldhakar2904@gmail.com?subject=Anecdote%20Request";
+
+    let colleaguesData = [];
+
+    // Robust CSV parser to handle quotes, commas, and line breaks
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let entry = "";
+      let insideQuote = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const nextChar = text[i + 1];
+
+        if (char === '"') {
+          if (insideQuote && nextChar === '"') {
+            entry += '"';
+            i++;
+          } else {
+            insideQuote = !insideQuote;
+          }
+        } else if (char === ',' && !insideQuote) {
+          row.push(entry.trim());
+          entry = "";
+        } else if ((char === '\r' || char === '\n') && !insideQuote) {
+          if (char === '\r' && nextChar === '\n') {
+            i++;
+          }
+          row.push(entry.trim());
+          if (row.length > 1 || row[0] !== "") {
+            rows.push(row);
+          }
+          row = [];
+          entry = "";
+        } else {
+          entry += char;
+        }
+      }
+      if (entry || row.length > 0) {
+        row.push(entry.trim());
+        rows.push(row);
+      }
+
+      // Skip header row and map columns
+      const parsedData = [];
+      for (let i = 1; i < rows.length; i++) {
+        const r = rows[i];
+        if (r[0]) {
+          parsedData.push({
+            name: r[0] || "",
+            team: r[1] || "",
+            anecdote: r[2] || "Still figuring out what to say, but you're awesome!",
+            remark: r[3] || "" // 4th Column: Remark
+          });
+        }
+      }
+      return parsedData;
+    }
+
+    function renderCards(data) {
+      const grid = document.getElementById("cardGrid");
+      grid.innerHTML = "";
+
+      if (data.length === 0) {
+        const currentQuery = document.getElementById("searchInput").value.trim();
+        grid.innerHTML = `
+          <div class="empty-state">
+            <h3>No matching notes found</h3>
+            <p>Couldn't find anything matching <strong>"${escapeHtml(currentQuery)}"</strong>. Did I miss you?</p>
+            <a href="${REQUEST_LINK}" target="_blank" class="request-btn">
+              Request Your Anecdote Now →
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      data.forEach((item) => {
+        const initials = item.name
+          .split(" ")
+          .filter(n => n.length > 0)
+          .map((n) => n[0])
+          .slice(0, 2)
+          .join("")
+          .toUpperCase() || "?";
+
+        const card = document.createElement("div");
+        card.className = "card-container";
+        card.onclick = () => card.classList.toggle("is-flipped");
+
+        const remarkBadge = item.remark 
+          ? `<span class="colleague-remark">${escapeHtml(item.remark)}</span>` 
+          : "";
+
+        const teamBadge = item.team 
+          ? `<span class="colleague-team">${escapeHtml(item.team)}</span>` 
+          : "";
+
+        card.innerHTML = `
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="avatar">${initials}</div>
+              <div class="colleague-name">${escapeHtml(item.name)}</div>
+              <div class="meta-tags">
+                ${teamBadge}
+                ${remarkBadge}
+              </div>
+              <div class="hint">Click to flip ↻</div>
+            </div>
+            <div class="card-back">
+              <div style="font-size: 0.8rem; opacity: 0.7; margin-bottom: 0.5rem;">${escapeHtml(item.name)}</div>
+              <div class="anecdote-wrapper">
+                <p class="anecdote-text">"${escapeHtml(item.anecdote)}"</p>
+              </div>
+              <div class="hint" style="color: #9ca3af;">Click to flip back</div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function escapeHtml(str) {
+      return (str || "").replace(/[&<>"']/g, function(m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        }[m];
+      });
+    }
+
+    // Instant filter on keystroke across Name, Team, and Remark
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+      const term = e.target.value.toLowerCase().trim();
+      if (!term) {
+        renderCards(colleaguesData);
+        return;
+      }
+      const filtered = colleaguesData.filter((c) =>
+        c.name.toLowerCase().includes(term) ||
+        c.team.toLowerCase().includes(term) ||
+        c.remark.toLowerCase().includes(term)
+      );
+      renderCards(filtered);
+    });
+
+    // Update Request button link
+    if (REQUEST_LINK !== "mailto:anshuldhakar2904@gmail.com?subject=Anecdote%20Request") {
+      document.getElementById("topRequestBtn").href = REQUEST_LINK;
+    }
+
+    // Initial fetch
+    async function loadData() {
+      try {
+        const res = await fetch(SHEET_CSV_URL);
+        const text = await res.text();
+        colleaguesData = parseCSV(text);
+        renderCards(colleaguesData);
+      } catch (err) {
+        console.error(err);
+        document.getElementById("cardGrid").innerHTML = `
+          <div class="empty-state">
+            <p>Could not load memories. Please check connection or sheet permissions.</p>
+          </div>
+        `;
+      }
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
