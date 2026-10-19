@@ -169,7 +169,7 @@
       outline: none;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
       background: #ffffff;
-      transition: all 0.2s ease;
+      transition: border-color 0.2s ease;
     }
 
     .search-bar:focus {
@@ -198,7 +198,7 @@
       border-radius: 6px;
       font-weight: 600;
       font-size: 0.9rem;
-      transition: all 0.15s ease;
+      transition: background-color 0.15s ease;
     }
 
     .request-btn:hover {
@@ -215,7 +215,7 @@
       margin-bottom: 4rem;
     }
 
-    /* 3D Consignment Tile - STRICT CLICK ONLY */
+    /* 3D Flip Card - STRICT CLICK ONLY (NO HOVER FLIPPING) */
     .card-container {
       perspective: 1000px;
       min-height: 275px;
@@ -231,11 +231,12 @@
       text-align: center;
       transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
       transform-style: preserve-3d;
-      transform: rotateY(0deg);
+      transform: rotateY(0deg) !important; /* Forces baseline, prevents hover-flip */
     }
 
+    /* THIS IS THE ONLY TRIGGER FOR ROTATION */
     .card-container.is-flipped .card-inner {
-      transform: rotateY(180deg);
+      transform: rotateY(180deg) !important;
     }
 
     .card-front,
@@ -252,13 +253,7 @@
       flex-direction: column;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
       background: var(--card-bg);
-      transition: box-shadow 0.2s ease, transform 0.2s ease;
-    }
-
-    .card-container:hover .card-front,
-    .card-container:hover .card-back {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-      transform: translateY(-2px);
+      pointer-events: none; /* Mouse passes to parent container for click */
     }
 
     /* Front: Shipping Label / Consignment */
@@ -266,6 +261,7 @@
       justify-content: flex-start;
       border-top: 3px solid var(--fk-blue);
       text-align: left;
+      transform: rotateY(0deg);
     }
 
     .label-header {
@@ -496,14 +492,13 @@
       font-weight: 700;
       font-size: 0.95rem;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-      transition: all 0.15s ease;
+      transition: background 0.15s ease;
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
 
     .flipkart-btn:hover {
       background: #e65612;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
@@ -641,7 +636,6 @@
           const rawAnecdote = (r[2] || "").trim();
           const rawRemarks = r.slice(3).join(", ");
           
-          // E-commerce supply chain themed fallback
           const fallbackAnecdote = "Consignment still pending pick-list creation... but you're an operational rockstar! (Ping me for the unboxed debrief 📦)";
           const finalAnecdote = rawAnecdote.length > 0 ? rawAnecdote : fallbackAnecdote;
 
@@ -696,8 +690,8 @@
         const card = document.createElement("div");
         card.className = "card-container";
         
-        // Strict Click-Only Toggle
-        card.addEventListener("click", function() {
+        // Strict Click Event Listener (Only flips upon clicking)
+        card.addEventListener("click", function(e) {
           card.classList.toggle("is-flipped");
         });
 
