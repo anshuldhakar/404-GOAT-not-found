@@ -232,7 +232,7 @@
     .btn-researchgate { background: #f0fdfa; color: #0d9488; border: 1px solid #ccfbf1; }
     .btn-personality { background: #faf5ff; color: #7e22ce; border: 1px solid #f3e8ff; }
 
-    /* Sticky Sub-Header: Broadened Search + Author Badge + Request Button */
+    /* Sticky Sub-Header */
     .sticky-control-container {
       position: sticky;
       top: 54px;
@@ -289,7 +289,7 @@
 
     .sticky-search-wrapper {
       position: relative;
-      flex: 1; /* Broadened search input */
+      flex: 1;
     }
 
     .sticky-search-bar {
@@ -786,17 +786,19 @@
       gap: 0.4rem;
     }
 
-    /* Bottom Flipkart Gift Section */
+    /* Option 2: Casual Treat Parting Gesture Section */
     .gift-section {
       background: #ffffff;
       border: 1px solid var(--border-color);
       border-top: 4px solid var(--fk-orange);
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 2.25rem 1.5rem;
       text-align: center;
       max-width: 720px;
       margin: 0 auto;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
     }
+
     .gift-badge {
       display: inline-block;
       background: #fff7ed;
@@ -808,27 +810,42 @@
       text-transform: uppercase;
       margin-bottom: 0.85rem;
     }
-    .email-box {
-      display: inline-flex;
+
+    .fk-guide-box {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 8px;
+      padding: 0.85rem 1.2rem;
+      max-width: 520px;
+      margin: 0 auto;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+    }
+
+    .fk-guide-step {
+      display: flex;
       align-items: center;
       gap: 0.6rem;
-      background: #f8fafc;
-      border: 1px solid var(--border-color);
-      padding: 0.55rem 1.1rem;
-      border-radius: 4px;
-      font-family: monospace;
-      font-size: 0.95rem;
-      margin-bottom: 1.25rem;
+      color: #334155;
     }
-    .copy-btn {
+
+    .step-num {
       background: var(--fk-blue);
-      border: none;
       color: #ffffff;
-      padding: 0.3rem 0.65rem;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      cursor: pointer;
+      font-weight: 800;
+      font-size: 0.72rem;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
+
     .flipkart-btn {
       display: inline-flex;
       align-items: center;
@@ -837,10 +854,48 @@
       color: #ffffff;
       text-decoration: none;
       padding: 0.85rem 1.8rem;
-      border-radius: 4px;
+      border-radius: 6px;
       font-weight: 700;
       font-size: 0.95rem;
       text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(251, 100, 27, 0.3);
+      transition: background 0.15s ease;
+    }
+    .flipkart-btn:hover {
+      background: #e55310;
+    }
+
+    /* Floating Scroll-to-Top Button */
+    .back-to-top-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 99;
+      background: var(--fk-blue);
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(40, 116, 240, 0.4);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .back-to-top-btn.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .back-to-top-btn:hover {
+      background: var(--fk-blue-dark);
+      transform: translateY(-2px);
     }
   </style>
 </head>
@@ -875,7 +930,7 @@
         </div>
       </div>
 
-      <!-- Social Links (Substack removed, 16Personalities renamed to Personality) -->
+      <!-- Social Links -->
       <div class="social-section">
         <div class="social-section-title">Let's Stay Connected 🤝</div>
         <div class="social-links-bar">
@@ -891,7 +946,7 @@
       </div>
     </header>
 
-    <!-- Sticky Control Bar (Share Board removed, search bar broadened) -->
+    <!-- Sticky Control Bar -->
     <div class="sticky-control-container">
       <div class="sticky-control-inner">
         <!-- Author Badge -->
@@ -934,28 +989,44 @@
       </div>
     </div>
 
-    <!-- Bottom Flipkart Gift Section -->
+    <!-- Option 2: Casual Treat Parting Gesture Section -->
     <footer class="gift-section">
       <div class="gift-badge">Parting Gesture 🎁</div>
-      <h2 style="font-size: 1.45rem; margin-bottom: 0.5rem;">Liked your anecdote or feeling generous?</h2>
-      <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 1.4rem;">
-        If I helped make your workdays less stressful, ran fun syncs, or brought laughter to the floor, feel free to fuel my next chapter with an electronic Flipkart Gift Card!
+      <h2 style="font-size: 1.45rem; margin-bottom: 0.5rem;">Sponsor a Farewell Treat! ☕🍕</h2>
+      <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 1.25rem;">
+        If our catch-ups made workdays brighter or helped take the edge off peak planning over the last 4.6 years, feel free to fuel my next chapter with an electronic Flipkart Gift Card!
       </p>
-      
-      <div>
-        <div class="email-box">
-          <span id="targetEmail">anshuldhakar2904@gmail.com</span>
-          <button class="copy-btn" onclick="copyEmail()">Copy</button>
+
+      <!-- 3-Step Casual Treat Guide -->
+      <div class="fk-guide-box">
+        <div class="fk-guide-step">
+          <span class="step-num">1</span>
+          <span>Recipient: <strong id="targetEmail" style="color: #1e3a8a;">anshuldhakar2904@gmail.com</strong></span>
+        </div>
+        <div class="fk-guide-step">
+          <span class="step-num">2</span>
+          <span>Suggested Treat: <strong>₹501</strong> (or whatever feels right!)</span>
+        </div>
+        <div class="fk-guide-step">
+          <span class="step-num">3</span>
+          <span>Format: <strong>Digital Gift Card (Sent to Email)</strong></span>
         </div>
       </div>
 
-      <div>
-        <a href="https://www.flipkart.com/the-gift-card-store" target="_blank" rel="noopener noreferrer" class="flipkart-btn">
-          Send Flipkart Gift Card 🛍️
-        </a>
+      <div style="margin-top: 1.25rem;">
+        <button id="fkGiftBtn" onclick="sendFlipkartGiftCard()" class="flipkart-btn" style="border: none; cursor: pointer;">
+          Copy Email &amp; Open Flipkart Store (₹501) 🛍️
+        </button>
       </div>
+
+      <div id="copyToastMessage" style="font-size: 0.8rem; color: var(--status-delivered); font-weight: 700; margin-top: 0.6rem; min-height: 1.2rem;"></div>
     </footer>
   </div>
+
+  <!-- Floating Back to Top Button -->
+  <button id="backToTopBtn" class="back-to-top-btn" onclick="scrollToTop()" title="Scroll to top">
+    ↑
+  </button>
 
   <script>
     // 1. Google Sheet published CSV URL
@@ -979,12 +1050,31 @@
     // Set of card names that received fresh comments during background polling
     const freshCommentCardNames = new Set();
 
-    // Helper: Turn a colleague's name into a clean URL-friendly slug
+    // Helper: Clean URL-friendly slug
     function slugify(name) {
       return (name || "")
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-+|-+$/g, "");
+    }
+
+    // Helper: Banter-First Sorting
+    // Sorts cards by comment count descending. If both have 0, sorts alphabetically by name.
+    function sortColleaguesByBanter(colleaguesList) {
+      const commentCountMap = {};
+      allComments.forEach(c => {
+        commentCountMap[c.cardName] = (commentCountMap[c.cardName] || 0) + 1;
+      });
+
+      return [...colleaguesList].sort((a, b) => {
+        const countA = commentCountMap[a.name] || 0;
+        const countB = commentCountMap[b.name] || 0;
+
+        if (countA !== countB) {
+          return countB - countA; // Descending by banter count
+        }
+        return (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: 'base' });
+      });
     }
 
     // CSV Parser
@@ -1056,12 +1146,6 @@
         }
       }
 
-      parsedData.sort((a, b) => {
-        const teamCompare = (a.team || "").localeCompare(b.team || "", undefined, { sensitivity: 'base' });
-        if (teamCompare !== 0) return teamCompare;
-        return (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: 'base' });
-      });
-
       return parsedData;
     }
 
@@ -1129,16 +1213,20 @@
       }
     }
 
-    // Filter helper: preserves active search query
+    // Filter helper: applies search and respects Banter-First sorting
     function applyCurrentFilter() {
       const inputEl = document.getElementById("searchInput");
       const term = inputEl ? inputEl.value.toLowerCase().trim() : "";
+      
+      const sortedData = sortColleaguesByBanter(rawColleaguesData);
+
       if (!term) {
-        renderCards(rawColleaguesData);
-        updateStatsBadge(rawColleaguesData.length, rawColleaguesData.length);
+        renderCards(sortedData);
+        updateStatsBadge(sortedData.length, rawColleaguesData.length);
         return;
       }
-      const filtered = rawColleaguesData.filter((c) =>
+
+      const filtered = sortedData.filter((c) =>
         c.name.toLowerCase().includes(term) ||
         c.team.toLowerCase().includes(term) ||
         c.tagsString.includes(term)
@@ -1368,12 +1456,11 @@
           targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
         }, 400);
 
-        // Clean the hash out of the address bar so future refreshes start clean
         history.replaceState(null, null, window.location.pathname);
       }
     }
 
-    // Post comment with Optimistic UI (0ms latency, Enter support, no double flip)
+    // Post comment with Optimistic UI
     async function postComment(cardName, inputId, event) {
       if (event) event.stopPropagation();
       const input = document.getElementById(inputId);
@@ -1470,7 +1557,7 @@
       }
     }
 
-    // Safe 30-second background polling with New Banter detection
+    // Safe 30-second background polling
     function startBackgroundPolling() {
       setInterval(async () => {
         if (document.hidden) return;
@@ -1500,6 +1587,47 @@
         }
       }, 30000);
     }
+
+    // Option 2 Gift Card Copy and Open Function
+    function sendFlipkartGiftCard() {
+      const email = document.getElementById("targetEmail").innerText.trim();
+      const toastEl = document.getElementById("copyToastMessage");
+      const btn = document.getElementById("fkGiftBtn");
+
+      navigator.clipboard.writeText(email).then(() => {
+        if (toastEl) toastEl.innerText = "✓ Recipient email copied to clipboard! Opening Flipkart...";
+        const origBtnText = btn.innerHTML;
+        btn.innerHTML = "✓ Email Copied! Redirecting...";
+
+        setTimeout(() => {
+          btn.innerHTML = origBtnText;
+          if (toastEl) toastEl.innerText = "";
+        }, 3500);
+
+        window.open("https://www.flipkart.com/the-gift-card-store", "_blank");
+      }).catch(() => {
+        window.open("https://www.flipkart.com/the-gift-card-store", "_blank");
+      });
+    }
+
+    // Scroll to Top Smooth Action
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    // Floating Button Visibility Listener
+    window.addEventListener("scroll", () => {
+      const topBtn = document.getElementById("backToTopBtn");
+      if (!topBtn) return;
+      if (window.scrollY > 400) {
+        topBtn.classList.add("is-visible");
+      } else {
+        topBtn.classList.remove("is-visible");
+      }
+    });
 
     function escapeHtml(str) {
       return (str || "").replace(/[&<>"']/g, function(m) {
@@ -1538,15 +1666,6 @@
 
     // Listen to manual URL hash changes
     window.addEventListener("hashchange", handleUrlHashDeepLink);
-
-    function copyEmail() {
-      const email = document.getElementById("targetEmail").innerText;
-      navigator.clipboard.writeText(email).then(() => {
-        const btn = document.querySelector(".copy-btn");
-        btn.innerText = "COPIED! ✓";
-        setTimeout(() => { btn.innerText = "Copy"; }, 2000);
-      });
-    }
 
     // Initialize
     async function init() {
