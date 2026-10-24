@@ -6,7 +6,7 @@
   <title>Thank You Flipkart | Anshul Dhakar</title>
   <!-- Google Identity Services -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <!-- html2canvas for zero-dependency client-side card image export -->
+  <!-- html2canvas for client-side card image export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
@@ -31,27 +31,31 @@
       --tag-border: #fde68a;
       --sig-bg: #f8fafc;
       --sig-text: #475569;
+      --nav-bg: #2874f0;
+      --fire-accent: #fb641b;
     }
 
-    /* BBD War Room Mode Theme */
+    /* BBD War Room: Bright Red, Fire & Gold High-Voltage Theme */
     body.theme-bbd {
-      --hub-bg: #090d16;
-      --card-bg: #131b2e;
-      --card-back-bg: #090e1a;
-      --card-back-text: #f8fafc;
-      --text-main: #f1f5f9;
-      --text-muted: #94a3b8;
-      --border-color: #1e293b;
-      --fk-blue: #3b82f6;
-      --fk-yellow: #facc15;
-      --control-bar-bg: rgba(9, 13, 22, 0.96);
-      --input-bg: #1e293b;
-      --input-border: #334155;
-      --tag-bg: #1e293b;
-      --tag-text: #fde047;
-      --tag-border: #854d0e;
-      --sig-bg: #0f172a;
-      --sig-text: #cbd5e1;
+      --hub-bg: #450a0a;
+      --card-bg: #2a0808;
+      --card-back-bg: #1a0505;
+      --card-back-text: #fffbeb;
+      --text-main: #fef2f2;
+      --text-muted: #fca5a5;
+      --border-color: #b91c1c;
+      --fk-blue: #ef4444;
+      --fk-yellow: #fde047;
+      --control-bar-bg: rgba(69, 10, 10, 0.96);
+      --input-bg: #1f0404;
+      --input-border: #dc2626;
+      --tag-bg: #7f1d1d;
+      --tag-text: #fef08a;
+      --tag-border: #f59e0b;
+      --sig-bg: #350808;
+      --sig-text: #fed7aa;
+      --nav-bg: linear-gradient(90deg, #991b1b 0%, #b91c1c 50%, #ea580c 100%);
+      --fire-accent: #f97316;
     }
 
     * {
@@ -65,18 +69,18 @@
       background-color: var(--hub-bg);
       color: var(--text-main);
       padding-bottom: 6rem;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
     /* Top Nav */
     .scm-navbar {
-      background-color: var(--fk-blue);
+      background: var(--nav-bg);
       color: #ffffff;
       padding: 0.75rem 1.25rem;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     .scm-nav-content {
@@ -114,33 +118,108 @@
     .nav-right-actions {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.75rem;
     }
 
-    .theme-toggle-btn {
-      background: rgba(255, 255, 255, 0.18);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      color: #ffffff;
-      padding: 0.3rem 0.65rem;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      cursor: pointer;
+    /* Toggle Switch Component (No On/Off Text) */
+    .toggle-wrapper {
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
+      gap: 0.4rem;
+      user-select: none;
+    }
+
+    .toggle-label-text {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 38px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(255, 255, 255, 0.35);
+      transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    input:checked + .slider {
+      background-color: var(--fire-accent);
+      border-color: var(--fk-yellow);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(18px);
+      background-color: #ffffff;
+    }
+
+    /* Sticky Bar Switch Variant */
+    .sticky-toggle-wrapper {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--card-bg);
+      border: 1.5px solid var(--fk-blue);
+      padding: 0.35rem 0.65rem;
+      border-radius: 8px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .sticky-toggle-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--fk-blue);
       white-space: nowrap;
     }
 
-    .theme-toggle-btn:hover {
-      background: rgba(255, 255, 255, 0.28);
+    .sticky-slider {
+      background-color: #cbd5e1;
+      border: 1px solid #94a3b8;
+    }
+
+    input:checked + .sticky-slider {
+      background-color: var(--fk-blue);
+      border-color: var(--fk-blue-dark);
     }
 
     .user-auth-badge {
       font-size: 0.78rem;
       background: rgba(255, 255, 255, 0.18);
       border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 0.28rem 0.7rem;
+      padding: 0.25rem 0.65rem;
       border-radius: 999px;
       display: flex;
       align-items: center;
@@ -198,7 +277,7 @@
       align-items: center;
       justify-content: center;
       border: 3px solid var(--fk-yellow);
-      box-shadow: 0 4px 10px rgba(40, 116, 240, 0.25);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
       flex-shrink: 0;
     }
 
@@ -317,7 +396,7 @@
       gap: 0.35rem;
       background: var(--card-bg);
       border: 1px solid var(--input-border);
-      padding: 0.55rem 0.8rem;
+      padding: 0.52rem 0.8rem;
       border-radius: 8px;
       font-size: 0.82rem;
       font-weight: 700;
@@ -333,7 +412,7 @@
       background: rgba(59, 130, 246, 0.1);
       border: 1px solid rgba(59, 130, 246, 0.25);
       color: var(--fk-blue);
-      padding: 0.55rem 0.75rem;
+      padding: 0.52rem 0.75rem;
       border-radius: 8px;
       font-size: 0.78rem;
       font-weight: 600;
@@ -350,7 +429,7 @@
 
     .sticky-search-bar {
       width: 100%;
-      padding: 0.58rem 1rem 0.58rem 2.3rem;
+      padding: 0.55rem 1rem 0.55rem 2.3rem;
       border-radius: 8px;
       border: 1.5px solid var(--input-border);
       font-size: 0.9rem;
@@ -376,7 +455,7 @@
 
     /* Team Dropdown Selector */
     .team-select-dropdown {
-      padding: 0.58rem 0.8rem;
+      padding: 0.55rem 0.8rem;
       border-radius: 8px;
       border: 1.5px solid var(--input-border);
       font-size: 0.85rem;
@@ -402,20 +481,16 @@
       color: var(--fk-blue);
       border: 1.5px solid var(--fk-blue);
       text-decoration: none;
-      padding: 0.54rem 0.8rem;
+      padding: 0.52rem 0.8rem;
       border-radius: 8px;
       font-weight: 700;
       font-size: 0.8rem;
       white-space: nowrap;
       cursor: pointer;
       flex-shrink: 0;
-      transition: background 0.15s ease;
-    }
-    .sticky-action-btn:hover {
-      background: rgba(59, 130, 246, 0.1);
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .sticky-stats-badge { display: none; }
     }
 
@@ -424,7 +499,7 @@
       .sticky-author-badge span.short-name { display: inline; }
       .sticky-action-btn span.full-label { display: none; }
       .sticky-action-btn span.short-label { display: inline; }
-      .team-select-dropdown { max-width: 130px; font-size: 0.78rem; }
+      .team-select-dropdown { max-width: 120px; font-size: 0.76rem; }
     }
 
     @media (min-width: 681px) {
@@ -654,10 +729,6 @@
       padding: 0.2rem 0.45rem;
       border-radius: 6px;
       cursor: pointer;
-      transition: background 0.15s ease;
-    }
-    .download-manifest-btn:hover {
-      background: rgba(59, 130, 246, 0.15);
     }
 
     .whatsapp-share-btn {
@@ -702,7 +773,7 @@
     .card-back-meta-right {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.35rem;
     }
 
     /* Zone 1: Adaptive Anecdote */
@@ -946,7 +1017,7 @@
       justify-content: center;
       font-size: 1.35rem;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(40, 116, 240, 0.4);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
       opacity: 0;
       visibility: hidden;
       transform: translateY(12px);
@@ -961,7 +1032,7 @@
 </head>
 <body>
 
-  <!-- Top Nav with Theme Switch -->
+  <!-- Top Nav with BBD Mode Toggle -->
   <nav class="scm-navbar">
     <div class="scm-nav-content">
       <div class="brand-title">
@@ -969,10 +1040,15 @@
         <span class="brand-tag">See-off Notes</span>
       </div>
       <div class="nav-right-actions">
-        <button id="themeToggleBtn" class="theme-toggle-btn" onclick="toggleShiftTheme()">
-          <span id="themeToggleIcon">⚡</span>
-          <span id="themeToggleLabel">BBD Mode</span>
-        </button>
+        <!-- BBD Mode Switch (No text inside switch) -->
+        <div class="toggle-wrapper" title="Toggle BBD War Room Mode">
+          <span class="toggle-label-text">⚡ BBD Mode</span>
+          <label class="switch">
+            <input type="checkbox" id="bbdThemeToggle" onchange="toggleShiftTheme(this.checked)" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
         <div id="authStatusPill" class="user-auth-badge">
           <span>● Not signed in</span>
         </div>
@@ -1039,17 +1115,19 @@
           />
         </div>
 
-        <!-- Dynamic Team Dropdown Filter (Sorted by count desc, then A-Z) -->
+        <!-- Dynamic Team Dropdown Filter (Pure team names, sorted by note count desc, then A-Z) -->
         <select id="teamSelectFilter" class="team-select-dropdown" onchange="applyCurrentFilter()">
-          <option value="">All Teams (All Notes)</option>
+          <option value="">All Teams</option>
         </select>
 
-        <!-- Flip All Visible Cards Switch -->
-        <button id="flipAllBtn" class="sticky-action-btn" onclick="toggleFlipAllCards()">
-          <span>🎴</span>
-          <span class="full-label">Flip All</span>
-          <span class="short-label">Flip</span>
-        </button>
+        <!-- Flip All Toggle Switch (No text inside switch) -->
+        <div class="sticky-toggle-wrapper" title="Flip All Cards">
+          <span class="sticky-toggle-label">🎴 Flip All</span>
+          <label class="switch">
+            <input type="checkbox" id="flipAllToggle" onchange="toggleFlipAllCards(this.checked)" />
+            <span class="slider sticky-slider"></span>
+          </label>
+        </div>
 
         <!-- Request Note Button -->
         <a href="mailto:anshuldhakar2904@gmail.com?subject=Missing%20Note%20-%20Request%20for%20Anecdote" class="sticky-action-btn">
@@ -1113,7 +1191,7 @@
     // 2. Apps Script Web App URL
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwKVPo2EbWlUE3iWWjDE0Yv7ca2se7gqFpQ40wcYQpSuzIeXN6s8syCAYTP74B2E1qS9g/exec";
 
-    // 3. Google OAuth Client ID
+    // 3. Google OAuth Client ID[cite: 1]
     const GOOGLE_CLIENT_ID = "202897632024-qhm5he4cbtk6bhm5n5se8uc20r4716tn.apps.googleusercontent.com";
 
     const ADMIN_EMAIL = "anshuldhakar2904@gmail.com";
@@ -1121,7 +1199,6 @@
     let rawColleaguesData = [];
     let allComments = [];
     let currentUser = null;
-    let isAllFlipped = false;
     
     const openCardNames = new Set();
     const freshCommentCardNames = new Set();
@@ -1135,22 +1212,16 @@
     }
 
     // Theme Switch: BAU vs. BBD War Room Mode
-    function toggleShiftTheme() {
-      const isBbd = document.body.classList.toggle("theme-bbd");
-      localStorage.setItem("fk_theme", isBbd ? "bbd" : "bau");
-      updateThemeUI(isBbd);
-    }
-
-    function updateThemeUI(isBbd) {
-      const icon = document.getElementById("themeToggleIcon");
-      const label = document.getElementById("themeToggleLabel");
+    function toggleShiftTheme(isBbd) {
       if (isBbd) {
-        icon.innerText = "☀️";
-        label.innerText = "BAU Shift";
+        document.body.classList.add("theme-bbd");
+        localStorage.setItem("fk_theme", "bbd");
       } else {
-        icon.innerText = "⚡";
-        label.innerText = "BBD Mode";
+        document.body.classList.remove("theme-bbd");
+        localStorage.setItem("fk_theme", "bau");
       }
+      const checkbox = document.getElementById("bbdThemeToggle");
+      if (checkbox) checkbox.checked = isBbd;
     }
 
     // 3-Tier Sort: 1) Number of Banters (desc), 2) Team (A-Z), 3) Name (A-Z)
@@ -1177,7 +1248,7 @@
       });
     }
 
-    // Populate Dynamic Team Dropdown Filter sorted by note count (desc), then A-Z
+    // Populate Dynamic Team Dropdown without numbers in brackets
     function populateTeamDropdown(data) {
       const selectEl = document.getElementById("teamSelectFilter");
       if (!selectEl) return;
@@ -1190,18 +1261,18 @@
 
       const sortedTeams = Object.keys(teamCountMap).sort((a, b) => {
         if (teamCountMap[b] !== teamCountMap[a]) {
-          return teamCountMap[b] - teamCountMap[a];
+          return teamCountMap[b] - teamCountMap[a]; // Most notes first
         }
         return a.localeCompare(b, undefined, { sensitivity: 'base' });
       });
 
       const currentSelected = selectEl.value;
-      selectEl.innerHTML = `<option value="">All Teams (${data.length} Notes)</option>`;
+      selectEl.innerHTML = `<option value="">All Teams</option>`;
 
       sortedTeams.forEach(team => {
         const option = document.createElement("option");
         option.value = team;
-        option.innerText = `${team} (${teamCountMap[team]})`;
+        option.innerText = team; // Strictly team name, no count in bracket
         selectEl.appendChild(option);
       });
 
@@ -1346,15 +1417,13 @@
       }
     }
 
-    // Toggle Flip All Cards simultaneously
-    function toggleFlipAllCards() {
-      isAllFlipped = !isAllFlipped;
+    // Toggle Flip All Cards simultaneously via toggle switch
+    function toggleFlipAllCards(checked) {
       const allVisibleContainers = document.querySelectorAll(".card-container");
-      const btn = document.getElementById("flipAllBtn");
 
       allVisibleContainers.forEach(card => {
         const cardName = card.dataset.cardName;
-        if (isAllFlipped) {
+        if (checked) {
           card.classList.add("is-flipped");
           if (cardName) openCardNames.add(cardName);
         } else {
@@ -1362,14 +1431,9 @@
           if (cardName) openCardNames.delete(cardName);
         }
       });
-
-      if (btn) {
-        btn.querySelector(".full-label").innerText = isAllFlipped ? "Reset View" : "Flip All";
-        btn.querySelector(".short-label").innerText = isAllFlipped ? "Reset" : "Flip";
-      }
     }
 
-    // Filter helper: filters by text AND team dropdown, preserves 3-Tier Sort
+    // Filter helper: filters by text AND team dropdown
     function applyCurrentFilter() {
       const inputEl = document.getElementById("searchInput");
       const term = inputEl ? inputEl.value.toLowerCase().trim() : "";
@@ -1447,35 +1511,93 @@
       );
     }
 
-    // Manifest Download: Captures the front of the specific card and downloads a clean PNG
-    function downloadCardManifest(cardId, colleagueName, event) {
+    // Manifest Download: Builds a pristine postcard WITH the anecdote and NO action buttons
+    function downloadCardManifest(colleagueName, event) {
       if (event) event.stopPropagation();
-      const cardElement = document.getElementById(cardId);
-      if (!cardElement) return;
 
-      const targetFace = cardElement.querySelector(".card-front");
-      if (!targetFace) return;
+      const item = rawColleaguesData.find(c => c.name === colleagueName);
+      if (!item) return;
 
-      const btn = event.currentTarget;
-      const originalText = btn.innerText;
-      btn.innerText = "📸 Saving...";
+      const initials = item.name
+        .split(" ")
+        .filter(n => n.length > 0)
+        .map(n => n[0])
+        .slice(0, 2)
+        .join("")
+        .toUpperCase() || "FK";
 
-      html2canvas(targetFace, {
+      // Temporary off-screen container for high-res clean capture
+      const exportBox = document.createElement("div");
+      exportBox.style.position = "fixed";
+      exportBox.style.left = "-9999px";
+      exportBox.style.top = "0";
+      exportBox.style.width = "460px";
+      exportBox.style.backgroundColor = "#ffffff";
+      exportBox.style.borderRadius = "12px";
+      exportBox.style.border = "1px solid #e0e0e0";
+      exportBox.style.borderTop = "4px solid #2874f0";
+      exportBox.style.padding = "1.5rem";
+      exportBox.style.boxSizing = "border-box";
+      exportBox.style.boxShadow = "none";
+      exportBox.style.display = "flex";
+      exportBox.style.flexDirection = "column";
+      exportBox.style.gap = "0.75rem";
+
+      const tagPills = item.tags.length > 0
+        ? item.tags.map(t => `<span style="font-size:0.75rem; color:#92400e; background:#fef3c7; border:1px solid #fde68a; padding:0.2rem 0.55rem; border-radius:4px; font-weight:500;">${escapeHtml(t)}</span>`).join(" ")
+        : "";
+
+      exportBox.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed #e0e0e0; padding-bottom:0.5rem; font-family:monospace; font-size:0.8rem; color:#2874f0; font-weight:700;">
+          <span>ANSHUL'S SIGN-OFF NOTE</span>
+          <span style="color:#16a34a; background:#f0fdf4; border:1px solid #bbf7d0; padding:0.15rem 0.45rem; border-radius:4px;">● ${escapeHtml(item.status)}</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.75rem; margin-top:0.35rem;">
+          <div style="width:48px; height:48px; background:#f0f5ff; color:#2874f0; font-weight:800; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.15rem; border:1px solid rgba(40,116,240,0.2);">
+            ${initials}
+          </div>
+          <div>
+            <div style="font-size:1.25rem; font-weight:700; color:#212121; line-height:1.2;">${escapeHtml(item.name)}</div>
+            <div style="font-size:0.78rem; color:#1e3a8a; background:#eff6ff; padding:0.15rem 0.5rem; border-radius:4px; font-weight:600; font-family:monospace; display:inline-block; margin-top:0.25rem;">
+              TEAM // ${escapeHtml(item.team || "Central")}
+            </div>
+          </div>
+        </div>
+
+        ${tagPills ? `<div style="display:flex; flex-wrap:wrap; gap:0.35rem; margin-top:0.25rem;">${tagPills}</div>` : ''}
+
+        <!-- Personal Anecdote in the Center -->
+        <div style="background:#f8fafc; border-left:3px solid #2874f0; border-radius:6px; padding:0.85rem 1rem; margin:0.4rem 0;">
+          <div style="font-size:0.72rem; color:#64748b; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.35rem; font-family:monospace;">
+            ✦ Anecdote from Anshul
+          </div>
+          <div style="font-size:0.92rem; line-height:1.45; font-style:italic; color:#1e293b;">
+            "${escapeHtml(item.anecdote)}"
+          </div>
+        </div>
+
+        <div style="padding:0.6rem 0; border-top:1px dashed #e0e0e0; font-size:0.78rem; font-weight:600; color:#475569; text-align:center; background:#f8fafc; border-radius:6px;">
+          ☕ 4.6 years of memories, signed by Anshul Dhakar
+        </div>
+      `;
+
+      document.body.appendChild(exportBox);
+
+      html2canvas(exportBox, {
         scale: 2,
         useCORS: true,
-        backgroundColor: null
+        backgroundColor: "#ffffff"
       }).then(canvas => {
         const image = canvas.toDataURL("image/png");
         const downloadLink = document.createElement("a");
-        downloadLink.download = `Anshul-Farewell-Manifest-${slugify(colleagueName)}.png`;
+        downloadLink.download = `Anshul-Farewell-Note-${slugify(colleagueName)}.png`;
         downloadLink.href = image;
         downloadLink.click();
-        btn.innerText = "✓ Saved!";
-        setTimeout(() => { btn.innerText = originalText; }, 2000);
+        document.body.removeChild(exportBox);
       }).catch(err => {
         console.error("Canvas export failed:", err);
-        btn.innerText = originalText;
-        alert("Unable to generate card image.");
+        document.body.removeChild(exportBox);
+        alert("Unable to save note image.");
       });
     }
 
@@ -1489,7 +1611,7 @@
       window.open(whatsappUrl, "_blank");
     }
 
-    // Render Cards
+    // Render Cards with Save and WhatsApp buttons on both Front and Back
     function renderCards(data) {
       const grid = document.getElementById("cardGrid");
       grid.innerHTML = "";
@@ -1566,6 +1688,7 @@
 
         card.innerHTML = `
           <div class="card-inner">
+            <!-- Front Face -->
             <div class="card-front">
               <div class="label-header">
                 <span>ANSHUL'S SIGN-OFF NOTE</span>
@@ -1587,7 +1710,7 @@
               <div class="front-footer-actions">
                 <span class="hint">[ CLICK TO FLIP ↷ ]</span>
                 <div class="card-action-btn-group">
-                  <button class="download-manifest-btn" onclick="downloadCardManifest('${item.slug}', '${escapeHtml(item.name)}', event)" title="Save note image">
+                  <button class="download-manifest-btn" onclick="downloadCardManifest('${escapeHtml(item.name)}', event)" title="Save note as image">
                     📸 Save
                   </button>
                   <button class="whatsapp-share-btn" onclick="shareCardOnWhatsApp('${escapeHtml(item.name)}', '${item.slug}', event)" title="Share this note on WhatsApp">
@@ -1597,11 +1720,18 @@
               </div>
             </div>
 
+            <!-- Back Face -->
             <div class="card-back">
               <div class="card-back-meta">
                 <span>✦ ANSHUL'S ANECDOTE FOR ${escapeHtml(item.name).toUpperCase()}</span>
                 <div class="card-back-meta-right">
-                  <span class="banter-count-badge" style="color: var(--fk-yellow); font-weight: 700;">BANTER (${cardComments.length})</span>
+                  <button class="download-manifest-btn" style="background:rgba(255,255,255,0.1); color:#ffffff; border-color:rgba(255,255,255,0.2);" onclick="downloadCardManifest('${escapeHtml(item.name)}', event)" title="Save note as image">
+                    📸 Save
+                  </button>
+                  <button class="whatsapp-share-btn" onclick="shareCardOnWhatsApp('${escapeHtml(item.name)}', '${item.slug}', event)" title="Share this note on WhatsApp">
+                    💬 WhatsApp
+                  </button>
+                  <span class="banter-count-badge" style="color: var(--fk-yellow); font-weight: 700; margin-left:0.2rem;">BANTER (${cardComments.length})</span>
                 </div>
               </div>
 
@@ -1861,10 +1991,8 @@
     async function init() {
       // 1. Restore Theme
       const savedTheme = localStorage.getItem("fk_theme");
-      if (savedTheme === "bbd") {
-        document.body.classList.add("theme-bbd");
-        updateThemeUI(true);
-      }
+      const isBbd = savedTheme === "bbd";
+      toggleShiftTheme(isBbd);
 
       // 2. Restore User Auth
       const savedUser = localStorage.getItem("fk_user");
