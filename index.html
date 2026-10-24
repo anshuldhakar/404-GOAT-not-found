@@ -33,9 +33,16 @@
       --sig-text: #475569;
       --nav-bg: #2874f0;
       --fire-accent: #fb641b;
+
+      /* Leadership Card Accent */
+      --leader-border: #d97706;
+      --leader-glow: rgba(217, 119, 6, 0.18);
+      --leader-badge-bg: linear-gradient(135deg, #fefce8 0%, #fef08a 100%);
+      --leader-badge-text: #854d0e;
+      --leader-badge-border: #eab308;
     }
 
-    /* BBD War Room: Bright Red, Fire & Gold High-Voltage Theme */
+    /* BBD War Room Mode */
     body.theme-bbd {
       --hub-bg: #450a0a;
       --card-bg: #2a0808;
@@ -56,6 +63,13 @@
       --sig-text: #fed7aa;
       --nav-bg: linear-gradient(90deg, #991b1b 0%, #b91c1c 50%, #ea580c 100%);
       --fire-accent: #f97316;
+
+      /* Leadership Card Accent in BBD */
+      --leader-border: #facc15;
+      --leader-glow: rgba(250, 204, 21, 0.35);
+      --leader-badge-bg: linear-gradient(135deg, #713f12 0%, #a16207 100%);
+      --leader-badge-text: #fef08a;
+      --leader-badge-border: #fde047;
     }
 
     * {
@@ -121,7 +135,7 @@
       gap: 0.75rem;
     }
 
-    /* Toggle Switch Component (No On/Off Text) */
+    /* Toggle Switch Component */
     .toggle-wrapper {
       display: inline-flex;
       align-items: center;
@@ -185,7 +199,6 @@
       background-color: #ffffff;
     }
 
-    /* Sticky Bar Switch Variant */
     .sticky-toggle-wrapper {
       display: inline-flex;
       align-items: center;
@@ -277,7 +290,7 @@
       align-items: center;
       justify-content: center;
       border: 3px solid var(--fk-yellow);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 4px 10px rgba(40, 116, 240, 0.25);
       flex-shrink: 0;
     }
 
@@ -566,6 +579,31 @@
       transform: rotateY(0deg);
     }
 
+    /* Senior Leadership Special Card Highlight (BAU & BBD) */
+    .card-container.is-leadership .card-front {
+      border: 1.5px solid var(--leader-border);
+      border-top: 4px solid var(--leader-border);
+      box-shadow: 0 4px 18px var(--leader-glow);
+    }
+
+    .card-container.is-leadership .card-back {
+      border: 1.5px solid var(--leader-border);
+      border-top: 4px solid var(--leader-border);
+      box-shadow: 0 4px 18px var(--leader-glow);
+    }
+
+    .card-container.is-leadership .avatar {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      color: #92400e;
+      border: 1.5px solid var(--leader-border);
+    }
+
+    body.theme-bbd .card-container.is-leadership .avatar {
+      background: linear-gradient(135deg, #78350f 0%, #b45309 100%);
+      color: #fef08a;
+      border: 1.5px solid var(--fk-yellow);
+    }
+
     .label-header {
       display: flex;
       justify-content: space-between;
@@ -578,6 +616,10 @@
       border-bottom: 1px dashed var(--border-color);
       padding-bottom: 0.4rem;
       letter-spacing: 0.3px;
+    }
+
+    .card-container.is-leadership .label-header {
+      color: var(--leader-border);
     }
 
     .header-badges-right {
@@ -665,6 +707,12 @@
       display: inline-block;
     }
 
+    .card-container.is-leadership .colleague-node {
+      color: var(--leader-border);
+      background: rgba(217, 119, 6, 0.12);
+      border: 1px solid rgba(217, 119, 6, 0.3);
+    }
+
     .meta-tags {
       display: flex;
       flex-wrap: wrap;
@@ -683,6 +731,15 @@
       border-radius: 4px;
       font-weight: 500;
       white-space: nowrap;
+    }
+
+    /* Distinct Gold Pill for Senior Leadership Tag */
+    .remark-tag.badge-leadership {
+      background: var(--leader-badge-bg);
+      color: var(--leader-badge-text);
+      border: 1px solid var(--leader-badge-border);
+      font-weight: 800;
+      box-shadow: 0 1px 3px rgba(217, 119, 6, 0.25);
     }
 
     .card-front-signature {
@@ -1115,7 +1172,7 @@
           />
         </div>
 
-        <!-- Dynamic Team Dropdown Filter (Pure team names, sorted by note count desc, then A-Z) -->
+        <!-- Dynamic Team Dropdown Filter -->
         <select id="teamSelectFilter" class="team-select-dropdown" onchange="applyCurrentFilter()">
           <option value="">All Teams</option>
         </select>
@@ -1191,7 +1248,7 @@
     // 2. Apps Script Web App URL
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwKVPo2EbWlUE3iWWjDE0Yv7ca2se7gqFpQ40wcYQpSuzIeXN6s8syCAYTP74B2E1qS9g/exec";
 
-    // 3. Google OAuth Client ID[cite: 1]
+    // 3. Google OAuth Client ID
     const GOOGLE_CLIENT_ID = "202897632024-qhm5he4cbtk6bhm5n5se8uc20r4716tn.apps.googleusercontent.com";
 
     const ADMIN_EMAIL = "anshuldhakar2904@gmail.com";
@@ -1211,6 +1268,15 @@
         .replace(/^-+|-+$/g, "");
     }
 
+    // Helper: Detect Senior Leadership from tags/remarks
+    function isSeniorLeadership(colleague) {
+      if (!colleague || !colleague.tagsString) return false;
+      const lower = colleague.tagsString;
+      return lower.includes("senior leadership") ||
+             lower.includes("executive leadership") ||
+             lower.includes("leadership");
+    }
+
     // Theme Switch: BAU vs. BBD War Room Mode
     function toggleShiftTheme(isBbd) {
       if (isBbd) {
@@ -1224,7 +1290,11 @@
       if (checkbox) checkbox.checked = isBbd;
     }
 
-    // 3-Tier Sort: 1) Number of Banters (desc), 2) Team (A-Z), 3) Name (A-Z)
+    // Advanced 4-Tier Sort:
+    // 1) Senior Leadership blocks at the top (sorted alphabetically A-Z among themselves)
+    // 2) Number of Banters (descending)
+    // 3) Team Name (alphabetical A-Z)
+    // 4) Colleague Name (alphabetical A-Z)
     function sortColleaguesByBanter(colleaguesList) {
       const commentCountMap = {};
       allComments.forEach(c => {
@@ -1232,18 +1302,32 @@
       });
 
       return [...colleaguesList].sort((a, b) => {
+        const aIsLeader = isSeniorLeadership(a);
+        const bIsLeader = isSeniorLeadership(b);
+
+        // 1. Senior Leadership blocks come first
+        if (aIsLeader && !bIsLeader) return -1;
+        if (!aIsLeader && bIsLeader) return 1;
+
+        // If both are Senior Leadership, sort them alphabetically
+        if (aIsLeader && bIsLeader) {
+          return (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: 'base' });
+        }
+
+        // 2. Number of Banters (descending)
         const countA = commentCountMap[a.name] || 0;
         const countB = commentCountMap[b.name] || 0;
-
         if (countA !== countB) {
           return countB - countA;
         }
 
+        // 3. Team Name (alphabetical)
         const teamCompare = (a.team || "").localeCompare(b.team || "", undefined, { sensitivity: 'base' });
         if (teamCompare !== 0) {
           return teamCompare;
         }
 
+        // 4. Colleague Name (alphabetical)
         return (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: 'base' });
       });
     }
@@ -1261,7 +1345,7 @@
 
       const sortedTeams = Object.keys(teamCountMap).sort((a, b) => {
         if (teamCountMap[b] !== teamCountMap[a]) {
-          return teamCountMap[b] - teamCountMap[a]; // Most notes first
+          return teamCountMap[b] - teamCountMap[a];
         }
         return a.localeCompare(b, undefined, { sensitivity: 'base' });
       });
@@ -1272,7 +1356,7 @@
       sortedTeams.forEach(team => {
         const option = document.createElement("option");
         option.value = team;
-        option.innerText = team; // Strictly team name, no count in bracket
+        option.innerText = team;
         selectEl.appendChild(option);
       });
 
@@ -1433,7 +1517,7 @@
       });
     }
 
-    // Filter helper: filters by text AND team dropdown
+    // Filter helper: filters by text AND team dropdown, preserves 4-Tier Sort
     function applyCurrentFilter() {
       const inputEl = document.getElementById("searchInput");
       const term = inputEl ? inputEl.value.toLowerCase().trim() : "";
@@ -1526,7 +1610,8 @@
         .join("")
         .toUpperCase() || "FK";
 
-      // Temporary off-screen container for high-res clean capture
+      const hasLeadership = isSeniorLeadership(item);
+
       const exportBox = document.createElement("div");
       exportBox.style.position = "fixed";
       exportBox.style.left = "-9999px";
@@ -1534,8 +1619,8 @@
       exportBox.style.width = "460px";
       exportBox.style.backgroundColor = "#ffffff";
       exportBox.style.borderRadius = "12px";
-      exportBox.style.border = "1px solid #e0e0e0";
-      exportBox.style.borderTop = "4px solid #2874f0";
+      exportBox.style.border = hasLeadership ? "2px solid #d97706" : "1px solid #e0e0e0";
+      exportBox.style.borderTop = hasLeadership ? "4px solid #d97706" : "4px solid #2874f0";
       exportBox.style.padding = "1.5rem";
       exportBox.style.boxSizing = "border-box";
       exportBox.style.boxShadow = "none";
@@ -1544,21 +1629,27 @@
       exportBox.style.gap = "0.75rem";
 
       const tagPills = item.tags.length > 0
-        ? item.tags.map(t => `<span style="font-size:0.75rem; color:#92400e; background:#fef3c7; border:1px solid #fde68a; padding:0.2rem 0.55rem; border-radius:4px; font-weight:500;">${escapeHtml(t)}</span>`).join(" ")
+        ? item.tags.map(t => {
+            const isLead = t.toLowerCase().includes("senior leadership") || t.toLowerCase().includes("leadership");
+            const style = isLead
+              ? "font-size:0.75rem; color:#854d0e; background:#fef08a; border:1px solid #eab308; padding:0.2rem 0.6rem; border-radius:4px; font-weight:800;"
+              : "font-size:0.75rem; color:#92400e; background:#fef3c7; border:1px solid #fde68a; padding:0.2rem 0.55rem; border-radius:4px; font-weight:500;";
+            return `<span style="${style}">${escapeHtml(t)}</span>`;
+          }).join(" ")
         : "";
 
       exportBox.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed #e0e0e0; padding-bottom:0.5rem; font-family:monospace; font-size:0.8rem; color:#2874f0; font-weight:700;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed #e0e0e0; padding-bottom:0.5rem; font-family:monospace; font-size:0.8rem; color:${hasLeadership ? '#d97706' : '#2874f0'}; font-weight:700;">
           <span>ANSHUL'S SIGN-OFF NOTE</span>
           <span style="color:#16a34a; background:#f0fdf4; border:1px solid #bbf7d0; padding:0.15rem 0.45rem; border-radius:4px;">● ${escapeHtml(item.status)}</span>
         </div>
         <div style="display:flex; align-items:center; gap:0.75rem; margin-top:0.35rem;">
-          <div style="width:48px; height:48px; background:#f0f5ff; color:#2874f0; font-weight:800; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.15rem; border:1px solid rgba(40,116,240,0.2);">
+          <div style="width:48px; height:48px; background:${hasLeadership ? '#fef3c7' : '#f0f5ff'}; color:${hasLeadership ? '#92400e' : '#2874f0'}; font-weight:800; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.15rem; border:1.5px solid ${hasLeadership ? '#d97706' : 'rgba(40,116,240,0.2)'};">
             ${initials}
           </div>
           <div>
             <div style="font-size:1.25rem; font-weight:700; color:#212121; line-height:1.2;">${escapeHtml(item.name)}</div>
-            <div style="font-size:0.78rem; color:#1e3a8a; background:#eff6ff; padding:0.15rem 0.5rem; border-radius:4px; font-weight:600; font-family:monospace; display:inline-block; margin-top:0.25rem;">
+            <div style="font-size:0.78rem; color:${hasLeadership ? '#b45309' : '#1e3a8a'}; background:${hasLeadership ? '#fffbeb' : '#eff6ff'}; padding:0.15rem 0.5rem; border-radius:4px; font-weight:600; font-family:monospace; display:inline-block; margin-top:0.25rem; border:1px solid ${hasLeadership ? '#fde68a' : 'transparent'};">
               TEAM // ${escapeHtml(item.team || "Central")}
             </div>
           </div>
@@ -1567,7 +1658,7 @@
         ${tagPills ? `<div style="display:flex; flex-wrap:wrap; gap:0.35rem; margin-top:0.25rem;">${tagPills}</div>` : ''}
 
         <!-- Personal Anecdote in the Center -->
-        <div style="background:#f8fafc; border-left:3px solid #2874f0; border-radius:6px; padding:0.85rem 1rem; margin:0.4rem 0;">
+        <div style="background:#f8fafc; border-left:3px solid ${hasLeadership ? '#d97706' : '#2874f0'}; border-radius:6px; padding:0.85rem 1rem; margin:0.4rem 0;">
           <div style="font-size:0.72rem; color:#64748b; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.35rem; font-family:monospace;">
             ✦ Anecdote from Anshul
           </div>
@@ -1611,7 +1702,7 @@
       window.open(whatsappUrl, "_blank");
     }
 
-    // Render Cards with Save and WhatsApp buttons on both Front and Back
+    // Render Cards with Leadership styling & dual Save/WhatsApp buttons
     function renderCards(data) {
       const grid = document.getElementById("cardGrid");
       grid.innerHTML = "";
@@ -1620,13 +1711,15 @@
         const initials = item.name
           .split(" ")
           .filter(n => n.length > 0)
-          .map((n) => n[0])
+          .map(n => n[0])
           .slice(0, 2)
           .join("")
           .toUpperCase() || "FK";
 
+        const hasLeadership = isSeniorLeadership(item);
+
         const card = document.createElement("div");
-        card.className = "card-container";
+        card.className = "card-container" + (hasLeadership ? " is-leadership" : "");
         card.id = item.slug;
         card.dataset.cardName = item.name;
 
@@ -1646,8 +1739,14 @@
           }
         });
 
+        // Tag badges with dedicated gold highlight for Senior Leadership
         const tagBadges = item.tags.length > 0
-          ? item.tags.map(t => `<span class="remark-tag">${escapeHtml(t)}</span>`).join("")
+          ? item.tags.map(t => {
+              const lower = t.toLowerCase();
+              const isLead = lower.includes("senior leadership") || lower.includes("leadership");
+              const extraClass = isLead ? " badge-leadership" : "";
+              return `<span class="remark-tag${extraClass}">${escapeHtml(t)}</span>`;
+            }).join("")
           : "";
 
         const teamBadge = item.team 
