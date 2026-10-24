@@ -232,7 +232,7 @@
     .btn-researchgate { background: #f0fdfa; color: #0d9488; border: 1px solid #ccfbf1; }
     .btn-personality { background: #faf5ff; color: #7e22ce; border: 1px solid #f3e8ff; }
 
-    /* Extra-Large Search Bar */
+    /* Search Bar */
     .controls {
       display: flex;
       flex-direction: column;
@@ -931,7 +931,7 @@
       applyCurrentFilter();
     }
 
-    // Filter Helper: ensures search text is always respected
+    // Filter helper: preserves active search query
     function applyCurrentFilter() {
       const inputEl = document.getElementById("searchInput");
       const term = inputEl ? inputEl.value.toLowerCase().trim() : "";
@@ -1072,7 +1072,7 @@
       });
     }
 
-    // Helper: keep targeted card flipped after re-render
+    // Flip-state tracking helpers
     function retainFlippedCard(cardName) {
       if (!cardName) return;
       const matchingCard = Array.from(document.querySelectorAll(".card-container")).find(card => {
@@ -1084,7 +1084,26 @@
       }
     }
 
-    // Post a new comment
+    function getFlippedCardNames() {
+      const flipped = [];
+      document.querySelectorAll(".card-container.is-flipped").forEach(card => {
+        const nameEl = card.querySelector(".colleague-name");
+        if (nameEl) flipped.push(nameEl.innerText.trim());
+      });
+      return flipped;
+    }
+
+    function restoreFlippedCards(flippedNames) {
+      if (!flippedNames || flippedNames.length === 0) return;
+      document.querySelectorAll(".card-container").forEach(card => {
+        const nameEl = card.querySelector(".colleague-name");
+        if (nameEl && flippedNames.includes(nameEl.innerText.trim())) {
+          card.classList.add("is-flipped");
+        }
+      });
+    }
+
+    // Post comment with Optimistic UI (0ms latency + automatic rollback)
     async function postComment(cardName, inputId, event) {
       if (event) event.stopPropagation();
       const input = document.getElementById(inputId);
@@ -1096,8 +1115,23 @@
         return;
       }
 
-      input.disabled = true;
+      // 1. Temporary local record for immediate render
+      const tempRowId = "temp_" + Date.now();
+      const optimisticEntry = {
+        rowId: tempRowId,
+        cardName: cardName,
+        authorName: currentUser.name,
+        authorEmail: currentUser.email,
+        commentText: text
+      };
 
+      // 2. Render instantly locally
+      allComments.push(optimisticEntry);
+      input.value = "";
+      applyCurrentFilter();
+      retainFlippedCard(cardName);
+
+      // 3. Persist in background
       try {
         await fetch(APPS_SCRIPT_URL, {
           method: "POST",
@@ -1110,25 +1144,39 @@
           })
         });
 
-        input.value = "";
+        // Silently sync server row IDs
         await loadComments();
         applyCurrentFilter();
         retainFlippedCard(cardName);
       } catch (err) {
-        console.error(err);
-        alert("Unable to post comment. Check network.");
-      } finally {
-        input.disabled = false;
+        console.error("Background comment sync failed:", err);
+        // Rollback on network failure
+        allComments = allComments.filter(c => c.rowId !== tempRowId);
+        applyCurrentFilter();
+        retainFlippedCard(cardName);
+        input.value = text;
+        alert("Unable to save comment. Check your connection.");
       }
     }
 
-    // Delete comment (Admin only)
+    // Delete comment with Optimistic UI (0ms latency + automatic rollback)
     async function deleteComment(rowId, cardName, event) {
       if (event) event.stopPropagation();
       if (!confirm("Are you sure you want to delete this comment?")) return;
 
+      // 1. Snapshot comment for rollback if needed
+      const targetIndex = allComments.findIndex(c => String(c.rowId) === String(rowId));
+      if (targetIndex === -1) return;
+      const backupComment = allComments[targetIndex];
+
+      // 2. Remove locally immediately
+      allComments.splice(targetIndex, 1);
+      applyCurrentFilter();
+      retainFlippedCard(cardName);
+
+      // 3. Persist deletion in background
       try {
-        await fetch(APPS_SCRIPT_URL, {
+        const response = await fetch(APPS_SCRIPT_URL, {
           method: "POST",
           body: JSON.stringify({
             action: "delete",
@@ -1137,12 +1185,17 @@
           })
         });
 
-        await loadComments();
+        const result = await response.json();
+        if (result.status !== "deleted") {
+          throw new Error(result.message || "Unauthorized or invalid row");
+        }
+      } catch (err) {
+        console.error("Background delete failed:", err);
+        // Rollback on failure
+        allComments.splice(targetIndex, 0, backupComment);
         applyCurrentFilter();
         retainFlippedCard(cardName);
-      } catch (err) {
-        console.error(err);
-        alert("Failed to delete comment.");
+        alert("Failed to delete comment from server. Reverting change.");
       }
     }
 
@@ -1151,12 +1204,41 @@
       try {
         const res = await fetch(APPS_SCRIPT_URL);
         const data = await res.json();
-        if (data.status === "ok") {
+        if (data.status === "ok" && Array.isArray(data.comments)) {
           allComments = data.comments;
         }
       } catch (err) {
         console.error("Comments fetch error:", err);
       }
+    }
+
+    // Safe 30-second background polling
+    function startBackgroundPolling() {
+      setInterval(async () => {
+        // Halt polling if tab is inactive to conserve Google Apps Script quota
+        if (document.hidden) return;
+
+        // Skip refresh if user is currently typing in any input field
+        const activeEl = document.activeElement;
+        const isTyping = activeEl && activeEl.classList.contains("comment-input") && activeEl.value.trim().length > 0;
+        if (isTyping) return;
+
+        try {
+          const res = await fetch(APPS_SCRIPT_URL);
+          const data = await res.json();
+          if (data.status === "ok" && Array.isArray(data.comments)) {
+            // Re-render only when data has actually changed
+            if (JSON.stringify(data.comments) !== JSON.stringify(allComments)) {
+              const flippedBefore = getFlippedCardNames();
+              allComments = data.comments;
+              applyCurrentFilter();
+              restoreFlippedCards(flippedBefore);
+            }
+          }
+        } catch (err) {
+          console.warn("Background polling tick skipped:", err);
+        }
+      }, 30000); // 30 seconds
     }
 
     function escapeHtml(str) {
@@ -1209,6 +1291,8 @@
       } catch (err) {
         console.error(err);
       }
+
+      startBackgroundPolling();
     }
 
     init();
