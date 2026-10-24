@@ -1097,7 +1097,7 @@
         <span class="brand-tag">See-off Notes</span>
       </div>
       <div class="nav-right-actions">
-        <!-- BBD Mode Switch (No text inside switch) -->
+        <!-- BBD Mode Switch -->
         <div class="toggle-wrapper" title="Toggle BBD War Room Mode">
           <span class="toggle-label-text">⚡ BBD Mode</span>
           <label class="switch">
@@ -1177,7 +1177,7 @@
           <option value="">All Teams</option>
         </select>
 
-        <!-- Flip All Toggle Switch (No text inside switch) -->
+        <!-- Flip All Toggle Switch -->
         <div class="sticky-toggle-wrapper" title="Flip All Cards">
           <span class="sticky-toggle-label">🎴 Flip All</span>
           <label class="switch">
@@ -1248,7 +1248,7 @@
     // 2. Apps Script Web App URL
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwKVPo2EbWlUE3iWWjDE0Yv7ca2se7gqFpQ40wcYQpSuzIeXN6s8syCAYTP74B2E1qS9g/exec";
 
-    // 3. Google OAuth Client ID
+    // 3. Google OAuth Client ID[cite: 1]
     const GOOGLE_CLIENT_ID = "202897632024-qhm5he4cbtk6bhm5n5se8uc20r4716tn.apps.googleusercontent.com";
 
     const ADMIN_EMAIL = "anshuldhakar2904@gmail.com";
@@ -1290,11 +1290,11 @@
       if (checkbox) checkbox.checked = isBbd;
     }
 
-    // Advanced 4-Tier Sort:
-    // 1) Senior Leadership blocks at the top (sorted alphabetically A-Z among themselves)
-    // 2) Number of Banters (descending)
-    // 3) Team Name (alphabetical A-Z)
-    // 4) Colleague Name (alphabetical A-Z)
+    // Option 1 Sorting Hierarchy:
+    // 1. Primary: Banter count descending (active banter ALWAYS beats 0-banter)
+    // 2. Secondary: If banter counts are equal, Senior Leadership comes first
+    // 3. Tertiary: Team Name alphabetically
+    // 4. Quaternary: Colleague Name alphabetically
     function sortColleaguesByBanter(colleaguesList) {
       const commentCountMap = {};
       allComments.forEach(c => {
@@ -1302,32 +1302,27 @@
       });
 
       return [...colleaguesList].sort((a, b) => {
-        const aIsLeader = isSeniorLeadership(a);
-        const bIsLeader = isSeniorLeadership(b);
-
-        // 1. Senior Leadership blocks come first
-        if (aIsLeader && !bIsLeader) return -1;
-        if (!aIsLeader && bIsLeader) return 1;
-
-        // If both are Senior Leadership, sort them alphabetically
-        if (aIsLeader && bIsLeader) {
-          return (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: 'base' });
-        }
-
-        // 2. Number of Banters (descending)
         const countA = commentCountMap[a.name] || 0;
         const countB = commentCountMap[b.name] || 0;
+
+        // 1. Primary: Banter count descending
         if (countA !== countB) {
           return countB - countA;
         }
 
-        // 3. Team Name (alphabetical)
+        // 2. Secondary (Tie-breaker when banter counts are identical):
+        const aIsLeader = isSeniorLeadership(a);
+        const bIsLeader = isSeniorLeadership(b);
+        if (aIsLeader && !bIsLeader) return -1;
+        if (!aIsLeader && bIsLeader) return 1;
+
+        // 3. Tertiary: Team Name (alphabetical)
         const teamCompare = (a.team || "").localeCompare(b.team || "", undefined, { sensitivity: 'base' });
         if (teamCompare !== 0) {
           return teamCompare;
         }
 
-        // 4. Colleague Name (alphabetical)
+        // 4. Quaternary: Colleague Name (alphabetical)
         return (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: 'base' });
       });
     }
@@ -1517,7 +1512,7 @@
       });
     }
 
-    // Filter helper: filters by text AND team dropdown, preserves 4-Tier Sort
+    // Filter helper: filters by text AND team dropdown, preserves Option 1 Sort
     function applyCurrentFilter() {
       const inputEl = document.getElementById("searchInput");
       const term = inputEl ? inputEl.value.toLowerCase().trim() : "";
