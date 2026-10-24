@@ -763,7 +763,7 @@
       </div>
     </div>
 
-    <!-- Bottom Gift Card -->
+    <!-- Bottom Flipkart Gift Section -->
     <footer class="gift-section">
       <div class="gift-badge">Parting Gesture 🎁</div>
       <h2 style="font-size: 1.45rem; margin-bottom: 0.5rem;">Liked your anecdote or feeling generous?</h2>
@@ -801,6 +801,9 @@
     let rawColleaguesData = [];
     let allComments = [];
     let currentUser = null;
+    
+    // Persistent tracker of all cards opened by the user
+    const openCardNames = new Set();
 
     // CSV parser
     function parseCSV(text) {
@@ -931,7 +934,7 @@
       applyCurrentFilter();
     }
 
-    // Filter helper: preserves active search query
+    // Filter helper: preserves search input and open cards
     function applyCurrentFilter() {
       const inputEl = document.getElementById("searchInput");
       const term = inputEl ? inputEl.value.toLowerCase().trim() : "";
@@ -947,7 +950,49 @@
       renderCards(filtered);
     }
 
-    // Render Cards with Inline Comments
+    // Generate HTML for comments feed
+    function buildCommentsHtml(cardComments) {
+      if (cardComments.length === 0) {
+        return `<div style="font-size:0.75rem; color:#94a3b8; padding:0.5rem 0;">No banter yet. Be the first to drop a reply!</div>`;
+      }
+      let html = "";
+      cardComments.forEach(c => {
+        const canDelete = currentUser && currentUser.email === ADMIN_EMAIL;
+        const deleteIcon = canDelete 
+          ? `<button class="delete-btn" onclick="deleteComment('${c.rowId}', '${escapeHtml(c.cardName)}', event)">🗑️</button>` 
+          : '';
+
+        html += `
+          <div class="comment-item">
+            <div class="comment-author-row">
+              <span class="comment-author">${escapeHtml(c.authorName)}</span>
+              ${deleteIcon}
+            </div>
+            <div class="comment-text-body">${escapeHtml(c.commentText)}</div>
+          </div>
+        `;
+      });
+      return html;
+    }
+
+    // Fast in-place DOM update without re-flipping cards
+    function updateCardCommentsDOM(cardName) {
+      const targetCard = Array.from(document.querySelectorAll(".card-container")).find(c => c.dataset.cardName === cardName);
+      if (!targetCard) return;
+
+      const cardComments = allComments.filter(c => c.cardName === cardName);
+      
+      const badge = targetCard.querySelector(".banter-count-badge");
+      if (badge) badge.innerText = `BANTER (${cardComments.length})`;
+
+      const list = targetCard.querySelector(".comments-scroll-list");
+      if (list) {
+        list.innerHTML = buildCommentsHtml(cardComments);
+        list.scrollTop = list.scrollHeight;
+      }
+    }
+
+    // Render Cards
     function renderCards(data) {
       const grid = document.getElementById("cardGrid");
       grid.innerHTML = "";
@@ -963,9 +1008,21 @@
 
         const card = document.createElement("div");
         card.className = "card-container";
+        card.dataset.cardName = item.name;
 
+        // Restore flip state if this card was previously flipped open
+        if (openCardNames.has(item.name)) {
+          card.classList.add("is-flipped");
+        }
+
+        // Click to toggle flip & track state
         card.addEventListener("click", function(e) {
           card.classList.toggle("is-flipped");
+          if (card.classList.contains("is-flipped")) {
+            openCardNames.add(item.name);
+          } else {
+            openCardNames.delete(item.name);
+          }
         });
 
         const tagBadges = item.tags.length > 0
@@ -979,41 +1036,21 @@
         const trackingNumber = `FK-SCM-${String(index + 101).padStart(4, '0')}`;
         const statusClass = item.isDelivered ? "status-badge-delivered" : "status-badge-intransit";
 
-        // Adaptive font sizing based on length
         const isLongText = item.anecdote.length > 140;
         const adaptiveClass = isLongText ? "anecdote-text compact-adaptive" : "anecdote-text";
 
-        // Filter comments for this person
         const cardComments = allComments.filter(c => c.cardName === item.name);
+        const commentsHtml = buildCommentsHtml(cardComments);
 
-        let commentsHtml = "";
-        if (cardComments.length === 0) {
-          commentsHtml = `<div style="font-size:0.75rem; color:#94a3b8; padding:0.5rem 0;">No banter yet. Be the first to drop a reply!</div>`;
-        } else {
-          cardComments.forEach(c => {
-            const canDelete = currentUser && currentUser.email === ADMIN_EMAIL;
-            const deleteIcon = canDelete 
-              ? `<button class="delete-btn" onclick="deleteComment('${c.rowId}', '${escapeHtml(item.name)}', event)">🗑️</button>` 
-              : '';
-
-            commentsHtml += `
-              <div class="comment-item">
-                <div class="comment-author-row">
-                  <span class="comment-author">${escapeHtml(c.authorName)}</span>
-                  ${deleteIcon}
-                </div>
-                <div class="comment-text-body">${escapeHtml(c.commentText)}</div>
-              </div>
-            `;
-          });
-        }
-
-        // Zone 3: Footer Input or Google Login Pill
+        // Zone 3: Footer Input with Enter key support
         let footerHtml = "";
         if (currentUser) {
           footerHtml = `
             <div class="comment-input-row" onclick="event.stopPropagation()">
-              <input type="text" id="input-${index}" class="comment-input" placeholder="Reply as ${escapeHtml(currentUser.name.split(' ')[0])}..." />
+              <input type="text" id="input-${index}" class="comment-input" 
+                placeholder="Reply as ${escapeHtml(currentUser.name.split(' ')[0])}..." 
+                onkeydown="if(event.key === 'Enter') postComment('${escapeHtml(item.name)}', 'input-${index}', event);"
+              />
               <button class="comment-post-btn" onclick="postComment('${escapeHtml(item.name)}', 'input-${index}', event)">Post</button>
             </div>
           `;
@@ -1045,10 +1082,10 @@
             <div class="card-back">
               <div class="card-back-meta">
                 <span>NOTE FOR: ${escapeHtml(item.name)}</span>
-                <span style="color: var(--fk-yellow); font-weight: 700;">BANTER (${cardComments.length})</span>
+                <span class="banter-count-badge" style="color: var(--fk-yellow); font-weight: 700;">BANTER (${cardComments.length})</span>
               </div>
 
-              <!-- Zone 1: Adaptive Pinned Anecdote -->
+              <!-- Zone 1: Adaptive Anecdote -->
               <div class="anecdote-pinned-box" onclick="event.stopPropagation()">
                 <p class="${adaptiveClass}">"${escapeHtml(item.anecdote)}"</p>
               </div>
@@ -1072,42 +1109,11 @@
       });
     }
 
-    // Flip-state tracking helpers
-    function retainFlippedCard(cardName) {
-      if (!cardName) return;
-      const matchingCard = Array.from(document.querySelectorAll(".card-container")).find(card => {
-        const nameEl = card.querySelector(".colleague-name");
-        return nameEl && nameEl.innerText.trim() === cardName;
-      });
-      if (matchingCard) {
-        matchingCard.classList.add("is-flipped");
-      }
-    }
-
-    function getFlippedCardNames() {
-      const flipped = [];
-      document.querySelectorAll(".card-container.is-flipped").forEach(card => {
-        const nameEl = card.querySelector(".colleague-name");
-        if (nameEl) flipped.push(nameEl.innerText.trim());
-      });
-      return flipped;
-    }
-
-    function restoreFlippedCards(flippedNames) {
-      if (!flippedNames || flippedNames.length === 0) return;
-      document.querySelectorAll(".card-container").forEach(card => {
-        const nameEl = card.querySelector(".colleague-name");
-        if (nameEl && flippedNames.includes(nameEl.innerText.trim())) {
-          card.classList.add("is-flipped");
-        }
-      });
-    }
-
-    // Post comment with Optimistic UI (0ms latency + automatic rollback)
+    // Post comment (Instant 0ms update, no double-flip animation)
     async function postComment(cardName, inputId, event) {
       if (event) event.stopPropagation();
       const input = document.getElementById(inputId);
-      const text = input.value.trim();
+      const text = input ? input.value.trim() : "";
       if (!text) return;
 
       if (!currentUser) {
@@ -1115,7 +1121,8 @@
         return;
       }
 
-      // 1. Temporary local record for immediate render
+      openCardNames.add(cardName);
+
       const tempRowId = "temp_" + Date.now();
       const optimisticEntry = {
         rowId: tempRowId,
@@ -1125,13 +1132,12 @@
         commentText: text
       };
 
-      // 2. Render instantly locally
+      // 1. Add locally and update only this card's DOM (zero page re-render, zero double flip)
       allComments.push(optimisticEntry);
-      input.value = "";
-      applyCurrentFilter();
-      retainFlippedCard(cardName);
+      if (input) input.value = "";
+      updateCardCommentsDOM(cardName);
 
-      // 3. Persist in background
+      // 2. Persist in background
       try {
         await fetch(APPS_SCRIPT_URL, {
           method: "POST",
@@ -1144,37 +1150,30 @@
           })
         });
 
-        // Silently sync server row IDs
+        // Silently update cache without resetting elements
         await loadComments();
-        applyCurrentFilter();
-        retainFlippedCard(cardName);
+        updateCardCommentsDOM(cardName);
       } catch (err) {
-        console.error("Background comment sync failed:", err);
-        // Rollback on network failure
+        console.error("Comment post error:", err);
         allComments = allComments.filter(c => c.rowId !== tempRowId);
-        applyCurrentFilter();
-        retainFlippedCard(cardName);
-        input.value = text;
-        alert("Unable to save comment. Check your connection.");
+        updateCardCommentsDOM(cardName);
+        if (input) input.value = text;
+        alert("Unable to post comment. Check your network.");
       }
     }
 
-    // Delete comment with Optimistic UI (0ms latency + automatic rollback)
+    // Delete comment
     async function deleteComment(rowId, cardName, event) {
       if (event) event.stopPropagation();
       if (!confirm("Are you sure you want to delete this comment?")) return;
 
-      // 1. Snapshot comment for rollback if needed
       const targetIndex = allComments.findIndex(c => String(c.rowId) === String(rowId));
       if (targetIndex === -1) return;
-      const backupComment = allComments[targetIndex];
+      const backup = allComments[targetIndex];
 
-      // 2. Remove locally immediately
       allComments.splice(targetIndex, 1);
-      applyCurrentFilter();
-      retainFlippedCard(cardName);
+      updateCardCommentsDOM(cardName);
 
-      // 3. Persist deletion in background
       try {
         const response = await fetch(APPS_SCRIPT_URL, {
           method: "POST",
@@ -1187,15 +1186,13 @@
 
         const result = await response.json();
         if (result.status !== "deleted") {
-          throw new Error(result.message || "Unauthorized or invalid row");
+          throw new Error(result.message || "Unauthorized");
         }
       } catch (err) {
-        console.error("Background delete failed:", err);
-        // Rollback on failure
-        allComments.splice(targetIndex, 0, backupComment);
-        applyCurrentFilter();
-        retainFlippedCard(cardName);
-        alert("Failed to delete comment from server. Reverting change.");
+        console.error("Delete failed:", err);
+        allComments.splice(targetIndex, 0, backup);
+        updateCardCommentsDOM(cardName);
+        alert("Failed to delete comment from server.");
       }
     }
 
@@ -1215,10 +1212,8 @@
     // Safe 30-second background polling
     function startBackgroundPolling() {
       setInterval(async () => {
-        // Halt polling if tab is inactive to conserve Google Apps Script quota
         if (document.hidden) return;
 
-        // Skip refresh if user is currently typing in any input field
         const activeEl = document.activeElement;
         const isTyping = activeEl && activeEl.classList.contains("comment-input") && activeEl.value.trim().length > 0;
         if (isTyping) return;
@@ -1227,18 +1222,16 @@
           const res = await fetch(APPS_SCRIPT_URL);
           const data = await res.json();
           if (data.status === "ok" && Array.isArray(data.comments)) {
-            // Re-render only when data has actually changed
             if (JSON.stringify(data.comments) !== JSON.stringify(allComments)) {
-              const flippedBefore = getFlippedCardNames();
               allComments = data.comments;
-              applyCurrentFilter();
-              restoreFlippedCards(flippedBefore);
+              // Update open cards smoothly in place
+              openCardNames.forEach(name => updateCardCommentsDOM(name));
             }
           }
         } catch (err) {
-          console.warn("Background polling tick skipped:", err);
+          console.warn("Polling skipped:", err);
         }
-      }, 30000); // 30 seconds
+      }, 30000);
     }
 
     function escapeHtml(str) {
@@ -1253,7 +1246,6 @@
       });
     }
 
-    // Attach search filter listener
     document.getElementById("searchInput").addEventListener("input", applyCurrentFilter);
 
     function copyEmail() {
