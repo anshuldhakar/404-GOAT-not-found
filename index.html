@@ -457,7 +457,7 @@
       font-family: monospace;
     }
 
-    /* Back: Option B Inline Anecdote + Scrollable Thread */
+    /* Back: Inline Anecdote + Scrollable Thread */
     .card-back {
       background: #111827;
       color: #ffffff;
@@ -890,7 +890,7 @@
         };
         localStorage.setItem("fk_user", JSON.stringify(currentUser));
         updateAuthNav();
-        renderCards(rawColleaguesData);
+        applyCurrentFilter();
       } catch (err) {
         console.error(err);
       }
@@ -928,7 +928,23 @@
       currentUser = null;
       localStorage.removeItem("fk_user");
       updateAuthNav();
-      renderCards(rawColleaguesData);
+      applyCurrentFilter();
+    }
+
+    // Filter Helper: ensures search text is always respected
+    function applyCurrentFilter() {
+      const inputEl = document.getElementById("searchInput");
+      const term = inputEl ? inputEl.value.toLowerCase().trim() : "";
+      if (!term) {
+        renderCards(rawColleaguesData);
+        return;
+      }
+      const filtered = rawColleaguesData.filter((c) =>
+        c.name.toLowerCase().includes(term) ||
+        c.team.toLowerCase().includes(term) ||
+        c.tagsString.includes(term)
+      );
+      renderCards(filtered);
     }
 
     // Render Cards with Inline Comments
@@ -977,7 +993,7 @@
           cardComments.forEach(c => {
             const canDelete = currentUser && currentUser.email === ADMIN_EMAIL;
             const deleteIcon = canDelete 
-              ? `<button class="delete-btn" onclick="deleteComment('${c.rowId}', event)">🗑️</button>` 
+              ? `<button class="delete-btn" onclick="deleteComment('${c.rowId}', '${escapeHtml(item.name)}', event)">🗑️</button>` 
               : '';
 
             commentsHtml += `
@@ -1056,6 +1072,18 @@
       });
     }
 
+    // Helper: keep targeted card flipped after re-render
+    function retainFlippedCard(cardName) {
+      if (!cardName) return;
+      const matchingCard = Array.from(document.querySelectorAll(".card-container")).find(card => {
+        const nameEl = card.querySelector(".colleague-name");
+        return nameEl && nameEl.innerText.trim() === cardName;
+      });
+      if (matchingCard) {
+        matchingCard.classList.add("is-flipped");
+      }
+    }
+
     // Post a new comment
     async function postComment(cardName, inputId, event) {
       if (event) event.stopPropagation();
@@ -1084,7 +1112,8 @@
 
         input.value = "";
         await loadComments();
-        renderCards(rawColleaguesData);
+        applyCurrentFilter();
+        retainFlippedCard(cardName);
       } catch (err) {
         console.error(err);
         alert("Unable to post comment. Check network.");
@@ -1094,7 +1123,7 @@
     }
 
     // Delete comment (Admin only)
-    async function deleteComment(rowId, event) {
+    async function deleteComment(rowId, cardName, event) {
       if (event) event.stopPropagation();
       if (!confirm("Are you sure you want to delete this comment?")) return;
 
@@ -1109,7 +1138,8 @@
         });
 
         await loadComments();
-        renderCards(rawColleaguesData);
+        applyCurrentFilter();
+        retainFlippedCard(cardName);
       } catch (err) {
         console.error(err);
         alert("Failed to delete comment.");
@@ -1141,20 +1171,8 @@
       });
     }
 
-    // Filter
-    document.getElementById("searchInput").addEventListener("input", (e) => {
-      const term = e.target.value.toLowerCase().trim();
-      if (!term) {
-        renderCards(rawColleaguesData);
-        return;
-      }
-      const filtered = rawColleaguesData.filter((c) =>
-        c.name.toLowerCase().includes(term) ||
-        c.team.toLowerCase().includes(term) ||
-        c.tagsString.includes(term)
-      );
-      renderCards(filtered);
-    });
+    // Attach search filter listener
+    document.getElementById("searchInput").addEventListener("input", applyCurrentFilter);
 
     function copyEmail() {
       const email = document.getElementById("targetEmail").innerText;
@@ -1187,7 +1205,7 @@
         const text = await res.text();
         rawColleaguesData = parseCSV(text);
         await loadComments();
-        renderCards(rawColleaguesData);
+        applyCurrentFilter();
       } catch (err) {
         console.error(err);
       }
