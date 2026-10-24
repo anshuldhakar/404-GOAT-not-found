@@ -229,11 +229,10 @@
     .btn-x { background: #f8fafc; color: #0f172a; border: 1px solid #cbd5e1; }
     .btn-email { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
     .btn-reddit { background: #fff7ed; color: #ea580c; border: 1px solid #ffedd5; }
-    .btn-substack { background: #fff1f2; color: #e11d48; border: 1px solid #ffe4e6; }
     .btn-researchgate { background: #f0fdfa; color: #0d9488; border: 1px solid #ccfbf1; }
     .btn-personality { background: #faf5ff; color: #7e22ce; border: 1px solid #f3e8ff; }
 
-    /* Sticky Sub-Header */
+    /* Sticky Sub-Header: Broadened Search + Author Badge + Request Button */
     .sticky-control-container {
       position: sticky;
       top: 54px;
@@ -252,7 +251,7 @@
       margin: 0 auto;
       display: flex;
       align-items: center;
-      gap: 0.55rem;
+      gap: 0.65rem;
       padding: 0 0.5rem;
     }
 
@@ -262,7 +261,7 @@
       gap: 0.35rem;
       background: #ffffff;
       border: 1px solid #cbd5e1;
-      padding: 0.5rem 0.75rem;
+      padding: 0.55rem 0.85rem;
       border-radius: 8px;
       font-size: 0.82rem;
       font-weight: 700;
@@ -279,7 +278,7 @@
       background: #eff6ff;
       border: 1px solid #bfdbfe;
       color: #1e40af;
-      padding: 0.5rem 0.75rem;
+      padding: 0.55rem 0.85rem;
       border-radius: 8px;
       font-size: 0.78rem;
       font-weight: 600;
@@ -290,15 +289,15 @@
 
     .sticky-search-wrapper {
       position: relative;
-      flex: 1;
+      flex: 1; /* Broadened search input */
     }
 
     .sticky-search-bar {
       width: 100%;
-      padding: 0.55rem 1rem 0.55rem 2.3rem;
+      padding: 0.62rem 1rem 0.62rem 2.4rem;
       border-radius: 8px;
       border: 1.5px solid #cbd5e1;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: 600;
       color: #111827;
       outline: none;
@@ -314,7 +313,7 @@
 
     .sticky-search-icon {
       position: absolute;
-      left: 0.75rem;
+      left: 0.8rem;
       top: 50%;
       transform: translateY(-50%);
       font-size: 0.95rem;
@@ -330,10 +329,10 @@
       color: var(--fk-blue);
       border: 1.5px solid var(--fk-blue);
       text-decoration: none;
-      padding: 0.52rem 0.75rem;
+      padding: 0.55rem 0.9rem;
       border-radius: 8px;
       font-weight: 700;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       white-space: nowrap;
       cursor: pointer;
       flex-shrink: 0;
@@ -876,7 +875,7 @@
         </div>
       </div>
 
-      <!-- Social Links -->
+      <!-- Social Links (Substack removed, 16Personalities renamed to Personality) -->
       <div class="social-section">
         <div class="social-section-title">Let's Stay Connected 🤝</div>
         <div class="social-links-bar">
@@ -886,14 +885,13 @@
           <a href="https://x.com/ANSHULDHAKAR_29" target="_blank" rel="noopener noreferrer" class="social-btn btn-x">🐦 X</a>
           <a href="mailto:anshuldhakar2904@gmail.com" class="social-btn btn-email">✉️ Email</a>
           <a href="https://www.reddit.com/user/anshul-dhakar/" target="_blank" rel="noopener noreferrer" class="social-btn btn-reddit">👾 Reddit</a>
-          <a href="https://substack.com/@anshuldhakar" target="_blank" rel="noopener noreferrer" class="social-btn btn-substack">📰 Substack</a>
           <a href="https://www.researchgate.net/profile/Anshul_Dhakar" target="_blank" rel="noopener noreferrer" class="social-btn btn-researchgate">🔬 ResearchGate</a>
-          <a href="https://www.16personalities.com/profiles/a6c241d0ccfdf" target="_blank" rel="noopener noreferrer" class="social-btn btn-personality">🧠 16Personalities</a>
+          <a href="https://www.16personalities.com/profiles/a6c241d0ccfdf" target="_blank" rel="noopener noreferrer" class="social-btn btn-personality">🧠 Personality</a>
         </div>
       </div>
     </header>
 
-    <!-- Sticky Control Bar -->
+    <!-- Sticky Control Bar (Share Board removed, search bar broadened) -->
     <div class="sticky-control-container">
       <div class="sticky-control-inner">
         <!-- Author Badge -->
@@ -908,7 +906,7 @@
           <span>📦 0 Notes | 💬 0 Banters</span>
         </div>
 
-        <!-- Search Input -->
+        <!-- Broadened Search Input -->
         <div class="sticky-search-wrapper">
           <span class="sticky-search-icon">🔍</span>
           <input
@@ -920,14 +918,7 @@
           />
         </div>
 
-        <!-- Share Entire Board -->
-        <button id="shareBoardBtn" class="sticky-action-btn" onclick="shareFarewellBoard()">
-          <span>🔗</span>
-          <span class="full-label">Share Board</span>
-          <span class="short-label">Share</span>
-        </button>
-
-        <!-- Request Anecdote -->
+        <!-- Request Anecdote Button -->
         <a href="mailto:anshuldhakar2904@gmail.com?subject=Missing%20Note%20-%20Request%20for%20Anecdote" class="sticky-action-btn">
           <span>✉️</span>
           <span class="full-label">Request Note</span>
@@ -973,7 +964,7 @@
     // 2. Apps Script Web App URL
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwKVPo2EbWlUE3iWWjDE0Yv7ca2se7gqFpQ40wcYQpSuzIeXN6s8syCAYTP74B2E1qS9g/exec";
 
-    // 3. Google OAuth Client ID[cite: 1, 2]
+    // 3. Google OAuth Client ID
     const GOOGLE_CLIENT_ID = "202897632024-qhm5he4cbtk6bhm5n5se8uc20r4716tn.apps.googleusercontent.com";
 
     const ADMIN_EMAIL = "anshuldhakar2904@gmail.com";
@@ -1209,7 +1200,7 @@
       );
     }
 
-    // Share specific card directly to WhatsApp with deep-link
+    // Share specific card directly to WhatsApp with clean URL deep link
     function shareCardOnWhatsApp(colleagueName, slug, event) {
       if (event) event.stopPropagation();
       const baseUrl = window.location.origin + window.location.pathname;
@@ -1219,7 +1210,7 @@
       window.open(whatsappUrl, "_blank");
     }
 
-    // Render Cards with signatures, deep-link anchors, and WhatsApp buttons
+    // Render Cards
     function renderCards(data) {
       const grid = document.getElementById("cardGrid");
       grid.innerHTML = "";
@@ -1243,7 +1234,7 @@
           card.classList.add("is-flipped");
         }
 
-        // Click to toggle flip & track state
+        // Click to toggle flip & track state WITHOUT modifying the browser address bar hash
         card.addEventListener("click", function(e) {
           card.classList.toggle("is-flipped");
           if (card.classList.contains("is-flipped")) {
@@ -1251,13 +1242,8 @@
             freshCommentCardNames.delete(item.name);
             const freshBadge = card.querySelector(".new-banter-badge");
             if (freshBadge) freshBadge.remove();
-            // Sync URL hash gently without forcing a jump
-            history.replaceState(null, null, `#${item.slug}`);
           } else {
             openCardNames.delete(item.name);
-            if (window.location.hash === `#${item.slug}`) {
-              history.replaceState(null, null, window.location.pathname);
-            }
           }
         });
 
@@ -1367,22 +1353,23 @@
       });
     }
 
-    // Handle deep-linking from URL hash (#colleague-name)
+    // Handles incoming URL hash deep-link when arriving via shared link
     function handleUrlHashDeepLink() {
       const hash = window.location.hash.replace("#", "").trim().toLowerCase();
       if (!hash) return;
 
       const targetCard = document.getElementById(hash);
       if (targetCard) {
-        // Open the targeted card
         targetCard.classList.add("is-flipped");
         const cardName = targetCard.dataset.cardName;
         if (cardName) openCardNames.add(cardName);
 
-        // Scroll smoothly directly into view
         setTimeout(() => {
           targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
         }, 400);
+
+        // Clean the hash out of the address bar so future refreshes start clean
+        history.replaceState(null, null, window.location.pathname);
       }
     }
 
@@ -1512,26 +1499,6 @@
           console.warn("Polling skipped:", err);
         }
       }, 30000);
-    }
-
-    // Share entire farewell board
-    function shareFarewellBoard() {
-      const shareData = {
-        title: "Thank You Flipkart | Anshul Dhakar",
-        text: "Flipkart Farewell Notes & Banter board by Anshul Dhakar ☕📦",
-        url: window.location.href
-      };
-
-      if (navigator.share) {
-        navigator.share(shareData).catch(() => {});
-      } else {
-        navigator.clipboard.writeText(window.location.href).then(() => {
-          const btn = document.getElementById("shareBoardBtn");
-          const originalHtml = btn.innerHTML;
-          btn.innerHTML = `<span>✓</span><span class="full-label">Link Copied!</span><span class="short-label">Copied</span>`;
-          setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
-        });
-      }
     }
 
     function escapeHtml(str) {
