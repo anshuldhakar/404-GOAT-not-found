@@ -424,9 +424,11 @@
       margin-bottom: 0.75rem;
       font-family: monospace;
       font-size: 0.72rem;
-      color: var(--text-muted);
+      color: #1e3a8a;
+      font-weight: 700;
       border-bottom: 1px dashed var(--border-color);
       padding-bottom: 0.4rem;
+      letter-spacing: 0.3px;
     }
 
     .header-badges-right {
@@ -1035,7 +1037,7 @@
     // 2. Apps Script Web App URL
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwKVPo2EbWlUE3iWWjDE0Yv7ca2se7gqFpQ40wcYQpSuzIeXN6s8syCAYTP74B2E1qS9g/exec";
 
-    // 3. Google OAuth Client ID
+    // 3. Google OAuth Client ID[cite: 1]
     const GOOGLE_CLIENT_ID = "202897632024-qhm5he4cbtk6bhm5n5se8uc20r4716tn.apps.googleusercontent.com";
 
     const ADMIN_EMAIL = "anshuldhakar2904@gmail.com";
@@ -1058,8 +1060,7 @@
         .replace(/^-+|-+$/g, "");
     }
 
-    // Helper: Banter-First Sorting
-    // Sorts cards by comment count descending. If both have 0, sorts alphabetically by name.
+    // 3-Tier Sort: 1) Number of Banters (descending), 2) Team (alphabetical), 3) Name (alphabetical)
     function sortColleaguesByBanter(colleaguesList) {
       const commentCountMap = {};
       allComments.forEach(c => {
@@ -1070,9 +1071,18 @@
         const countA = commentCountMap[a.name] || 0;
         const countB = commentCountMap[b.name] || 0;
 
+        // 1. Primary: Banters Descending
         if (countA !== countB) {
-          return countB - countA; // Descending by banter count
+          return countB - countA;
         }
+
+        // 2. Secondary: Team Alphabetical
+        const teamCompare = (a.team || "").localeCompare(b.team || "", undefined, { sensitivity: 'base' });
+        if (teamCompare !== 0) {
+          return teamCompare;
+        }
+
+        // 3. Tertiary: Colleague Name Alphabetical
         return (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: 'base' });
       });
     }
@@ -1213,7 +1223,7 @@
       }
     }
 
-    // Filter helper: applies search and respects Banter-First sorting
+    // Filter helper: applies search and respects the 3-Tier Sort
     function applyCurrentFilter() {
       const inputEl = document.getElementById("searchInput");
       const term = inputEl ? inputEl.value.toLowerCase().trim() : "";
@@ -1343,7 +1353,6 @@
           ? `<span class="colleague-node">TEAM // ${escapeHtml(item.team)}</span>` 
           : "";
 
-        const trackingNumber = `FK-SCM-${String(index + 101).padStart(4, '0')}`;
         const statusClass = item.isDelivered ? "status-badge-delivered" : "status-badge-intransit";
 
         const isLongText = item.anecdote.length > 140;
@@ -1382,7 +1391,7 @@
           <div class="card-inner">
             <div class="card-front">
               <div class="label-header">
-                <span>AWB: ${trackingNumber}</span>
+                <span>ANSHUL'S SIGN-OFF NOTE</span>
                 <div class="header-badges-right">
                   ${newBanterHtml}
                   <span class="front-banter-pill" style="display:${frontBanterDisplay};">💬 ${cardComments.length}</span>
