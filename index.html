@@ -42,29 +42,28 @@
       --leader-badge-border: #eab308;
     }
 
-    /* BBD War Room Mode */
+    /* BBD War Room: Crimson & Fire Theme */
     body.theme-bbd {
-      --hub-bg: #450a0a;
-      --card-bg: #2a0808;
-      --card-back-bg: #1a0505;
+      --hub-bg: #350505;
+      --card-bg: #220505;
+      --card-back-bg: #150303;
       --card-back-text: #fffbeb;
       --text-main: #fef2f2;
       --text-muted: #fca5a5;
       --border-color: #b91c1c;
       --fk-blue: #ef4444;
       --fk-yellow: #fde047;
-      --control-bar-bg: rgba(69, 10, 10, 0.96);
-      --input-bg: #1f0404;
+      --control-bar-bg: rgba(53, 5, 5, 0.96);
+      --input-bg: #180202;
       --input-border: #dc2626;
       --tag-bg: #7f1d1d;
       --tag-text: #fef08a;
       --tag-border: #f59e0b;
-      --sig-bg: #350808;
+      --sig-bg: #2d0606;
       --sig-text: #fed7aa;
-      --nav-bg: linear-gradient(90deg, #991b1b 0%, #b91c1c 50%, #ea580c 100%);
-      --fire-accent: #f97316;
+      --nav-bg: linear-gradient(90deg, #7f1d1d 0%, #b91c1c 50%, #c2410c 100%);
+      --fire-accent: #ea580c;
 
-      /* Leadership Card Accent in BBD */
       --leader-border: #facc15;
       --leader-glow: rgba(250, 204, 21, 0.35);
       --leader-badge-bg: linear-gradient(135deg, #713f12 0%, #a16207 100%);
@@ -83,7 +82,25 @@
       background-color: var(--hub-bg);
       color: var(--text-main);
       padding-bottom: 6rem;
-      transition: background-color 0.25s ease, color 0.25s ease;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      position: relative;
+    }
+
+    /* Fire Ignition Flash on Toggle */
+    body.fire-flash-active::after {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: radial-gradient(circle, rgba(251, 100, 27, 0.3) 0%, rgba(185, 28, 28, 0.45) 70%, rgba(69, 10, 10, 0.6) 100%);
+      pointer-events: none;
+      z-index: 9999;
+      animation: flameIgnition 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+
+    @keyframes flameIgnition {
+      0% { opacity: 0; transform: scale(0.98); }
+      40% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.02); }
     }
 
     /* Top Nav */
@@ -95,6 +112,7 @@
       top: 0;
       z-index: 100;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      transition: background 0.4s ease;
     }
 
     .scm-nav-content {
@@ -171,7 +189,7 @@
       cursor: pointer;
       top: 0; left: 0; right: 0; bottom: 0;
       background-color: rgba(255, 255, 255, 0.35);
-      transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       border-radius: 999px;
       border: 1px solid rgba(255, 255, 255, 0.4);
     }
@@ -184,7 +202,7 @@
       left: 2px;
       bottom: 2px;
       background-color: white;
-      transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       border-radius: 50%;
       box-shadow: 0 1px 3px rgba(0,0,0,0.3);
     }
@@ -259,6 +277,7 @@
       max-width: 980px;
       margin-left: auto;
       margin-right: auto;
+      transition: background-color 0.4s ease, border-color 0.4s ease;
     }
 
     .creator-header {
@@ -391,6 +410,7 @@
       margin-bottom: 1.5rem;
       border-bottom: 1px solid var(--border-color);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: background 0.4s ease;
     }
 
     .sticky-control-inner {
@@ -538,6 +558,7 @@
       cursor: pointer;
       user-select: none;
       scroll-margin-top: 140px;
+      position: relative;
     }
 
     .card-inner {
@@ -569,6 +590,38 @@
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
       background: var(--card-bg);
       pointer-events: auto;
+      overflow: hidden;
+      transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    /* Fire Emoticon Watermark Behind Blocks in BBD Mode */
+    .card-front::before,
+    .card-back::before {
+      content: "🔥";
+      position: absolute;
+      right: -15px;
+      bottom: -15px;
+      font-size: 7.5rem;
+      opacity: 0;
+      pointer-events: none;
+      user-select: none;
+      transform: rotate(-10deg) scale(0.6);
+      transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+      z-index: 0;
+      line-height: 1;
+    }
+
+    body.theme-bbd .card-front::before,
+    body.theme-bbd .card-back::before {
+      opacity: 0.12;
+      transform: rotate(-5deg) scale(1);
+    }
+
+    /* Keep content elements above the fire watermark */
+    .card-front > *,
+    .card-back > * {
+      position: relative;
+      z-index: 1;
     }
 
     /* Front Label */
@@ -579,7 +632,7 @@
       transform: rotateY(0deg);
     }
 
-    /* Senior Leadership Special Card Highlight (BAU & BBD) */
+    /* Senior Leadership Special Card Highlight */
     .card-container.is-leadership .card-front {
       border: 1.5px solid var(--leader-border);
       border-top: 4px solid var(--leader-border);
@@ -733,7 +786,6 @@
       white-space: nowrap;
     }
 
-    /* Distinct Gold Pill for Senior Leadership Tag */
     .remark-tag.badge-leadership {
       background: var(--leader-badge-bg);
       color: var(--leader-badge-text);
@@ -982,17 +1034,19 @@
       gap: 0.4rem;
     }
 
-    /* Casual Treat Parting Gesture Section */
+    /* Parting Gesture Block */
     .gift-section {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-top: 4px solid var(--fk-orange);
       border-radius: 12px;
-      padding: 2.25rem 1.5rem;
+      padding: 1.75rem 1.25rem;
       text-align: center;
-      max-width: 720px;
+      max-width: 600px;
       margin: 0 auto;
       box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+      scroll-margin-top: 140px;
+      transition: background 0.4s ease, border-color 0.4s ease;
     }
 
     .gift-badge {
@@ -1004,81 +1058,84 @@
       padding: 0.25rem 0.8rem;
       border-radius: 4px;
       text-transform: uppercase;
-      margin-bottom: 0.85rem;
+      margin-bottom: 1.1rem;
     }
 
-    .fk-guide-box {
-      background: var(--sig-bg);
-      border: 1px dashed var(--border-color);
-      border-radius: 8px;
-      padding: 0.85rem 1.2rem;
-      max-width: 520px;
-      margin: 0 auto;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      font-size: 0.88rem;
-    }
-
-    .fk-guide-step {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      color: var(--text-main);
-    }
-
-    .step-num {
-      background: var(--fk-blue);
-      color: #ffffff;
-      font-weight: 800;
-      font-size: 0.72rem;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+    body.theme-bbd .gift-badge {
+      background: #7f1d1d;
+      color: #fef08a;
     }
 
     .flipkart-btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
       background: var(--fk-orange);
       color: #ffffff;
-      text-decoration: none;
-      padding: 0.85rem 1.8rem;
+      padding: 0.85rem 1.6rem;
       border-radius: 6px;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       text-transform: uppercase;
       box-shadow: 0 2px 8px rgba(251, 100, 27, 0.3);
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+    .flipkart-btn:hover {
+      background: #e55310;
+      transform: translateY(-1px);
     }
 
-    /* Back to Top Floating Button */
-    .back-to-top-btn {
+    #copyToastMessage {
+      font-size: 0.85rem;
+      color: var(--status-delivered);
+      font-weight: 700;
+      margin-top: 0.75rem;
+      min-height: 1.4rem;
+      transition: all 0.2s ease;
+    }
+
+    body.theme-bbd #copyToastMessage {
+      color: #4ade80;
+    }
+
+    /* Floating Navigation Controls (Up and Down Stack) */
+    .floating-nav-stack {
       position: fixed;
       bottom: 2rem;
       right: 2rem;
       z-index: 99;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .nav-circle-btn {
       background: var(--fk-blue);
       color: #ffffff;
       border: none;
       border-radius: 50%;
-      width: 48px;
-      height: 48px;
+      width: 46px;
+      height: 46px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+    }
+    .nav-circle-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+    }
+
+    .back-to-top-btn {
       opacity: 0;
       visibility: hidden;
-      transform: translateY(12px);
-      transition: opacity 0.2s ease, transform 0.2s ease;
+      transform: translateY(8px);
     }
     .back-to-top-btn.is-visible {
       opacity: 1;
@@ -1202,44 +1259,29 @@
       </div>
     </div>
 
-    <!-- Parting Gesture Section -->
-    <footer class="gift-section">
+    <!-- Parting Gesture Block -->
+    <footer id="partingGestureBlock" class="gift-section">
       <div class="gift-badge">Parting Gesture 🎁</div>
-      <h2 style="font-size: 1.45rem; margin-bottom: 0.5rem;">Sponsor a Farewell Treat! ☕🍕</h2>
-      <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 1.25rem;">
-        If our catch-ups made workdays brighter or helped take the edge off peak planning over the last 4.6 years, feel free to fuel my next chapter with an electronic Flipkart Gift Card!
-      </p>
 
-      <!-- 3-Step Casual Treat Guide -->
-      <div class="fk-guide-box">
-        <div class="fk-guide-step">
-          <span class="step-num">1</span>
-          <span>Recipient: <strong id="targetEmail" style="color: var(--fk-blue);">anshuldhakar2904@gmail.com</strong></span>
-        </div>
-        <div class="fk-guide-step">
-          <span class="step-num">2</span>
-          <span>Suggested Treat: <strong>₹501</strong> (or whatever feels right!)</span>
-        </div>
-        <div class="fk-guide-step">
-          <span class="step-num">3</span>
-          <span>Format: <strong>Digital Gift Card (Sent to Email)</strong></span>
-        </div>
-      </div>
-
-      <div style="margin-top: 1.25rem;">
-        <button id="fkGiftBtn" onclick="sendFlipkartGiftCard()" class="flipkart-btn" style="border: none; cursor: pointer;">
-          Copy Email &amp; Open Flipkart Store (₹501) 🛍️
+      <div>
+        <button id="fkGiftBtn" onclick="handleFlipkartGiftAction()" class="flipkart-btn">
+          Copy Anshul's Email &amp; Direct to Flipkart Gift Card Store 🛍️
         </button>
       </div>
 
-      <div id="copyToastMessage" style="font-size: 0.8rem; color: var(--status-delivered); font-weight: 700; margin-top: 0.6rem; min-height: 1.2rem;"></div>
+      <div id="copyToastMessage"></div>
     </footer>
   </div>
 
-  <!-- Floating Back to Top Button -->
-  <button id="backToTopBtn" class="back-to-top-btn" onclick="scrollToTop()" title="Scroll to top">
-    ↑
-  </button>
+  <!-- Floating Navigation Controls: Up (Top) & Down (Parting Gesture) -->
+  <div class="floating-nav-stack">
+    <button id="backToTopBtn" class="nav-circle-btn back-to-top-btn" onclick="scrollToTop()" title="Scroll to top">
+      ↑
+    </button>
+    <button id="scrollToGiftBtn" class="nav-circle-btn" onclick="scrollToGiftSection()" title="Go to Parting Gesture">
+      ↓
+    </button>
+  </div>
 
   <script>
     // 1. Google Sheet published CSV URL
@@ -1248,7 +1290,7 @@
     // 2. Apps Script Web App URL
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwKVPo2EbWlUE3iWWjDE0Yv7ca2se7gqFpQ40wcYQpSuzIeXN6s8syCAYTP74B2E1qS9g/exec";
 
-    // 3. Google OAuth Client ID[cite: 1]
+    // 3. Google OAuth Client ID
     const GOOGLE_CLIENT_ID = "202897632024-qhm5he4cbtk6bhm5n5se8uc20r4716tn.apps.googleusercontent.com";
 
     const ADMIN_EMAIL = "anshuldhakar2904@gmail.com";
@@ -1277,15 +1319,26 @@
              lower.includes("leadership");
     }
 
-    // Theme Switch: BAU vs. BBD War Room Mode
+    // Theme Switch: BAU vs. BBD War Room Mode with Flash Transition Animation
     function toggleShiftTheme(isBbd) {
       if (isBbd) {
+        // Trigger one-time flame flash animation across the screen
+        document.body.classList.remove("fire-flash-active");
+        void document.body.offsetWidth; // trigger reflow
+        document.body.classList.add("fire-flash-active");
+
         document.body.classList.add("theme-bbd");
         localStorage.setItem("fk_theme", "bbd");
+
+        setTimeout(() => {
+          document.body.classList.remove("fire-flash-active");
+        }, 800);
       } else {
         document.body.classList.remove("theme-bbd");
+        document.body.classList.remove("fire-flash-active");
         localStorage.setItem("fk_theme", "bau");
       }
+
       const checkbox = document.getElementById("bbdThemeToggle");
       if (checkbox) checkbox.checked = isBbd;
     }
@@ -1305,24 +1358,20 @@
         const countA = commentCountMap[a.name] || 0;
         const countB = commentCountMap[b.name] || 0;
 
-        // 1. Primary: Banter count descending
         if (countA !== countB) {
           return countB - countA;
         }
 
-        // 2. Secondary (Tie-breaker when banter counts are identical):
         const aIsLeader = isSeniorLeadership(a);
         const bIsLeader = isSeniorLeadership(b);
         if (aIsLeader && !bIsLeader) return -1;
         if (!aIsLeader && bIsLeader) return 1;
 
-        // 3. Tertiary: Team Name (alphabetical)
         const teamCompare = (a.team || "").localeCompare(b.team || "", undefined, { sensitivity: 'base' });
         if (teamCompare !== 0) {
           return teamCompare;
         }
 
-        // 4. Quaternary: Colleague Name (alphabetical)
         return (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: 'base' });
       });
     }
@@ -1706,7 +1755,7 @@
         const initials = item.name
           .split(" ")
           .filter(n => n.length > 0)
-          .map(n => n[0])
+          .map((n) => n[0])
           .slice(0, 2)
           .join("")
           .toUpperCase() || "FK";
@@ -1734,7 +1783,6 @@
           }
         });
 
-        // Tag badges with dedicated gold highlight for Senior Leadership
         const tagBadges = item.tags.length > 0
           ? item.tags.map(t => {
               const lower = t.toLowerCase();
@@ -2000,25 +2048,39 @@
       }, 30000);
     }
 
-    // Gift Card Copy and Open Function
-    function sendFlipkartGiftCard() {
-      const email = document.getElementById("targetEmail").innerText.trim();
+    // Two-step Copy & Redirect for Flipkart Gift Card
+    function handleFlipkartGiftAction() {
+      const email = "anshuldhakar2904@gmail.com";
       const toastEl = document.getElementById("copyToastMessage");
       const btn = document.getElementById("fkGiftBtn");
 
+      // 1. Copy Email to Clipboard
       navigator.clipboard.writeText(email).then(() => {
-        if (toastEl) toastEl.innerText = "✓ Recipient email copied to clipboard! Opening Flipkart...";
-        const origBtnText = btn.innerHTML;
-        btn.innerHTML = "✓ Email Copied! Redirecting...";
+        // 2. Show prominent message first
+        if (toastEl) {
+          toastEl.innerText = "✓ Recipient email ID copied! Redirecting to Flipkart Gift Card store...";
+        }
+        if (btn) {
+          btn.innerText = "✓ Copied! Redirecting...";
+          btn.disabled = true;
+        }
 
+        // 3. Pause 1.8 seconds so users actually read the message before new tab opens
         setTimeout(() => {
-          btn.innerHTML = origBtnText;
-          if (toastEl) toastEl.innerText = "";
-        }, 3500);
-
-        window.open("https://www.flipkart.com/the-gift-card-store", "_blank");
+          window.open("https://www.flipkart.com/the-gift-card-store", "_blank");
+          if (btn) {
+            btn.innerText = "Copy Anshul's Email & Direct to Flipkart Gift Card Store 🛍️";
+            btn.disabled = false;
+          }
+        }, 1800);
       }).catch(() => {
-        window.open("https://www.flipkart.com/the-gift-card-store", "_blank");
+        // Fallback if clipboard permission fails
+        if (toastEl) {
+          toastEl.innerText = "Opening Flipkart Gift Card store...";
+        }
+        setTimeout(() => {
+          window.open("https://www.flipkart.com/the-gift-card-store", "_blank");
+        }, 1000);
       });
     }
 
@@ -2028,6 +2090,14 @@
         top: 0,
         behavior: "smooth"
       });
+    }
+
+    // Scroll down to Parting Gesture Smooth Action
+    function scrollToGiftSection() {
+      const giftEl = document.getElementById("partingGestureBlock");
+      if (giftEl) {
+        giftEl.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     }
 
     // Floating Button Visibility Listener
