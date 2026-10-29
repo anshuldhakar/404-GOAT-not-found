@@ -908,14 +908,14 @@
       color: #ffd500;
     }
 
-    /* Zone 1: Natural Mouse Wheel & Trackpad Scrolling */
+    /* Zone 1: Natural Mouse Wheel & Trackpad Scrolling (Contained within Card) */
     .anecdote-pinned-box {
       background: rgba(255, 255, 255, 0.06);
       border-radius: 6px;
       padding: 0.65rem 0.75rem;
       max-height: 155px;
       height: 155px;
-      overflow-y: scroll !important;
+      overflow-y: auto !important;
       overflow-x: hidden;
       flex-shrink: 0;
       border: 1px solid rgba(255, 255, 255, 0.12);
@@ -925,6 +925,7 @@
       cursor: auto;
       touch-action: pan-y !important;
       pointer-events: auto;
+      overscroll-behavior: contain !important;
     }
 
     .anecdote-pinned-box::-webkit-scrollbar {
@@ -975,6 +976,7 @@
       overflow: hidden;
       border-top: 1px dashed rgba(255, 255, 255, 0.15);
       padding-top: 0.4rem;
+      overscroll-behavior: contain !important;
     }
 
     .thread-title {
@@ -999,6 +1001,7 @@
       scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
       user-select: text !important;
       touch-action: pan-y !important;
+      overscroll-behavior: contain !important;
     }
     .comments-scroll-list::-webkit-scrollbar {
       width: 4px;
@@ -1170,11 +1173,11 @@
       color: #ffd500;
     }
 
-    /* Floating Navigation Controls (Offset to never obstruct card text) */
+    /* Floating Navigation Controls (Shifted right to avoid covering cards) */
     .floating-nav-stack {
       position: fixed;
       bottom: 1.5rem;
-      right: 0.85rem;
+      right: 0.75rem;
       z-index: 99;
       display: flex;
       flex-direction: column;
@@ -1183,17 +1186,17 @@
     }
 
     .nav-circle-btn {
-      background: rgba(40, 116, 240, 0.9);
+      background: rgba(40, 116, 240, 0.92);
       backdrop-filter: blur(4px);
       color: #ffffff;
       border: 1px solid rgba(255, 255, 255, 0.4);
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       cursor: pointer;
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
       transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
@@ -1205,7 +1208,7 @@
     }
 
     body.theme-bbd .nav-circle-btn {
-      background: rgba(255, 213, 0, 0.9);
+      background: rgba(255, 213, 0, 0.92);
       color: #031440;
       border-color: #ffd500;
     }
@@ -1372,7 +1375,7 @@
     </footer>
   </div>
 
-  <!-- Floating Navigation Controls (Edge Offset) -->
+  <!-- Floating Navigation Controls -->
   <div class="floating-nav-stack">
     <button id="backToTopBtn" class="nav-circle-btn back-to-top-btn" onclick="scrollToTop()" title="Scroll to top">
       ↑
@@ -1410,7 +1413,6 @@
              lower.includes("leadership");
     }
 
-    // Formatter: Cleans literal \n, preserves paragraphs, and linkifies URLs
     function formatAnecdoteHTML(rawText) {
       if (!rawText) return "";
       
@@ -1991,7 +1993,7 @@
                 </div>
               </div>
 
-              <!-- Zone 1: Natural Mouse Wheel / Trackpad Scrollable Anecdote Box -->
+              <!-- Zone 1: Natural Mouse Wheel & Trackpad Scrollable Anecdote Box -->
               <div class="anecdote-pinned-box" onclick="event.stopPropagation()">
                 <div class="${adaptiveClass}">"${formattedAnecdote}"</div>
               </div>
@@ -2012,13 +2014,19 @@
           </div>
         `;
 
-        // Direct non-passive wheel event attachment to ensure trackpads and mouse wheels scroll smoothly inside the 3D-rotated box
+        // Direct boundary-locking wheel listener preventing background window scroll
         const anecdoteBox = card.querySelector(".anecdote-pinned-box");
         if (anecdoteBox) {
           anecdoteBox.addEventListener("wheel", function(e) {
+            const atTop = this.scrollTop === 0 && e.deltaY < 0;
+            const atBottom = (this.scrollHeight - this.scrollTop <= this.clientHeight + 1) && e.deltaY > 0;
+
             e.stopPropagation();
-            anecdoteBox.scrollTop += e.deltaY;
-          }, { passive: true });
+            if (!atTop && !atBottom) {
+              this.scrollTop += e.deltaY;
+            }
+            e.preventDefault();
+          }, { passive: false });
         }
 
         grid.appendChild(card);
