@@ -912,29 +912,35 @@
       color: #ffd500;
     }
 
-    /* Zone 1: Natural Mouse Wheel & Trackpad Scrolling (Contained strictly within Card) */
+    /* Zone 1: Identical wrapper + scroll structure as Comments & Banter */
+    .anecdote-wrapper {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      overscroll-behavior: contain !important;
+    }
+
     .anecdote-pinned-box {
       background: rgba(255, 255, 255, 0.06);
       border-radius: 6px;
       padding: 0.65rem 0.75rem;
       max-height: 155px;
       height: 155px;
-      overflow-y: auto !important;
-      overflow-x: hidden;
-      flex-shrink: 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
       border: 1px solid rgba(255, 255, 255, 0.12);
       scrollbar-width: thin;
       scrollbar-color: var(--fk-yellow) rgba(255, 255, 255, 0.08);
       user-select: text !important;
-      cursor: auto;
       touch-action: pan-y !important;
-      pointer-events: auto;
       overscroll-behavior: contain !important;
+      -webkit-overflow-scrolling: touch;
     }
 
     .anecdote-pinned-box::-webkit-scrollbar {
       width: 5px;
-      display: block;
     }
 
     .anecdote-pinned-box::-webkit-scrollbar-track {
@@ -1006,6 +1012,7 @@
       user-select: text !important;
       touch-action: pan-y !important;
       overscroll-behavior: contain !important;
+      -webkit-overflow-scrolling: touch;
     }
     .comments-scroll-list::-webkit-scrollbar {
       width: 4px;
@@ -1884,7 +1891,7 @@
           const isTextSelected = window.getSelection().toString().length > 0;
           if (isTextSelected) return;
 
-          if (e.target.closest(".anecdote-pinned-box") || e.target.closest(".thread-container") || e.target.closest(".thread-footer")) {
+          if (e.target.closest(".anecdote-wrapper") || e.target.closest(".thread-container") || e.target.closest(".thread-footer")) {
             return;
           }
 
@@ -1997,9 +2004,11 @@
                 </div>
               </div>
 
-              <!-- Zone 1: Natural Mouse Wheel & Trackpad Scrollable Anecdote Box -->
-              <div class="anecdote-pinned-box" onclick="event.stopPropagation()">
-                <div class="${adaptiveClass}">"${formattedAnecdote}"</div>
+              <!-- Zone 1: Identical wrapper & scroll mechanism as Comments & Banter -->
+              <div class="anecdote-wrapper" onclick="event.stopPropagation()">
+                <div class="anecdote-pinned-box">
+                  <div class="${adaptiveClass}">"${formattedAnecdote}"</div>
+                </div>
               </div>
 
               <!-- Zone 2: Scrollable Comment Feed -->
@@ -2017,21 +2026,6 @@
             </div>
           </div>
         `;
-
-        // Direct boundary-locking wheel listener preventing background window scroll
-        const anecdoteBox = card.querySelector(".anecdote-pinned-box");
-        if (anecdoteBox) {
-          anecdoteBox.addEventListener("wheel", function(e) {
-            const atTop = this.scrollTop === 0 && e.deltaY < 0;
-            const atBottom = (this.scrollHeight - this.scrollTop <= this.clientHeight + 1) && e.deltaY > 0;
-
-            e.stopPropagation();
-            if (!atTop && !atBottom) {
-              this.scrollTop += e.deltaY;
-            }
-            e.preventDefault();
-          }, { passive: false });
-        }
 
         grid.appendChild(card);
       });
