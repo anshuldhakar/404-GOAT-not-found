@@ -10,6 +10,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
+      --navbar-height: 60px;
       --fk-blue: #2874f0;
       --fk-blue-dark: #1e5bc6;
       --fk-yellow: #ffe500;
@@ -23,7 +24,7 @@
       --border-color: #e0e0e0;
       --status-delivered: #16a34a;
       --status-intransit: #d97706;
-      --control-bar-bg: rgba(241, 243, 246, 0.98);
+      --control-bar-bg: #f1f3f6;
       --input-bg: #ffffff;
       --input-border: #cbd5e1;
       --tag-bg: #fef3c7;
@@ -53,7 +54,7 @@
       --fk-blue: #38bdf8;
       --fk-yellow: #ffd500;
       --fk-orange: #ff5722;
-      --control-bar-bg: rgba(3, 20, 64, 0.98);
+      --control-bar-bg: #031440;
       --input-bg: #061848;
       --input-border: #2563eb;
       --tag-bg: #1e3a8a;
@@ -130,21 +131,25 @@
       100% { opacity: 1; filter: drop-shadow(0 0 14px #ffd500); transform: scale(1.15); }
     }
 
-    /* Top Nav */
+    /* Top Nav: Strict 60px height to prevent bleed-through gaps */
     .scm-navbar {
       background: var(--nav-bg);
       color: #ffffff;
-      padding: 0.75rem 1.25rem;
+      height: var(--navbar-height);
       position: sticky;
       top: 0;
       z-index: 100;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
       transition: background 0.3s ease;
+      display: flex;
+      align-items: center;
     }
 
     .scm-nav-content {
       max-width: 1180px;
+      width: 100%;
       margin: 0 auto;
+      padding: 0 1.25rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -425,24 +430,23 @@
     .btn-researchgate { background: #f0fdfa; color: #0d9488; border: 1px solid #ccfbf1; }
     .btn-personality { background: #faf5ff; color: #7e22ce; border: 1px solid #f3e8ff; }
 
-    /* Sticky Control Sub-Header */
+    /* Sticky Sub-Header: Docks flush at exactly top: 60px (zero bleed-through) */
     .sticky-control-container {
       position: sticky;
-      top: 54px;
-      z-index: 95;
-      background: var(--control-bar-bg);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      top: var(--navbar-height);
+      z-index: 99;
+      background-color: var(--hub-bg);
       padding: 0.65rem 0;
       margin-bottom: 1.5rem;
       border-bottom: 1px solid var(--border-color);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      transition: background 0.3s ease, border-color 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
     body.theme-bbd .sticky-control-container {
+      background-color: var(--hub-bg);
       border-bottom: 2px solid var(--fk-yellow);
-      box-shadow: 0 4px 18px rgba(0, 43, 153, 0.3);
+      box-shadow: 0 4px 18px rgba(0, 43, 153, 0.35);
     }
 
     .sticky-control-inner {
@@ -908,7 +912,7 @@
       color: #ffd500;
     }
 
-    /* Zone 1: Natural Mouse Wheel & Trackpad Scrolling (Contained within Card) */
+    /* Zone 1: Natural Mouse Wheel & Trackpad Scrolling (Contained strictly within Card) */
     .anecdote-pinned-box {
       background: rgba(255, 255, 255, 0.06);
       border-radius: 6px;
