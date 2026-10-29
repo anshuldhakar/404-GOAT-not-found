@@ -16,7 +16,7 @@
       --fk-orange: #fb641b;
       --hub-bg: #f1f3f6;
       --card-bg: #ffffff;
-      --card-back-bg: #111827;
+      --card-back-bg: #0f172a;
       --card-back-text: #ffffff;
       --text-main: #212121;
       --text-muted: #717478;
@@ -42,33 +42,34 @@
       --leader-badge-border: #eab308;
     }
 
-    /* BBD War Room: Crimson & Fire Theme */
+    /* Bright Iconic Flipkart BBD Theme */
     body.theme-bbd {
-      --hub-bg: #350505;
-      --card-bg: #220505;
-      --card-back-bg: #150303;
-      --card-back-text: #fffbeb;
-      --text-main: #fef2f2;
-      --text-muted: #fca5a5;
-      --border-color: #b91c1c;
-      --fk-blue: #ef4444;
-      --fk-yellow: #fde047;
-      --control-bar-bg: rgba(53, 5, 5, 0.96);
-      --input-bg: #180202;
-      --input-border: #dc2626;
-      --tag-bg: #7f1d1d;
+      --hub-bg: #08122c;
+      --card-bg: #0e1b3d;
+      --card-back-bg: #060d21;
+      --card-back-text: #ffffff;
+      --text-main: #ffffff;
+      --text-muted: #93c5fd;
+      --border-color: #2563eb;
+      --fk-blue: #38bdf8;
+      --fk-yellow: #ffd500;
+      --fk-orange: #ff4800;
+      --control-bar-bg: rgba(8, 18, 44, 0.96);
+      --input-bg: #0b1531;
+      --input-border: #1d4ed8;
+      --tag-bg: #1e3a8a;
       --tag-text: #fef08a;
-      --tag-border: #f59e0b;
-      --sig-bg: #2d0606;
-      --sig-text: #fed7aa;
-      --nav-bg: linear-gradient(90deg, #7f1d1d 0%, #b91c1c 50%, #c2410c 100%);
-      --fire-accent: #ea580c;
+      --tag-border: #eab308;
+      --sig-bg: #0a142e;
+      --sig-text: #bae6fd;
+      --nav-bg: linear-gradient(90deg, #0047e1 0%, #002db3 45%, #ff4800 100%);
+      --fire-accent: #ffd500;
 
-      --leader-border: #facc15;
-      --leader-glow: rgba(250, 204, 21, 0.35);
-      --leader-badge-bg: linear-gradient(135deg, #713f12 0%, #a16207 100%);
-      --leader-badge-text: #fef08a;
-      --leader-badge-border: #fde047;
+      --leader-border: #ffd500;
+      --leader-glow: rgba(255, 213, 0, 0.45);
+      --leader-badge-bg: linear-gradient(135deg, #ca8a04 0%, #ffd500 100%);
+      --leader-badge-text: #020617;
+      --leader-badge-border: #fef08a;
     }
 
     * {
@@ -82,25 +83,45 @@
       background-color: var(--hub-bg);
       color: var(--text-main);
       padding-bottom: 6rem;
-      transition: background-color 0.4s ease, color 0.4s ease;
+      transition: background-color 0.3s ease, color 0.3s ease;
       position: relative;
     }
 
-    /* Fire Ignition Flash on Toggle */
-    body.fire-flash-active::after {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: radial-gradient(circle, rgba(251, 100, 27, 0.3) 0%, rgba(185, 28, 28, 0.45) 70%, rgba(69, 10, 10, 0.6) 100%);
+    /* BBD Incandescent Decorative Light Bulbs */
+    .bbd-bulb-string {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 24px;
+      justify-content: space-around;
       pointer-events: none;
-      z-index: 9999;
-      animation: flameIgnition 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      z-index: 102;
+      overflow: hidden;
     }
 
-    @keyframes flameIgnition {
-      0% { opacity: 0; transform: scale(0.98); }
-      40% { opacity: 1; transform: scale(1); }
-      100% { opacity: 0; transform: scale(1.02); }
+    body.theme-bbd .bbd-bulb-string {
+      display: flex;
+    }
+
+    .bulb {
+      font-size: 0.9rem;
+      animation: bulbGlow 1.8s infinite alternate ease-in-out;
+      filter: drop-shadow(0 0 6px #ffe500);
+    }
+    .bulb:nth-child(even) {
+      animation-delay: 0.5s;
+      filter: drop-shadow(0 0 6px #ff6600);
+    }
+    .bulb:nth-child(3n) {
+      animation-delay: 0.9s;
+      filter: drop-shadow(0 0 6px #ffffff);
+    }
+
+    @keyframes bulbGlow {
+      0% { opacity: 0.45; transform: scale(0.92); }
+      100% { opacity: 1; transform: scale(1.1); }
     }
 
     /* Top Nav */
@@ -112,7 +133,7 @@
       top: 0;
       z-index: 100;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-      transition: background 0.4s ease;
+      transition: background 0.3s ease;
     }
 
     .scm-nav-content {
@@ -277,7 +298,7 @@
       max-width: 980px;
       margin-left: auto;
       margin-right: auto;
-      transition: background-color 0.4s ease, border-color 0.4s ease;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
     .creator-header {
@@ -410,7 +431,7 @@
       margin-bottom: 1.5rem;
       border-bottom: 1px solid var(--border-color);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      transition: background 0.4s ease;
+      transition: background 0.3s ease;
     }
 
     .sticky-control-inner {
@@ -591,33 +612,32 @@
       background: var(--card-bg);
       pointer-events: auto;
       overflow: hidden;
-      transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
-    /* Fire Emoticon Watermark Behind Blocks in BBD Mode */
+    /* Subtle Fire Glow Watermark in BBD Mode */
     .card-front::before,
     .card-back::before {
       content: "🔥";
       position: absolute;
-      right: -15px;
-      bottom: -15px;
-      font-size: 7.5rem;
+      right: -10px;
+      bottom: -10px;
+      font-size: 7rem;
       opacity: 0;
       pointer-events: none;
       user-select: none;
       transform: rotate(-10deg) scale(0.6);
-      transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition: opacity 0.4s ease, transform 0.4s ease;
       z-index: 0;
       line-height: 1;
     }
 
     body.theme-bbd .card-front::before,
     body.theme-bbd .card-back::before {
-      opacity: 0.12;
+      opacity: 0.16;
       transform: rotate(-5deg) scale(1);
     }
 
-    /* Keep content elements above the fire watermark */
     .card-front > *,
     .card-back > * {
       position: relative;
@@ -633,12 +653,7 @@
     }
 
     /* Senior Leadership Special Card Highlight */
-    .card-container.is-leadership .card-front {
-      border: 1.5px solid var(--leader-border);
-      border-top: 4px solid var(--leader-border);
-      box-shadow: 0 4px 18px var(--leader-glow);
-    }
-
+    .card-container.is-leadership .card-front,
     .card-container.is-leadership .card-back {
       border: 1.5px solid var(--leader-border);
       border-top: 4px solid var(--leader-border);
@@ -652,9 +667,9 @@
     }
 
     body.theme-bbd .card-container.is-leadership .avatar {
-      background: linear-gradient(135deg, #78350f 0%, #b45309 100%);
-      color: #fef08a;
-      border: 1.5px solid var(--fk-yellow);
+      background: linear-gradient(135deg, #eab308 0%, #ffd500 100%);
+      color: #020617;
+      border: 1.5px solid #ffffff;
     }
 
     .label-header {
@@ -868,47 +883,75 @@
       gap: 0.5rem;
     }
 
+    /* 2-Row Header Layout to prevent squishing on back */
     .card-back-meta {
-      font-family: monospace;
-      font-size: 0.72rem;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
-      padding-bottom: 0.35rem;
+      flex-direction: column;
+      gap: 0.35rem;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.25);
+      padding-bottom: 0.4rem;
       flex-shrink: 0;
     }
 
-    .card-back-meta-right {
+    .card-back-meta-row1 {
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #93c5fd;
+    }
+
+    .card-back-meta-row2 {
+      display: flex;
+      justify-content: flex-end;
       align-items: center;
       gap: 0.35rem;
     }
 
-    /* Zone 1: Adaptive Anecdote */
+    /* Zone 1: Adaptive Anecdote WITH VISIBLE SLIDE SCROLLBAR */
     .anecdote-pinned-box {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.06);
       border-radius: 6px;
       padding: 0.65rem 0.75rem;
-      max-height: 160px;
-      overflow-y: auto;
+      max-height: 155px;
+      height: 155px;
+      overflow-y: auto !important;
+      overflow-x: hidden;
       flex-shrink: 0;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      scrollbar-width: none;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      scrollbar-width: thin;
+      scrollbar-color: var(--fk-yellow) rgba(255, 255, 255, 0.08);
     }
-    .anecdote-pinned-box::-webkit-scrollbar { display: none; }
+
+    .anecdote-pinned-box::-webkit-scrollbar {
+      width: 5px;
+      display: block;
+    }
+
+    .anecdote-pinned-box::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+
+    .anecdote-pinned-box::-webkit-scrollbar-thumb {
+      background: var(--fk-yellow);
+      border-radius: 4px;
+    }
 
     .anecdote-text {
       font-size: 0.88rem;
       line-height: 1.45;
       font-style: italic;
-      color: #f1f5f9;
+      color: #f8fafc;
+      white-space: pre-line;
     }
 
     .anecdote-text.compact-adaptive {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       line-height: 1.38;
-      color: #e2e8f0;
+      color: #f1f5f9;
     }
 
     /* Zone 2: Scrollable Comment Feed */
@@ -938,13 +981,15 @@
       flex-direction: column;
       gap: 0.4rem;
       padding-right: 0.25rem;
-      max-height: 140px;
+      max-height: 130px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
     }
     .comments-scroll-list::-webkit-scrollbar {
       width: 4px;
     }
     .comments-scroll-list::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.3);
       border-radius: 4px;
     }
 
@@ -1040,13 +1085,13 @@
       border: 1px solid var(--border-color);
       border-top: 4px solid var(--fk-orange);
       border-radius: 12px;
-      padding: 1.75rem 1.25rem;
+      padding: 2.2rem 1.5rem;
       text-align: center;
-      max-width: 600px;
+      max-width: 660px;
       margin: 0 auto;
       box-shadow: 0 4px 16px rgba(0,0,0,0.04);
       scroll-margin-top: 140px;
-      transition: background 0.4s ease, border-color 0.4s ease;
+      transition: background 0.3s ease, border-color 0.3s ease;
     }
 
     .gift-badge {
@@ -1058,12 +1103,20 @@
       padding: 0.25rem 0.8rem;
       border-radius: 4px;
       text-transform: uppercase;
-      margin-bottom: 1.1rem;
+      margin-bottom: 0.85rem;
     }
 
     body.theme-bbd .gift-badge {
-      background: #7f1d1d;
-      color: #fef08a;
+      background: #ffd500;
+      color: #08122c;
+    }
+
+    .parting-gesture-text {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.4rem;
+      font-style: italic;
     }
 
     .flipkart-btn {
@@ -1098,10 +1151,10 @@
     }
 
     body.theme-bbd #copyToastMessage {
-      color: #4ade80;
+      color: #ffd500;
     }
 
-    /* Floating Navigation Controls (Up and Down Stack) */
+    /* Floating Navigation Controls */
     .floating-nav-stack {
       position: fixed;
       bottom: 2rem;
@@ -1146,6 +1199,14 @@
 </head>
 <body>
 
+  <!-- Top Festive Bulbs for BBD Mode -->
+  <div class="bbd-bulb-string">
+    <span class="bulb">💡</span><span class="bulb">💡</span><span class="bulb">💡</span>
+    <span class="bulb">💡</span><span class="bulb">💡</span><span class="bulb">💡</span>
+    <span class="bulb">💡</span><span class="bulb">💡</span><span class="bulb">💡</span>
+    <span class="bulb">💡</span><span class="bulb">💡</span><span class="bulb">💡</span>
+  </div>
+
   <!-- Top Nav with BBD Mode Toggle -->
   <nav class="scm-navbar">
     <div class="scm-nav-content">
@@ -1155,7 +1216,7 @@
       </div>
       <div class="nav-right-actions">
         <!-- BBD Mode Switch -->
-        <div class="toggle-wrapper" title="Toggle BBD War Room Mode">
+        <div class="toggle-wrapper" title="Toggle BBD Festive Mode">
           <span class="toggle-label-text">⚡ BBD Mode</span>
           <label class="switch">
             <input type="checkbox" id="bbdThemeToggle" onchange="toggleShiftTheme(this.checked)" />
@@ -1262,6 +1323,9 @@
     <!-- Parting Gesture Block -->
     <footer id="partingGestureBlock" class="gift-section">
       <div class="gift-badge">Parting Gesture 🎁</div>
+      <p class="parting-gesture-text">
+        If our conversations, late-night planning syncs, or shared laughs added a little spark to your Flipkart journey over the last 4.6 years, feel free to fuel my next chapter with an electronic Flipkart Gift Card!
+      </p>
 
       <div>
         <button id="fkGiftBtn" onclick="handleFlipkartGiftAction()" class="flipkart-btn">
@@ -1273,7 +1337,7 @@
     </footer>
   </div>
 
-  <!-- Floating Navigation Controls: Up (Top) & Down (Parting Gesture) -->
+  <!-- Floating Navigation Controls -->
   <div class="floating-nav-stack">
     <button id="backToTopBtn" class="nav-circle-btn back-to-top-btn" onclick="scrollToTop()" title="Scroll to top">
       ↑
@@ -1302,7 +1366,6 @@
     const openCardNames = new Set();
     const freshCommentCardNames = new Set();
 
-    // Helper: Clean URL slug
     function slugify(name) {
       return (name || "")
         .toLowerCase()
@@ -1310,7 +1373,6 @@
         .replace(/^-+|-+$/g, "");
     }
 
-    // Helper: Detect Senior Leadership from tags/remarks
     function isSeniorLeadership(colleague) {
       if (!colleague || !colleague.tagsString) return false;
       const lower = colleague.tagsString;
@@ -1319,35 +1381,18 @@
              lower.includes("leadership");
     }
 
-    // Theme Switch: BAU vs. BBD War Room Mode with Flash Transition Animation
     function toggleShiftTheme(isBbd) {
       if (isBbd) {
-        // Trigger one-time flame flash animation across the screen
-        document.body.classList.remove("fire-flash-active");
-        void document.body.offsetWidth; // trigger reflow
-        document.body.classList.add("fire-flash-active");
-
         document.body.classList.add("theme-bbd");
         localStorage.setItem("fk_theme", "bbd");
-
-        setTimeout(() => {
-          document.body.classList.remove("fire-flash-active");
-        }, 800);
       } else {
         document.body.classList.remove("theme-bbd");
-        document.body.classList.remove("fire-flash-active");
         localStorage.setItem("fk_theme", "bau");
       }
-
       const checkbox = document.getElementById("bbdThemeToggle");
       if (checkbox) checkbox.checked = isBbd;
     }
 
-    // Option 1 Sorting Hierarchy:
-    // 1. Primary: Banter count descending (active banter ALWAYS beats 0-banter)
-    // 2. Secondary: If banter counts are equal, Senior Leadership comes first
-    // 3. Tertiary: Team Name alphabetically
-    // 4. Quaternary: Colleague Name alphabetically
     function sortColleaguesByBanter(colleaguesList) {
       const commentCountMap = {};
       allComments.forEach(c => {
@@ -1376,7 +1421,6 @@
       });
     }
 
-    // Populate Dynamic Team Dropdown without numbers in brackets
     function populateTeamDropdown(data) {
       const selectEl = document.getElementById("teamSelectFilter");
       if (!selectEl) return;
@@ -1409,7 +1453,6 @@
       }
     }
 
-    // CSV Parser
     function parseCSV(text) {
       const rows = [];
       let row = [];
@@ -1481,7 +1524,6 @@
       return parsedData;
     }
 
-    // Google Sign-In Callback
     function handleCredentialResponse(response) {
       try {
         const payload = parseJwt(response.credential);
@@ -1533,7 +1575,6 @@
       applyCurrentFilter();
     }
 
-    // Update Counter in Sticky Bar
     function updateStatsBadge(showingCount, totalCount) {
       const badge = document.getElementById("stickyStatsBadge");
       if (!badge) return;
@@ -1545,7 +1586,6 @@
       }
     }
 
-    // Toggle Flip All Cards simultaneously via toggle switch
     function toggleFlipAllCards(checked) {
       const allVisibleContainers = document.querySelectorAll(".card-container");
 
@@ -1561,7 +1601,6 @@
       });
     }
 
-    // Filter helper: filters by text AND team dropdown, preserves Option 1 Sort
     function applyCurrentFilter() {
       const inputEl = document.getElementById("searchInput");
       const term = inputEl ? inputEl.value.toLowerCase().trim() : "";
@@ -1586,7 +1625,6 @@
       updateStatsBadge(filtered.length, rawColleaguesData.length);
     }
 
-    // Build comment feed HTML
     function buildCommentsHtml(cardComments) {
       if (cardComments.length === 0) {
         return `<div style="font-size:0.75rem; color:#94a3b8; padding:0.5rem 0;">No banter yet. Be the first to drop a reply!</div>`;
@@ -1611,7 +1649,6 @@
       return html;
     }
 
-    // In-place DOM update without resetting card orientation
     function updateCardCommentsDOM(cardName) {
       const targetCard = Array.from(document.querySelectorAll(".card-container")).find(c => c.dataset.cardName === cardName);
       if (!targetCard) return;
@@ -1639,7 +1676,6 @@
       );
     }
 
-    // Manifest Download: Builds a pristine postcard WITH the anecdote and NO action buttons
     function downloadCardManifest(colleagueName, event) {
       if (event) event.stopPropagation();
 
@@ -1667,7 +1703,6 @@
       exportBox.style.borderTop = hasLeadership ? "4px solid #d97706" : "4px solid #2874f0";
       exportBox.style.padding = "1.5rem";
       exportBox.style.boxSizing = "border-box";
-      exportBox.style.boxShadow = "none";
       exportBox.style.display = "flex";
       exportBox.style.flexDirection = "column";
       exportBox.style.gap = "0.75rem";
@@ -1701,12 +1736,11 @@
 
         ${tagPills ? `<div style="display:flex; flex-wrap:wrap; gap:0.35rem; margin-top:0.25rem;">${tagPills}</div>` : ''}
 
-        <!-- Personal Anecdote in the Center -->
         <div style="background:#f8fafc; border-left:3px solid ${hasLeadership ? '#d97706' : '#2874f0'}; border-radius:6px; padding:0.85rem 1rem; margin:0.4rem 0;">
           <div style="font-size:0.72rem; color:#64748b; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.35rem; font-family:monospace;">
             ✦ Anecdote from Anshul
           </div>
-          <div style="font-size:0.92rem; line-height:1.45; font-style:italic; color:#1e293b;">
+          <div style="font-size:0.92rem; line-height:1.45; font-style:italic; color:#1e293b; white-space:pre-line;">
             "${escapeHtml(item.anecdote)}"
           </div>
         </div>
@@ -1736,7 +1770,6 @@
       });
     }
 
-    // Share specific card directly to WhatsApp with clean URL deep link
     function shareCardOnWhatsApp(colleagueName, slug, event) {
       if (event) event.stopPropagation();
       const baseUrl = window.location.origin + window.location.pathname;
@@ -1746,7 +1779,6 @@
       window.open(whatsappUrl, "_blank");
     }
 
-    // Render Cards with Leadership styling & dual Save/WhatsApp buttons
     function renderCards(data) {
       const grid = document.getElementById("cardGrid");
       grid.innerHTML = "";
@@ -1862,22 +1894,24 @@
               </div>
             </div>
 
-            <!-- Back Face -->
+            <!-- Back Face (Clean 2-Row Header Layout) -->
             <div class="card-back">
               <div class="card-back-meta">
-                <span>✦ ANSHUL'S ANECDOTE FOR ${escapeHtml(item.name).toUpperCase()}</span>
-                <div class="card-back-meta-right">
-                  <button class="download-manifest-btn" style="background:rgba(255,255,255,0.1); color:#ffffff; border-color:rgba(255,255,255,0.2);" onclick="downloadCardManifest('${escapeHtml(item.name)}', event)" title="Save note as image">
+                <div class="card-back-meta-row1">
+                  <span>✦ NOTE FOR ${escapeHtml(item.name).toUpperCase()}</span>
+                  <span class="banter-count-badge" style="color: var(--fk-yellow);">BANTER (${cardComments.length})</span>
+                </div>
+                <div class="card-back-meta-row2">
+                  <button class="download-manifest-btn" style="background:rgba(255,255,255,0.12); color:#ffffff; border-color:rgba(255,255,255,0.25);" onclick="downloadCardManifest('${escapeHtml(item.name)}', event)" title="Save note as image">
                     📸 Save
                   </button>
                   <button class="whatsapp-share-btn" onclick="shareCardOnWhatsApp('${escapeHtml(item.name)}', '${item.slug}', event)" title="Share this note on WhatsApp">
                     💬 WhatsApp
                   </button>
-                  <span class="banter-count-badge" style="color: var(--fk-yellow); font-weight: 700; margin-left:0.2rem;">BANTER (${cardComments.length})</span>
                 </div>
               </div>
 
-              <!-- Zone 1: Adaptive Anecdote -->
+              <!-- Zone 1: Adaptive Anecdote with Custom Gold Scrollbar -->
               <div class="anecdote-pinned-box" onclick="event.stopPropagation()">
                 <p class="${adaptiveClass}">"${escapeHtml(item.anecdote)}"</p>
               </div>
@@ -1901,7 +1935,6 @@
       });
     }
 
-    // Handles incoming URL hash deep-link when arriving via shared link
     function handleUrlHashDeepLink() {
       const hash = window.location.hash.replace("#", "").trim().toLowerCase();
       if (!hash) return;
@@ -1920,7 +1953,6 @@
       }
     }
 
-    // Post comment with Optimistic UI
     async function postComment(cardName, inputId, event) {
       if (event) event.stopPropagation();
       const input = document.getElementById(inputId);
@@ -1970,7 +2002,6 @@
       }
     }
 
-    // Delete comment with Optimistic UI
     async function deleteComment(rowId, cardName, event) {
       if (event) event.stopPropagation();
       if (!confirm("Are you sure you want to delete this comment?")) return;
@@ -2004,7 +2035,6 @@
       }
     }
 
-    // Load comments from Apps Script
     async function loadComments() {
       try {
         const res = await fetch(APPS_SCRIPT_URL);
@@ -2017,7 +2047,6 @@
       }
     }
 
-    // Safe 30-second background polling
     function startBackgroundPolling() {
       setInterval(async () => {
         if (document.hidden) return;
@@ -2048,15 +2077,12 @@
       }, 30000);
     }
 
-    // Two-step Copy & Redirect for Flipkart Gift Card
     function handleFlipkartGiftAction() {
       const email = "anshuldhakar2904@gmail.com";
       const toastEl = document.getElementById("copyToastMessage");
       const btn = document.getElementById("fkGiftBtn");
 
-      // 1. Copy Email to Clipboard
       navigator.clipboard.writeText(email).then(() => {
-        // 2. Show prominent message first
         if (toastEl) {
           toastEl.innerText = "✓ Recipient email ID copied! Redirecting to Flipkart Gift Card store...";
         }
@@ -2065,7 +2091,6 @@
           btn.disabled = true;
         }
 
-        // 3. Pause 1.8 seconds so users actually read the message before new tab opens
         setTimeout(() => {
           window.open("https://www.flipkart.com/the-gift-card-store", "_blank");
           if (btn) {
@@ -2074,7 +2099,6 @@
           }
         }, 1800);
       }).catch(() => {
-        // Fallback if clipboard permission fails
         if (toastEl) {
           toastEl.innerText = "Opening Flipkart Gift Card store...";
         }
@@ -2084,7 +2108,6 @@
       });
     }
 
-    // Scroll to Top Smooth Action
     function scrollToTop() {
       window.scrollTo({
         top: 0,
@@ -2092,7 +2115,6 @@
       });
     }
 
-    // Scroll down to Parting Gesture Smooth Action
     function scrollToGiftSection() {
       const giftEl = document.getElementById("partingGestureBlock");
       if (giftEl) {
@@ -2100,7 +2122,6 @@
       }
     }
 
-    // Floating Button Visibility Listener
     window.addEventListener("scroll", () => {
       const topBtn = document.getElementById("backToTopBtn");
       if (!topBtn) return;
@@ -2123,7 +2144,6 @@
       });
     }
 
-    // Search input listener
     const searchInputEl = document.getElementById("searchInput");
     searchInputEl.addEventListener("input", () => {
       applyCurrentFilter();
@@ -2133,7 +2153,6 @@
       }
     });
 
-    // Reset search on Escape key
     searchInputEl.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         searchInputEl.value = "";
@@ -2148,17 +2167,13 @@
       }
     });
 
-    // Listen to manual URL hash changes
     window.addEventListener("hashchange", handleUrlHashDeepLink);
 
-    // Initialize
     async function init() {
-      // 1. Restore Theme
       const savedTheme = localStorage.getItem("fk_theme");
       const isBbd = savedTheme === "bbd";
       toggleShiftTheme(isBbd);
 
-      // 2. Restore User Auth
       const savedUser = localStorage.getItem("fk_user");
       if (savedUser) {
         try {
