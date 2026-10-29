@@ -23,7 +23,7 @@
       --border-color: #e0e0e0;
       --status-delivered: #16a34a;
       --status-intransit: #d97706;
-      --control-bar-bg: rgba(241, 243, 246, 0.96);
+      --control-bar-bg: rgba(241, 243, 246, 0.98);
       --input-bg: #ffffff;
       --input-border: #cbd5e1;
       --tag-bg: #fef3c7;
@@ -42,32 +42,32 @@
       --leader-badge-border: #eab308;
     }
 
-    /* Bright Iconic Flipkart BBD Theme */
+    /* BBD War Room: Bright Festive & Fire Theme */
     body.theme-bbd {
-      --hub-bg: #08122c;
-      --card-bg: #0e1b3d;
-      --card-back-bg: #060d21;
-      --card-back-text: #ffffff;
+      --hub-bg: #1a0404;
+      --card-bg: #290808;
+      --card-back-bg: #1c0505;
+      --card-back-text: #fffbeb;
       --text-main: #ffffff;
-      --text-muted: #93c5fd;
-      --border-color: #2563eb;
-      --fk-blue: #38bdf8;
+      --text-muted: #fca5a5;
+      --border-color: #b91c1c;
+      --fk-blue: #f87171;
       --fk-yellow: #ffd500;
       --fk-orange: #ff4800;
-      --control-bar-bg: rgba(8, 18, 44, 0.96);
-      --input-bg: #0b1531;
-      --input-border: #1d4ed8;
-      --tag-bg: #1e3a8a;
+      --control-bar-bg: rgba(30, 4, 4, 0.98);
+      --input-bg: #150202;
+      --input-border: #ef4444;
+      --tag-bg: #7f1d1d;
       --tag-text: #fef08a;
-      --tag-border: #eab308;
-      --sig-bg: #0a142e;
-      --sig-text: #bae6fd;
-      --nav-bg: linear-gradient(90deg, #0047e1 0%, #002db3 45%, #ff4800 100%);
+      --tag-border: #f59e0b;
+      --sig-bg: #350808;
+      --sig-text: #fed7aa;
+      --nav-bg: linear-gradient(90deg, #991b1b 0%, #b91c1c 45%, #ea580c 100%);
       --fire-accent: #ffd500;
 
       --leader-border: #ffd500;
       --leader-glow: rgba(255, 213, 0, 0.45);
-      --leader-badge-bg: linear-gradient(135deg, #ca8a04 0%, #ffd500 100%);
+      --leader-badge-bg: linear-gradient(135deg, #713f12 0%, #ffd500 100%);
       --leader-badge-text: #020617;
       --leader-badge-border: #fef08a;
     }
@@ -87,48 +87,44 @@
       position: relative;
     }
 
-    /* BBD Incandescent Decorative Light Bulbs */
-    .bbd-bulb-string {
+    /* Clean Festive Lights Bar in Navbar */
+    .bbd-bulb-tray {
       display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
-      height: 24px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.2rem 1rem;
+      border-bottom: 1px solid rgba(255, 213, 0, 0.35);
       justify-content: space-around;
-      pointer-events: none;
-      z-index: 102;
-      overflow: hidden;
+      align-items: center;
+      user-select: none;
     }
 
-    body.theme-bbd .bbd-bulb-string {
+    body.theme-bbd .bbd-bulb-tray {
       display: flex;
     }
 
-    .bulb {
-      font-size: 0.9rem;
-      animation: bulbGlow 1.8s infinite alternate ease-in-out;
-      filter: drop-shadow(0 0 6px #ffe500);
+    .bulb-item {
+      font-size: 0.95rem;
+      line-height: 1;
+      display: inline-block;
+      animation: bulbPulse 1.6s infinite alternate ease-in-out;
     }
-    .bulb:nth-child(even) {
-      animation-delay: 0.5s;
-      filter: drop-shadow(0 0 6px #ff6600);
+    .bulb-item:nth-child(even) {
+      animation-delay: 0.4s;
     }
-    .bulb:nth-child(3n) {
-      animation-delay: 0.9s;
-      filter: drop-shadow(0 0 6px #ffffff);
+    .bulb-item:nth-child(3n) {
+      animation-delay: 0.8s;
     }
 
-    @keyframes bulbGlow {
-      0% { opacity: 0.45; transform: scale(0.92); }
-      100% { opacity: 1; transform: scale(1.1); }
+    @keyframes bulbPulse {
+      0% { opacity: 0.4; filter: drop-shadow(0 0 2px #ff4800); transform: scale(0.9); }
+      100% { opacity: 1; filter: drop-shadow(0 0 7px #ffd500); transform: scale(1.1); }
     }
 
     /* Top Nav */
     .scm-navbar {
       background: var(--nav-bg);
       color: #ffffff;
-      padding: 0.75rem 1.25rem;
       position: sticky;
       top: 0;
       z-index: 100;
@@ -139,6 +135,7 @@
     .scm-nav-content {
       max-width: 1180px;
       margin: 0 auto;
+      padding: 0.75rem 1.25rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -431,7 +428,12 @@
       margin-bottom: 1.5rem;
       border-bottom: 1px solid var(--border-color);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    body.theme-bbd .sticky-control-container {
+      border-bottom: 2px solid var(--fk-orange);
+      box-shadow: 0 4px 16px rgba(251, 100, 27, 0.2);
     }
 
     .sticky-control-inner {
@@ -473,6 +475,12 @@
       font-family: monospace;
       white-space: nowrap;
       flex-shrink: 0;
+    }
+
+    body.theme-bbd .sticky-stats-badge {
+      background: rgba(255, 213, 0, 0.12);
+      border-color: rgba(255, 213, 0, 0.35);
+      color: var(--fk-yellow);
     }
 
     .sticky-search-wrapper {
@@ -577,7 +585,7 @@
       min-height: 480px;
       height: 480px;
       cursor: pointer;
-      user-select: none;
+      user-select: text;
       scroll-margin-top: 140px;
       position: relative;
     }
@@ -615,7 +623,35 @@
       transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
-    /* Subtle Fire Glow Watermark in BBD Mode */
+    /* Front Face */
+    .card-front {
+      justify-content: flex-start;
+      border-top: 3px solid var(--fk-blue);
+      text-align: left;
+      transform: rotateY(0deg);
+    }
+
+    /* Back Face - Distinct Backgrounds for BAU vs BBD */
+    .card-back {
+      background: var(--card-back-bg);
+      color: var(--card-back-text);
+      transform: rotateY(180deg);
+      border: 1px solid var(--border-color);
+      border-top: 3.5px solid var(--fk-yellow);
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    body.theme-bbd .card-back {
+      background: radial-gradient(circle at top right, #350606 0%, #170202 100%);
+      border: 1px solid #dc2626;
+      border-top: 4px solid var(--fk-orange);
+      box-shadow: 0 0 18px rgba(234, 88, 12, 0.25);
+    }
+
+    /* Subtle Fire Watermark */
     .card-front::before,
     .card-back::before {
       content: "🔥";
@@ -642,14 +678,6 @@
     .card-back > * {
       position: relative;
       z-index: 1;
-    }
-
-    /* Front Label */
-    .card-front {
-      justify-content: flex-start;
-      border-top: 3px solid var(--fk-blue);
-      text-align: left;
-      transform: rotateY(0deg);
     }
 
     /* Senior Leadership Special Card Highlight */
@@ -870,20 +898,7 @@
       text-decoration: none;
     }
 
-    /* Back: Anecdote + Scrollable Thread */
-    .card-back {
-      background: var(--card-back-bg);
-      color: var(--card-back-text);
-      transform: rotateY(180deg);
-      border: 1px solid var(--border-color);
-      border-top: 3px solid var(--fk-yellow);
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    /* 2-Row Header Layout to prevent squishing on back */
+    /* Back Face: Clean 2-Row Header Layout */
     .card-back-meta {
       display: flex;
       flex-direction: column;
@@ -903,6 +918,10 @@
       color: #93c5fd;
     }
 
+    body.theme-bbd .card-back-meta-row1 {
+      color: #fde047;
+    }
+
     .card-back-meta-row2 {
       display: flex;
       justify-content: flex-end;
@@ -910,7 +929,7 @@
       gap: 0.35rem;
     }
 
-    /* Zone 1: Adaptive Anecdote WITH VISIBLE SLIDE SCROLLBAR */
+    /* Zone 1: Natural Mouse Wheel & Touch Scrolling */
     .anecdote-pinned-box {
       background: rgba(255, 255, 255, 0.06);
       border-radius: 6px;
@@ -923,6 +942,8 @@
       border: 1px solid rgba(255, 255, 255, 0.12);
       scrollbar-width: thin;
       scrollbar-color: var(--fk-yellow) rgba(255, 255, 255, 0.08);
+      user-select: text !important;
+      cursor: auto;
     }
 
     .anecdote-pinned-box::-webkit-scrollbar {
@@ -942,15 +963,26 @@
 
     .anecdote-text {
       font-size: 0.88rem;
-      line-height: 1.45;
+      line-height: 1.5;
       font-style: italic;
       color: #f8fafc;
-      white-space: pre-line;
+      white-space: pre-wrap;
+      user-select: text !important;
+    }
+
+    .anecdote-text a {
+      color: #38bdf8;
+      text-decoration: underline;
+      font-weight: 600;
+      word-break: break-all;
+    }
+    .anecdote-text a:hover {
+      color: var(--fk-yellow);
     }
 
     .anecdote-text.compact-adaptive {
       font-size: 0.8rem;
-      line-height: 1.38;
+      line-height: 1.4;
       color: #f1f5f9;
     }
 
@@ -984,6 +1016,7 @@
       max-height: 130px;
       scrollbar-width: thin;
       scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+      user-select: text !important;
     }
     .comments-scroll-list::-webkit-scrollbar {
       width: 4px;
@@ -1026,6 +1059,7 @@
     .comment-text-body {
       color: #f8fafc;
       word-break: break-word;
+      user-select: text !important;
     }
 
     /* Zone 3: Footer Input or Login Button */
@@ -1199,16 +1233,24 @@
 </head>
 <body>
 
-  <!-- Top Festive Bulbs for BBD Mode -->
-  <div class="bbd-bulb-string">
-    <span class="bulb">💡</span><span class="bulb">💡</span><span class="bulb">💡</span>
-    <span class="bulb">💡</span><span class="bulb">💡</span><span class="bulb">💡</span>
-    <span class="bulb">💡</span><span class="bulb">💡</span><span class="bulb">💡</span>
-    <span class="bulb">💡</span><span class="bulb">💡</span><span class="bulb">💡</span>
-  </div>
-
   <!-- Top Nav with BBD Mode Toggle -->
   <nav class="scm-navbar">
+    <!-- Top Festive Bulbs Tray in BBD Mode (Never overlaps text) -->
+    <div class="bbd-bulb-tray">
+      <span class="bulb-item">💡</span>
+      <span class="bulb-item">💡</span>
+      <span class="bulb-item">💡</span>
+      <span class="bulb-item">💡</span>
+      <span class="bulb-item">💡</span>
+      <span class="bulb-item">💡</span>
+      <span class="bulb-item">💡</span>
+      <span class="bulb-item">💡</span>
+      <span class="bulb-item">💡</span>
+      <span class="bulb-item">💡</span>
+      <span class="bulb-item">💡</span>
+      <span class="bulb-item">💡</span>
+    </div>
+
     <div class="scm-nav-content">
       <div class="brand-title">
         <h1>Flipkart</h1>
@@ -1348,15 +1390,9 @@
   </div>
 
   <script>
-    // 1. Google Sheet published CSV URL
     const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTOnE4C0nb_EUJuxnD1taVpQxMmG-Su-iOxPXLAEanOs4oiUYNxhrszNGP39Sr7QUCDDQOiaEppTvPB/pub?output=csv";
-    
-    // 2. Apps Script Web App URL
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwKVPo2EbWlUE3iWWjDE0Yv7ca2se7gqFpQ40wcYQpSuzIeXN6s8syCAYTP74B2E1qS9g/exec";
-
-    // 3. Google OAuth Client ID
     const GOOGLE_CLIENT_ID = "202897632024-qhm5he4cbtk6bhm5n5se8uc20r4716tn.apps.googleusercontent.com";
-
     const ADMIN_EMAIL = "anshuldhakar2904@gmail.com";
 
     let rawColleaguesData = [];
@@ -1379,6 +1415,28 @@
       return lower.includes("senior leadership") ||
              lower.includes("executive leadership") ||
              lower.includes("leadership");
+    }
+
+    // Formatter: Cleans literal \n strings, escapes HTML, and turns URLs into clickable links
+    function formatAnecdoteHTML(rawText) {
+      if (!rawText) return "";
+      
+      // Clean escaped newlines from Google Sheets
+      let cleaned = rawText
+        .replace(/\\r\\n/g, "\n")
+        .replace(/\\n/g, "\n")
+        .replace(/\\r/g, "\n");
+
+      // Escape basic HTML
+      let escaped = escapeHtml(cleaned);
+
+      // Detect and linkify URLs
+      const urlPattern = /(https?:\/\/[^\s<]+)/g;
+      escaped = escaped.replace(urlPattern, function(url) {
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${url}</a>`;
+      });
+
+      return escaped;
     }
 
     function toggleShiftTheme(isBbd) {
@@ -1676,12 +1734,14 @@
       );
     }
 
+    // Theme-Aware Manifest Download (Supports both BAU and BBD Mode)
     function downloadCardManifest(colleagueName, event) {
       if (event) event.stopPropagation();
 
       const item = rawColleaguesData.find(c => c.name === colleagueName);
       if (!item) return;
 
+      const isBbdActive = document.body.classList.contains("theme-bbd");
       const initials = item.name
         .split(" ")
         .filter(n => n.length > 0)
@@ -1692,15 +1752,30 @@
 
       const hasLeadership = isSeniorLeadership(item);
 
+      // Color tokens for export image
+      const bgCard = isBbdActive ? "#220505" : "#ffffff";
+      const borderTop = isBbdActive ? "#ff4800" : (hasLeadership ? "#d97706" : "#2874f0");
+      const borderOutline = isBbdActive ? "#b91c1c" : (hasLeadership ? "#d97706" : "#e0e0e0");
+      const headerColor = isBbdActive ? "#ffd500" : (hasLeadership ? "#d97706" : "#2874f0");
+      const nameColor = isBbdActive ? "#ffffff" : "#212121";
+      const avatarBg = isBbdActive ? "#7f1d1d" : (hasLeadership ? "#fef3c7" : "#f0f5ff");
+      const avatarColor = isBbdActive ? "#fef08a" : (hasLeadership ? "#92400e" : "#2874f0");
+      const teamBg = isBbdActive ? "#350808" : (hasLeadership ? "#fffbeb" : "#eff6ff");
+      const teamColor = isBbdActive ? "#fca5a5" : (hasLeadership ? "#b45309" : "#1e3a8a");
+      const quoteBoxBg = isBbdActive ? "#160202" : "#f8fafc";
+      const quoteColor = isBbdActive ? "#fed7aa" : "#1e293b";
+      const sigColor = isBbdActive ? "#fca5a5" : "#475569";
+      const sigBg = isBbdActive ? "#1f0303" : "#f8fafc";
+
       const exportBox = document.createElement("div");
       exportBox.style.position = "fixed";
       exportBox.style.left = "-9999px";
       exportBox.style.top = "0";
       exportBox.style.width = "460px";
-      exportBox.style.backgroundColor = "#ffffff";
+      exportBox.style.backgroundColor = bgCard;
       exportBox.style.borderRadius = "12px";
-      exportBox.style.border = hasLeadership ? "2px solid #d97706" : "1px solid #e0e0e0";
-      exportBox.style.borderTop = hasLeadership ? "4px solid #d97706" : "4px solid #2874f0";
+      exportBox.style.border = `1.5px solid ${borderOutline}`;
+      exportBox.style.borderTop = `4px solid ${borderTop}`;
       exportBox.style.padding = "1.5rem";
       exportBox.style.boxSizing = "border-box";
       exportBox.style.display = "flex";
@@ -1711,24 +1786,31 @@
         ? item.tags.map(t => {
             const isLead = t.toLowerCase().includes("senior leadership") || t.toLowerCase().includes("leadership");
             const style = isLead
-              ? "font-size:0.75rem; color:#854d0e; background:#fef08a; border:1px solid #eab308; padding:0.2rem 0.6rem; border-radius:4px; font-weight:800;"
-              : "font-size:0.75rem; color:#92400e; background:#fef3c7; border:1px solid #fde68a; padding:0.2rem 0.55rem; border-radius:4px; font-weight:500;";
+              ? (isBbdActive
+                  ? "font-size:0.75rem; color:#020617; background:#ffd500; border:1px solid #fef08a; padding:0.2rem 0.6rem; border-radius:4px; font-weight:800;"
+                  : "font-size:0.75rem; color:#854d0e; background:#fef08a; border:1px solid #eab308; padding:0.2rem 0.6rem; border-radius:4px; font-weight:800;")
+              : (isBbdActive
+                  ? "font-size:0.75rem; color:#fef08a; background:#7f1d1d; border:1px solid #f59e0b; padding:0.2rem 0.55rem; border-radius:4px; font-weight:500;"
+                  : "font-size:0.75rem; color:#92400e; background:#fef3c7; border:1px solid #fde68a; padding:0.2rem 0.55rem; border-radius:4px; font-weight:500;");
             return `<span style="${style}">${escapeHtml(t)}</span>`;
           }).join(" ")
         : "";
 
+      // Clean formatted anecdote for export image
+      const formattedAnecdote = formatAnecdoteHTML(item.anecdote);
+
       exportBox.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed #e0e0e0; padding-bottom:0.5rem; font-family:monospace; font-size:0.8rem; color:${hasLeadership ? '#d97706' : '#2874f0'}; font-weight:700;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed ${isBbdActive ? 'rgba(255,255,255,0.2)' : '#e0e0e0'}; padding-bottom:0.5rem; font-family:monospace; font-size:0.8rem; color:${headerColor}; font-weight:700;">
           <span>ANSHUL'S SIGN-OFF NOTE</span>
           <span style="color:#16a34a; background:#f0fdf4; border:1px solid #bbf7d0; padding:0.15rem 0.45rem; border-radius:4px;">● ${escapeHtml(item.status)}</span>
         </div>
         <div style="display:flex; align-items:center; gap:0.75rem; margin-top:0.35rem;">
-          <div style="width:48px; height:48px; background:${hasLeadership ? '#fef3c7' : '#f0f5ff'}; color:${hasLeadership ? '#92400e' : '#2874f0'}; font-weight:800; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.15rem; border:1.5px solid ${hasLeadership ? '#d97706' : 'rgba(40,116,240,0.2)'};">
+          <div style="width:48px; height:48px; background:${avatarBg}; color:${avatarColor}; font-weight:800; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.15rem; border:1.5px solid ${borderOutline};">
             ${initials}
           </div>
           <div>
-            <div style="font-size:1.25rem; font-weight:700; color:#212121; line-height:1.2;">${escapeHtml(item.name)}</div>
-            <div style="font-size:0.78rem; color:${hasLeadership ? '#b45309' : '#1e3a8a'}; background:${hasLeadership ? '#fffbeb' : '#eff6ff'}; padding:0.15rem 0.5rem; border-radius:4px; font-weight:600; font-family:monospace; display:inline-block; margin-top:0.25rem; border:1px solid ${hasLeadership ? '#fde68a' : 'transparent'};">
+            <div style="font-size:1.25rem; font-weight:700; color:${nameColor}; line-height:1.2;">${escapeHtml(item.name)}</div>
+            <div style="font-size:0.78rem; color:${teamColor}; background:${teamBg}; padding:0.15rem 0.5rem; border-radius:4px; font-weight:600; font-family:monospace; display:inline-block; margin-top:0.25rem; border:1px solid ${borderOutline};">
               TEAM // ${escapeHtml(item.team || "Central")}
             </div>
           </div>
@@ -1736,16 +1818,16 @@
 
         ${tagPills ? `<div style="display:flex; flex-wrap:wrap; gap:0.35rem; margin-top:0.25rem;">${tagPills}</div>` : ''}
 
-        <div style="background:#f8fafc; border-left:3px solid ${hasLeadership ? '#d97706' : '#2874f0'}; border-radius:6px; padding:0.85rem 1rem; margin:0.4rem 0;">
-          <div style="font-size:0.72rem; color:#64748b; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.35rem; font-family:monospace;">
+        <div style="background:${quoteBoxBg}; border-left:3.5px solid ${borderTop}; border-radius:6px; padding:0.85rem 1rem; margin:0.4rem 0;">
+          <div style="font-size:0.72rem; color:${isBbdActive ? '#ffd500' : '#64748b'}; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.35rem; font-family:monospace;">
             ✦ Anecdote from Anshul
           </div>
-          <div style="font-size:0.92rem; line-height:1.45; font-style:italic; color:#1e293b; white-space:pre-line;">
-            "${escapeHtml(item.anecdote)}"
+          <div style="font-size:0.92rem; line-height:1.5; font-style:italic; color:${quoteColor}; white-space:pre-wrap;">
+            "${formattedAnecdote}"
           </div>
         </div>
 
-        <div style="padding:0.6rem 0; border-top:1px dashed #e0e0e0; font-size:0.78rem; font-weight:600; color:#475569; text-align:center; background:#f8fafc; border-radius:6px;">
+        <div style="padding:0.6rem 0; border-top:1px dashed ${isBbdActive ? 'rgba(255,255,255,0.2)' : '#e0e0e0'}; font-size:0.78rem; font-weight:600; color:${sigColor}; text-align:center; background:${sigBg}; border-radius:6px;">
           ☕ 4.6 years of memories, signed by Anshul Dhakar
         </div>
       `;
@@ -1755,11 +1837,12 @@
       html2canvas(exportBox, {
         scale: 2,
         useCORS: true,
-        backgroundColor: "#ffffff"
+        backgroundColor: bgCard
       }).then(canvas => {
         const image = canvas.toDataURL("image/png");
         const downloadLink = document.createElement("a");
-        downloadLink.download = `Anshul-Farewell-Note-${slugify(colleagueName)}.png`;
+        const modeSuffix = isBbdActive ? "BBD" : "BAU";
+        downloadLink.download = `Anshul-Farewell-Note-${slugify(colleagueName)}-${modeSuffix}.png`;
         downloadLink.href = image;
         downloadLink.click();
         document.body.removeChild(exportBox);
@@ -1803,7 +1886,16 @@
           card.classList.add("is-flipped");
         }
 
+        // Toggle card flip, ensuring clicks on text or links don't trigger unwanted flips
         card.addEventListener("click", function(e) {
+          const isTextSelected = window.getSelection().toString().length > 0;
+          if (isTextSelected) return;
+
+          // Don't flip when clicking inside the anecdote box or thread feed
+          if (e.target.closest(".anecdote-pinned-box") || e.target.closest(".thread-container") || e.target.closest(".thread-footer")) {
+            return;
+          }
+
           card.classList.toggle("is-flipped");
           if (card.classList.contains("is-flipped")) {
             openCardNames.add(item.name);
@@ -1830,7 +1922,7 @@
 
         const statusClass = item.isDelivered ? "status-badge-delivered" : "status-badge-intransit";
 
-        const isLongText = item.anecdote.length > 140;
+        const isLongText = item.anecdote.length > 160;
         const adaptiveClass = isLongText ? "anecdote-text compact-adaptive" : "anecdote-text";
 
         const cardComments = allComments.filter(c => c.cardName === item.name);
@@ -1839,6 +1931,9 @@
         const frontBanterDisplay = cardComments.length > 0 ? "inline-block" : "none";
         const hasFreshBanter = freshCommentCardNames.has(item.name);
         const newBanterHtml = hasFreshBanter ? `<span class="new-banter-badge">● NEW</span>` : "";
+
+        // Formatted anecdote with support for newlines and clickable URLs
+        const formattedAnecdote = formatAnecdoteHTML(item.anecdote);
 
         let footerHtml = "";
         if (currentUser) {
@@ -1911,9 +2006,9 @@
                 </div>
               </div>
 
-              <!-- Zone 1: Adaptive Anecdote with Custom Gold Scrollbar -->
+              <!-- Zone 1: Adaptive Anecdote with Natural Mouse Wheel / Touch Scrolling -->
               <div class="anecdote-pinned-box" onclick="event.stopPropagation()">
-                <p class="${adaptiveClass}">"${escapeHtml(item.anecdote)}"</p>
+                <p class="${adaptiveClass}">"${formattedAnecdote}"</p>
               </div>
 
               <!-- Zone 2: Scrollable Comment Feed -->
